@@ -44,7 +44,7 @@ mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME CHARACTER
 echo "Installing php 7.0..."
 echo vagrant | sudo -S add-apt-repository ppa:ondrej/php
 echo vagrant | sudo -S apt-get update
-echo vagrant | sudo -S apt-get install php7.0 php7.0-cgi php7.0-fpm php7.0-mysql php7.0-gd php7.0-mbstring -y > /dev/null 2>&1
+echo vagrant | sudo -S apt-get install php7.0 php7.0-cgi php7.0-fpm php7.0-dom php7.0-mysql php7.0-gd php7.0-mbstring -y > /dev/null 2>&1
 
 echo "Installing composer..."
 curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
