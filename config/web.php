@@ -1,6 +1,6 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
+$params = require(__DIR__ . '/params.php.sample');
 
 $config = [
     'id' => 'basic',

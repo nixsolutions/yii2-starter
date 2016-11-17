@@ -62,4 +62,5 @@ echo y | php yii migrate --migrationPath=@yii/rbac/migrations/
 echo y | php yii migrate/up
 echo y | php yii rbac/init
 
-sudo mv config/db.php.sample config/db.php
+sudo cp config/db.php.sample config/db.php
+sudo cp config/params.php.sample config/params.php
