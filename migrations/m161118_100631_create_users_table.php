@@ -12,7 +12,7 @@ class m161118_100631_create_users_table extends Migration
      */
     public function up()
     {
-        $this->update('users', [
+        $this->createTable('users', [
             'id' => $this->primaryKey(),
             'first_name' => $this->string(),
             'last_name' => $this->string(),
