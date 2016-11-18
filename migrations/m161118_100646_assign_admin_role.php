@@ -14,8 +14,6 @@ class m161118_100646_assign_admin_role extends Migration
 
     public function down()
     {
-        echo "m161118_100646_assign_admin_role cannot be reverted.\n";
-
-        return false;
+        $this->delete('auth_assignment', ['user_id' => '1']);
     }
 }
