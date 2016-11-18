@@ -57,10 +57,10 @@ composer global require "fxp/composer-asset-plugin:^1.2.1" > /dev/null 2>&1
 cd /vagrant
 composer install > /dev/null 2>&1
 
+sudo cp config/db.php.sample config/db.php
+sudo cp config/params.php.sample config/params.php
+
 echo "Migrating..."
 echo y | php yii migrate --migrationPath=@yii/rbac/migrations/
 echo y | php yii migrate/up
 echo y | php yii rbac/init
-
-sudo cp config/db.php.sample config/db.php
-sudo cp config/params.php.sample config/params.php
