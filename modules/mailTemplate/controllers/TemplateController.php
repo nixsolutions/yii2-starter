@@ -32,7 +32,7 @@ class TemplateController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update', 'delete'],
+                        'actions' => ['update',],
                         'roles' => ['@']
                     ],
                     [
@@ -91,21 +91,6 @@ class TemplateController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
-
-    }
-
-    /**
-     * Deletes an existing MailTemplate model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     *
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -118,9 +103,10 @@ class TemplateController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MailTemplate::findOne($id)) !== null) {
-            return $model;
+        $model = MailTemplate::findOne($id);
+        if (null === $model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $model;
     }
 }

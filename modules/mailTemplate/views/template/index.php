@@ -20,11 +20,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'key',
-            'subject',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\SerialColumn',
+                'headerOptions' => ['width' => '10'],
+            ],
+            [
+                'attribute' => 'name',
+                'headerOptions' => ['width' => '130'],
+            ],
+            [
+                'attribute' => 'key',
+                'headerOptions' => ['width' => '130'],
+            ],
+            [
+                'attribute' => 'subject',
+                'headerOptions' => ['width' => '300'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => Yii::t('mailTemplate', 'Actions'),
+                'headerOptions' => ['width' => '65'],
+                'template' => '{view}  {update}',
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?></div>
