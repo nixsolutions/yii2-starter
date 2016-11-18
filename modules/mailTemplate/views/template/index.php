@@ -15,9 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Mail Template'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,9 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'subject',
             'key',
-            'created_at:datetime',
+            'subject',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

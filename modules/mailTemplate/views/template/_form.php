@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <h4><?= Yii::t('mailTemplate', 'Allowed placeholders {user} {location} {date}') ?></h4>
+    <h4><?= Yii::t('mailTemplate', 'Allowed placeholders {user} {date} {link} {password}') ?></h4>
     <?= $form->field($model, 'body')->widget(CKEditor::className(), [
         'options' => ['rows' => 6],
         'preset' => 'full'

@@ -19,7 +19,7 @@ class m161114_123235_create_mail_template_table extends Migration
             'key' => $this->string(255)->unique(),
             'body' => $this->text(),
             'name' => $this->string(250)->notNull(),
-            'created_at' => $this->dateTime()->notNull(),
+            'updated_at' => $this->dateTime(),
             'subject' => $this->string(255),
         ]);
     }

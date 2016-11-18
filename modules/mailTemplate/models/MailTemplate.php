@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $body
  * @property string $key
  * @property string $name
- * @property string $created_at
+ * @property string $updated_at
  * @property string $subject
  */
 class MailTemplate extends ActiveRecord
@@ -34,7 +34,7 @@ class MailTemplate extends ActiveRecord
         return [
             [['body'], 'string'],
             [['name',], 'required'],
-            [['created_at'], 'safe'],
+            [['updated_at'], 'safe'],
             [['name'], 'string', 'max' => 250],
             [['key', 'subject'], 'string', 'max' => 255],
             [['key'], 'unique']
@@ -51,7 +51,7 @@ class MailTemplate extends ActiveRecord
             'key' => Yii::t('mailTemplate', 'Key'),
             'body' => Yii::t('mailTemplate', 'Body'),
             'name' => Yii::t('mailTemplate', 'Name'),
-            'created_at' => Yii::t('mailTemplate', 'Created At'),
+            'updated_at' => Yii::t('mailTemplate', 'Created At'),
             'subject' => Yii::t('mailTemplate', 'Subject'),
         ];
     }
@@ -62,7 +62,7 @@ class MailTemplate extends ActiveRecord
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 'value' => date('Y-m-d H:i:s'),
             ],

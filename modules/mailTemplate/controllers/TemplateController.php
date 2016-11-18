@@ -5,6 +5,7 @@ namespace app\modules\mailTemplate\controllers;
 use Yii;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\mailTemplate\models\SearchMailTemplate;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,21 @@ class TemplateController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['?', '@']
+                    ],
+                ]
+            ]
         ];
     }
 
@@ -56,25 +72,6 @@ class TemplateController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Creates a new MailTemplate model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new MailTemplate();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-
     }
 
     /**
