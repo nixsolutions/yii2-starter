@@ -1,6 +1,8 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$routes = require(__DIR__ . '/routes.php');
+$routesMailTemplate = require(dirname(__DIR__) . '/modules/mailTemplate/config/routes.php');
 
 $config = [
     'id' => 'basic',
@@ -41,30 +43,38 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => array_merge($routes, $routesMailTemplate),
+        ],
+
+        'i18n' => [
+            'translations' => [
+                'mailTemplate' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
             ],
         ],
-        */
+
+    ],
+    'modules' => [
+        'mailTemplate' => [
+            'class' => 'app\modules\mailTemplate\MailTemplate',
+        ],
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        'allowedIPs' => ['*'],
-    ];
-
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['*'],
+        'allowedIPs' => ['192.168.10.1'],
     ];
 }
 
