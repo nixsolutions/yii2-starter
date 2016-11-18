@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'name',
             'subject',
+            'key',
             'created_at:datetime',
             [
                 'label' => \Yii::t('mailTemplate', 'Body'),

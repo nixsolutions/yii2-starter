@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $body
+ * @property string $key
  * @property string $name
  * @property string $created_at
  * @property string $subject
@@ -35,7 +36,8 @@ class MailTemplate extends ActiveRecord
             [['name',], 'required'],
             [['created_at'], 'safe'],
             [['name'], 'string', 'max' => 250],
-            [['subject'], 'string', 'max' => 255],
+            [['key', 'subject'], 'string', 'max' => 255],
+            [['key'], 'unique']
         ];
     }
 
@@ -46,6 +48,7 @@ class MailTemplate extends ActiveRecord
     {
         return [
             'id' => Yii::t('mailTemplate', 'ID'),
+            'key' => Yii::t('mailTemplate', 'Key'),
             'body' => Yii::t('mailTemplate', 'Body'),
             'name' => Yii::t('mailTemplate', 'Name'),
             'created_at' => Yii::t('mailTemplate', 'Created At'),
@@ -64,12 +67,5 @@ class MailTemplate extends ActiveRecord
                 'value' => date('Y-m-d H:i:s'),
             ],
         ];
-    }
-
-    public function getHtmlBody()
-    {
-        ob_start();
-        echo $this->body;
-        return ob_get_clean();
     }
 }

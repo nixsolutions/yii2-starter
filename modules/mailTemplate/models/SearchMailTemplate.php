@@ -19,7 +19,7 @@ class SearchMailTemplate extends MailTemplate
     {
         return [
             [['id'], 'integer'],
-            [['body', 'name', 'created_at', 'subject'], 'safe'],
+            [['key', 'body', 'name', 'created_at', 'subject'], 'safe'],
         ];
     }
 
@@ -63,7 +63,8 @@ class SearchMailTemplate extends MailTemplate
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'body', $this->body])
+        $query->andFilterWhere(['like', 'key', $this->key])
+            ->andFilterWhere(['like', 'body', $this->body])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'subject', $this->subject]);
 
