@@ -4,6 +4,7 @@ namespace app\modules\mailTemplate\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -67,5 +68,16 @@ class MailTemplate extends ActiveRecord
                 'value' => date('Y-m-d H:i:s'),
             ],
         ];
+    }
+
+    /**
+     * Find template by key
+     *
+     * @param $key
+     * @return array|null|ActiveRecord
+     */
+    public static function findByKey($key)
+    {
+        return static::find()->where(['key' => $key])->one();
     }
 }
