@@ -31,9 +31,10 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
-            [['firstName', 'lastName', 'email', 'verifyCode'], 'string', 'max' => 64],
             [['firstName', 'lastName', 'password', 'passwordRepeat', 'email', 'verifyCode'], 'required'],
             ['email', 'email'],
+            [['email', 'verifyCode'], 'string'],
+            [['firstName', 'lastName'], 'string', 'max' => 64],
             ['password', 'string', 'min' => 8, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
             ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha'],
@@ -62,7 +63,6 @@ class RegistrationForm extends Model
         $user->create($this);
 
         $hash = new Hash();
-
         if ($hashKey = $hash->create($user->id)) {
             return [
                 'user_id' => $user->id,

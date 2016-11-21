@@ -31,6 +31,7 @@ class AuthController extends Controller
             ],
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -55,7 +56,7 @@ class AuthController extends Controller
         $registrationForm = new RegistrationForm();
 
         if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
-           $registrationForm->register();
+            $registrationForm->register();
             Yii::$app->session->setFlash('confirmRegistration');
             return $this->refresh();
         }

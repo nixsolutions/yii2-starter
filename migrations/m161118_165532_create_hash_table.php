@@ -14,7 +14,7 @@ class m161118_165532_create_hash_table extends Migration
     {
         $this->createTable('hash', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer(),
+            'user_id' => $this->integer()->unique(),
             'hash' => $this->string(),
             'type' => "ENUM('register','recover') DEFAULT 'register'"
         ]);
