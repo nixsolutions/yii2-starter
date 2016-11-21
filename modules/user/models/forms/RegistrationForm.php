@@ -8,6 +8,7 @@
 
 namespace app\modules\user\models\forms;
 
+use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
 use yii\base\Model;
@@ -32,8 +33,9 @@ class RegistrationForm extends Model
     {
         return [
             [['firstName', 'lastName', 'password', 'passwordRepeat', 'email', 'verifyCode'], 'required'],
-            ['passwordRepeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match"],
-            ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha',],
+            ['email', 'email'],
+            ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha'],
         ];
     }
 
@@ -47,11 +49,34 @@ class RegistrationForm extends Model
         ];
     }
 
+
     public function register()
     {
-        if ($this->validate()) {
-            $user = new User();
-            return $user->create($this);
+        $user = new User();
+        $user->create($this);
+
+        $hash = new Hash();
+
+        if ($hashKey = $hash->create($user->id)) {
+            return [
+                'user_id' => $user->id,
+                'hash' => $hashKey,
+            ];
         }
+        return false;
+    }
+
+    /**
+     * @param $hashData
+     * @return bool
+     */
+    public function confirm($hashData)
+    {
+        $url = Yii::$app->urlManager->createAbsoluteUrl(['auth/confirm',
+            'user_id' => $hashData['user_id'],
+            'hash' => $hashData['hash']
+        ]);
+
+        return true;
     }
 }

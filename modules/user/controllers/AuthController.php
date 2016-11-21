@@ -40,7 +40,10 @@ class AuthController extends Controller
         $registrationForm = new RegistrationForm();
 
         if ($registrationForm->load(Yii::$app->request->post())) {
-            $registrationForm->register();
+            if ($registrationForm->register()) {
+                $registrationForm->confirm($registrationForm->register());
+                return $this->refresh();
+            }
         }
 
         return $this->render('@app/views/site/registration', [

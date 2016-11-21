@@ -3,6 +3,7 @@
 namespace app\modules\user\models;
 
 use Yii;
+use yii\base\Security;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -151,7 +152,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->first_name = $userData->firstName;
         $this->last_name = $userData->lastName;
         $this->email = $userData->email;
-        $this->password = $userData->password;
+        $this->password = Yii::$app->security->generatePasswordHash($userData->password);
         $this->auth_key = Yii::$app->security->generateRandomString();
 
         $this->save();
