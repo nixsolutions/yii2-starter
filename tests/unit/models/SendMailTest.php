@@ -2,7 +2,6 @@
 
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
-use app\modules\mailTemplate\models\Placeholders;
 
 class SendMailTest extends \Codeception\Test\Unit
 {
@@ -24,13 +23,11 @@ class SendMailTest extends \Codeception\Test\Unit
         $mail = new Mail();
         $mail->attributes = [
             'template' => 'some string',
-            'placeholders' => 'some string',
         ];
         $this->assertFalse($mail->validate());
 
         $mail->attributes = [
             'template' => new MailTemplate(),
-            'placeholders' => new Placeholders(),
         ];
         $this->assertTrue($mail->validate());
     }
@@ -46,15 +43,14 @@ class SendMailTest extends \Codeception\Test\Unit
             ->method('validate')
             ->will($this->returnValue(true));
 
-        $this->model->attributes = [
-            'placeholders' => new Placeholders([
-                'user' => 'vasia',
-                'data' => '21.03.2018',
-                'link' => 'https://www.google.com.ua',
-                'password' => 'qwerty',
-            ]),
-            'template' => MailTemplate::findByKey('LOGIN'),
-        ];
+        $template = MailTemplate::findByKey('LOGIN');
+        $template->replacePlaceholders([
+            'user' => 'vasia',
+            'data' => '21.03.2018',
+            'link' => 'https://www.google.com.ua',
+            'password' => 'qwerty',
+        ]);
+        $this->model->template = $template;
 
         expect_that($this->model->sendTo('admin@example.com'));
 
