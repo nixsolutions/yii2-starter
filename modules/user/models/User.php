@@ -3,7 +3,6 @@
 namespace app\modules\user\models;
 
 use Yii;
-use yii\base\Security;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
