@@ -10,7 +10,6 @@ namespace app\modules\user\models\forms;
 
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
-use Yii;
 use yii\base\Model;
 
 /**
@@ -64,19 +63,5 @@ class RegistrationForm extends Model
             ];
         }
         return false;
-    }
-
-    /**
-     * @param $hashData
-     * @return bool
-     */
-    public function confirm($hashData)
-    {
-        $url = Yii::$app->urlManager->createAbsoluteUrl(['auth/confirm',
-            'user_id' => $hashData['user_id'],
-            'hash' => $hashData['hash']
-        ]);
-
-        return true;
     }
 }

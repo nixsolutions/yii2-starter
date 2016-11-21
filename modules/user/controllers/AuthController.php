@@ -28,10 +28,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Renders the index view for the module
-     * @return string
+     * @return string|\yii\web\Response
      */
-    public function actionIndex()
+    public function actionRegistration()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -39,14 +38,11 @@ class AuthController extends Controller
 
         $registrationForm = new RegistrationForm();
 
-        if ($registrationForm->load(Yii::$app->request->post())) {
-            if ($registrationForm->register()) {
-                $registrationForm->confirm($registrationForm->register());
-                return $this->refresh();
-            }
+        if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
+           $registrationForm->register();
         }
 
-        return $this->render('@app/views/site/registration', [
+        return $this->render('registration', [
             'model' => $registrationForm,
         ]);
     }
