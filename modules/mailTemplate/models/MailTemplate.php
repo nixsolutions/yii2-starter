@@ -4,7 +4,6 @@ namespace app\modules\mailTemplate\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -19,6 +18,9 @@ use yii\db\ActiveRecord;
  */
 class MailTemplate extends ActiveRecord
 {
+    /** @var array Placeholders list */
+    protected $placeholdersList = ['user', 'data', 'link', 'password'];
+
     /**
      * @inheritdoc
      */
@@ -74,10 +76,33 @@ class MailTemplate extends ActiveRecord
      * Find template by key
      *
      * @param $key
-     * @return array|null|ActiveRecord
+     * @return $this|null
      */
     public static function findByKey($key)
     {
         return static::find()->where(['key' => $key])->one();
+    }
+
+    /**
+     * Replace placeholders in template to concrete data
+     *
+     * @param $placeholders array
+     * @return string
+     */
+    public function replacePlaceholders(array $placeholders)
+    {
+        foreach ($this->getPlaceholdersList() as $placeholderName) {
+            $this->body = str_replace("{{$placeholderName}}", $placeholders[$placeholderName], $this->body);
+        }
+    }
+
+    /**
+     * Return array with placeholders name
+     *
+     * @return array
+     */
+    protected function getPlaceholdersList()
+    {
+        return (array)$this->placeholdersList;
     }
 }

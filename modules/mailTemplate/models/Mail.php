@@ -7,26 +7,22 @@ use yii\base\Model;
 
 class Mail extends Model
 {
-    public $email;
-
-    /** @var Placeholders */
-    public $placeholders = null;
-
     /** @var MailTemplate */
     public $template = null;
 
+    /** @var string */
+    public $fromName = 'Yii2 application';
+
+    /** @var string */
+    public $fromEmail = 'admin@example.com';
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['placeholders', 'template'], 'required'],
-            ['placeholders', function ($attribute, $params) {
-                if (!$this->$attribute instanceof \app\modules\mailTemplate\models\Placeholders) {
-                    $this->addError(
-                        $attribute,
-                        "$attribute must be instance of \\app\\modules\\mailTemplate\\models\\Placeholders"
-                    );
-                }
-            }],
+            [['template'], 'required'],
             ['template', function ($attribute, $params) {
                 if (!$this->$attribute instanceof \app\modules\mailTemplate\models\MailTemplate) {
                     $this->addError(
@@ -46,30 +42,19 @@ class Mail extends Model
      */
     public function sendTo($emailTo)
     {
-        if ($this->validate()) {
+        if (!$this->validate()) {
+            return false;
+        }
+        try {
             Yii::$app->mailer->compose()
                 ->setTo($emailTo)
-                ->setFrom([Yii::$app->params['adminEmail'] => 'Yii2 starter'])
+                ->setFrom([$this->fromEmail => $this->fromName])
                 ->setSubject($this->template->subject)
-                ->setHtmlBody($this->getBody())
+                ->setHtmlBody($this->template->body)
                 ->send();
-
             return true;
+        } catch (\Exception $e) {
+            return false;
         }
-        return false;
-    }
-
-    /**
-     * Replace placeholders in template to concrete data
-     *
-     * @return string
-     */
-    private function getBody()
-    {
-        $body = $this->template->body;
-        foreach ($this->placeholders as $name => $placeholder) {
-            $body = str_replace("{{$name}}", $placeholder, $body);
-        }
-        return $body;
     }
 }
