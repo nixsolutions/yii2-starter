@@ -41,8 +41,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['status'], 'string'],
+            ['email', 'email'],
             [['created_at', 'last_login_at'], 'safe'],
-            [['first_name', 'last_name', 'email', 'password', 'avatar', 'auth_key'], 'string', 'max' => 255],
+            [['auth_key', 'avatar', 'email'], 'string'],
+            [['first_name', 'last_name'], 'string', 'max' => 64],
+            ['password', 'string', 'max' => 32]
         ];
     }
 
@@ -60,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
             'avatar' => 'Avatar',
             'status' => 'Status',
             'created_at' => 'Registration time',
-            'last_login_at' => 'Last login time',
+            'last_login_at' => 'Last sign in',
         ];
     }
 
@@ -128,7 +131,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return $this->password === Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
