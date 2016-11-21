@@ -12,6 +12,8 @@ modules:
     config:
         Yii2:
             configFile: 'config/test.php'
+        Db:
+            dump: tests/_data/dump.sql
 
 # To enable code coverage:
 #coverage:

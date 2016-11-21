@@ -51,7 +51,7 @@ class MailTemplate extends ActiveRecord
             'key' => Yii::t('mailTemplate', 'Key'),
             'body' => Yii::t('mailTemplate', 'Body'),
             'name' => Yii::t('mailTemplate', 'Name'),
-            'updated_at' => Yii::t('mailTemplate', 'Created At'),
+            'updated_at' => Yii::t('mailTemplate', 'Updated At'),
             'subject' => Yii::t('mailTemplate', 'Subject'),
         ];
     }
