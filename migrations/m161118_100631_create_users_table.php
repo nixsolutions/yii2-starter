@@ -16,7 +16,7 @@ class m161118_100631_create_users_table extends Migration
             'id' => $this->primaryKey(),
             'first_name' => $this->string(),
             'last_name' => $this->string(),
-            'email' => $this->string()->unique(),
+            'email' => $this->string(),
             'password' => $this->string(),
             'avatar' => $this->string(),
             'status' => "ENUM('created', 'active', 'blocked') DEFAULT 'created'",
