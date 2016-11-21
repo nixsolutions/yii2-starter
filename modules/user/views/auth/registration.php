@@ -13,37 +13,47 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-register">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields for registration:</p>
+    <?php if (Yii::$app->session->hasFlash('confirmRegistration')): ?>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'registration-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+        <div class="alert alert-success">
+            Please, check your email to confirm registration.
+        </div>
 
-    <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]) ?>
+    <?php else: ?>
 
-    <?= $form->field($model, 'lastName')->textInput() ?>
+        <p>Please fill out the following fields for registration:</p>
 
-    <?= $form->field($model, 'email')->textInput() ?>
+        <?php $form = ActiveForm::begin([
+            'id' => 'registration-form',
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            ],
+        ]); ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]) ?>
 
-    <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>
+        <?= $form->field($model, 'lastName')->textInput() ?>
 
-    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), ['captchaAction' => 'auth/captcha',
+        <?= $form->field($model, 'email')->textInput() ?>
+
+        <?= $form->field($model, 'password')->passwordInput() ?>
+
+        <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>
+
+        <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), ['captchaAction' => 'auth/captcha',
         'template' => '<div class="row"><div class="col-lg-6">{image}</div><div class="col-lg-6">{input}</div></div>',
     ]) ?>
 
 
-    <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+        <div class="form-group">
+            <div class="col-lg-offset-1 col-lg-11">
+                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+            </div>
         </div>
-    </div>
 
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
+
+    <?php endif; ?>
 </div>

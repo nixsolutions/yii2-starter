@@ -31,8 +31,10 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
+            [['firstName', 'lastName', 'email', 'verifyCode'], 'string', 'max' => 64],
             [['firstName', 'lastName', 'password', 'passwordRepeat', 'email', 'verifyCode'], 'required'],
             ['email', 'email'],
+            ['password', 'string', 'min' => 8, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
             ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha'],
         ];
@@ -44,6 +46,11 @@ class RegistrationForm extends Model
     public function attributeLabels()
     {
         return [
+            'firstName' => 'First name',
+            'lastName' => 'Last name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'passwordRepeat' => 'Repeat password',
             'verifyCode' => 'Verification Code',
         ];
     }

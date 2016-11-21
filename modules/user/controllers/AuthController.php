@@ -3,6 +3,7 @@
 namespace app\modules\user\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use app\modules\user\models\forms\RegistrationForm;
 
@@ -11,6 +12,25 @@ use app\modules\user\models\forms\RegistrationForm;
  */
 class AuthController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['registration'],
+                'rules' => [
+                    [
+                        'actions' => ['registration'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -32,16 +52,13 @@ class AuthController extends Controller
      */
     public function actionRegistration()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $registrationForm = new RegistrationForm();
 
         if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
            $registrationForm->register();
+            Yii::$app->session->setFlash('confirmRegistration');
+            return $this->refresh();
         }
-
         return $this->render('registration', [
             'model' => $registrationForm,
         ]);
