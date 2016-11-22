@@ -21,8 +21,17 @@ use yii\widgets\ActiveForm;
 
     <h4><?= Yii::t('mailTemplate', 'Example placeholders {{user}} {{date}} {{link}} {{password}}') ?></h4>
     <?= $form->field($model, 'body')->widget(CKEditor::className(), [
-        'options' => ['rows' => 6],
-        'preset' => 'full'
+        'options' => ['rows' => 8],
+        'preset' => 'basic',
+        'clientOptions' => [
+            'height' => 300,
+            'toolbarGroups' => [
+                ['name' => 'document', 'groups' => ['mode']],
+                ['name' => 'basicstyles', 'groups' => ['cleanup']],
+            ],
+            'resize_enabled' => true,
+        ],
+
     ]) ?>
 
     <div class="form-group">
