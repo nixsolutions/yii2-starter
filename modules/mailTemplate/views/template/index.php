@@ -26,20 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'name',
-                'headerOptions' => ['width' => '130'],
+                'headerOptions' => ['width' => '400'],
             ],
             [
                 'attribute' => 'key',
-                'headerOptions' => ['width' => '130'],
+                'headerOptions' => ['width' => '300'],
             ],
             [
                 'attribute' => 'subject',
-                'headerOptions' => ['width' => '300'],
+                'headerOptions' => ['width' => '400'],
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('mailTemplate', 'Actions'),
-                'headerOptions' => ['width' => '65'],
+                'headerOptions' => ['width' => '35'],
+                'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view}  {update}',
             ],
         ],
