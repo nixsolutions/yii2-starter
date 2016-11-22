@@ -5,6 +5,26 @@ namespace app\modules\mailTemplate\models;
 use Yii;
 use yii\base\Model;
 
+/**
+ * Class Mail
+ *
+ * How to use
+ *
+    if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
+        throw new \Exception('Template not found in database');
+    }
+    $mailTemplate->replacePlaceholders([
+        'user' => 'vasia',
+        'link' => 'https://www.google.com.ua',
+        'password' => 'qwerty
+    ]);
+
+    $sendMail = new Mail();
+    $sendMail->setTemplate($mailTemplate);
+    $sendMail->sendTo('goodeveningproj@gmail.com');
+ *
+ * @package app\modules\mailTemplate\models
+ */
 class Mail extends Model
 {
     /** @var MailTemplate */
