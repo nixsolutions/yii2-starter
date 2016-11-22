@@ -34,7 +34,7 @@ class SendMailTest extends \Codeception\Test\Unit
 
     public function testSendingEmail()
     {
-        /** @var ContactForm $model */
+        /** @var Mail $model */
         $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')
             ->setMethods(['validate'])
             ->getMock();
@@ -43,7 +43,7 @@ class SendMailTest extends \Codeception\Test\Unit
             ->method('validate')
             ->will($this->returnValue(true));
 
-        $template = MailTemplate::findByKey('LOGIN');
+        $template = MailTemplate::findByKey('REGISTER');
         $template->replacePlaceholders([
             'user' => 'vasia',
             'data' => '21.03.2018',
