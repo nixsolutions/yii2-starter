@@ -26,15 +26,17 @@ class SendMailTest extends \Codeception\Test\Unit
         });
     }
 
-    public function testTrySetWrongPlaceholder()
+    public function testTrySetPlaceholderNotExistInTemplate()
     {
         /** @var Mail $model */
-        $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')->getMock();
+        $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')
+            ->setMethods(['validate'])
+            ->getMock();
 
         $template = MailTemplate::findByKey('REGISTER');
-        $this->tester->expectException(\Exception::class, function () use ($template) {
-            $template->replacePlaceholders(['user name' => 'vasia']);
-        });
+        $template->replacePlaceholders(['user name' => 'vasia']);
+        $this->model->setTemplate($template);
+        expect_that($this->model->sendTo('admin@example.com'));
     }
 
     public function testSendingEmail()
@@ -61,7 +63,7 @@ class SendMailTest extends \Codeception\Test\Unit
         expect('valid email is sent', $emailMessage)->isInstanceOf('yii\mail\MessageInterface');
         expect($emailMessage->getTo())->hasKey('admin@example.com');
         expect($emailMessage->getFrom())->hasKey('admin@example.com');
-        expect($emailMessage->getSubject())->equals('test');
+        expect($emailMessage->getSubject())->equals('Test regisret user');
         expect($emailMessage->toString())->contains('Hello vasia');
         expect($emailMessage->toString())->contains('In 21.03.2018');
         expect($emailMessage->toString())->contains('Visit link https://www.google.com.ua');

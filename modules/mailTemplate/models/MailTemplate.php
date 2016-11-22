@@ -18,9 +18,6 @@ use yii\db\ActiveRecord;
  */
 class MailTemplate extends ActiveRecord
 {
-    /** @var array Placeholders list */
-    protected $placeholdersList = ['user', 'data', 'link', 'password'];
-
     /**
      * @inheritdoc
      */
@@ -94,10 +91,7 @@ class MailTemplate extends ActiveRecord
     public function replacePlaceholders(array $placeholders)
     {
         foreach ($placeholders as $placeholderName => $value) {
-            if (!in_array($placeholderName, $this->placeholdersList)) {
-                throw new \Exception("Getting unknown placeholders name: $placeholderName");
-            }
-            $this->body = str_replace("{{$placeholderName}}", $value, $this->body);
+            $this->body = str_replace("{{{$placeholderName}}}", $value, $this->body);
         }
     }
 }
