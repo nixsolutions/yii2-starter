@@ -35,7 +35,7 @@ class RegistrationForm extends Model
             ['email', 'email'],
             [['email', 'verifyCode'], 'string'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
-            ['password', 'string', 'min' => 8, 'max' => 32],
+            ['password', 'string', 'min' => 6, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
             ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha'],
         ];
