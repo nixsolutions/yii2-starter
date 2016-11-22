@@ -20,16 +20,21 @@ class SendMailTest extends \Codeception\Test\Unit
 
     public function testValidation()
     {
-        $mail = new Mail();
-        $mail->attributes = [
-            'template' => 'some string',
-        ];
-        $this->assertFalse($mail->validate());
+        $this->tester->expectException(\Exception::class, function () {
+            $mail = new Mail();
+            $mail->sendTo('admin@example.com');
+        });
+    }
 
-        $mail->attributes = [
-            'template' => new MailTemplate(),
-        ];
-        $this->assertTrue($mail->validate());
+    public function testTrySetWrongPlaceholder()
+    {
+        /** @var Mail $model */
+        $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')->getMock();
+
+        $template = MailTemplate::findByKey('REGISTER');
+        $this->tester->expectException(\Exception::class, function () use ($template) {
+            $template->replacePlaceholders(['user name' => 'vasia']);
+        });
     }
 
     public function testSendingEmail()
@@ -39,10 +44,6 @@ class SendMailTest extends \Codeception\Test\Unit
             ->setMethods(['validate'])
             ->getMock();
 
-        $this->model->expects($this->once())
-            ->method('validate')
-            ->will($this->returnValue(true));
-
         $template = MailTemplate::findByKey('REGISTER');
         $template->replacePlaceholders([
             'user' => 'vasia',
@@ -50,8 +51,7 @@ class SendMailTest extends \Codeception\Test\Unit
             'link' => 'https://www.google.com.ua',
             'password' => 'qwerty',
         ]);
-        $this->model->template = $template;
-
+        $this->model->setTemplate($template);
         expect_that($this->model->sendTo('admin@example.com'));
 
         // using Yii2 module actions to check email was sent

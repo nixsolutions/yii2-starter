@@ -24,6 +24,22 @@ class MailTemplate extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => date('Y-m-d H:i:s'),
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'mail_template';
@@ -38,8 +54,7 @@ class MailTemplate extends ActiveRecord
             [['body'], 'string'],
             [['name',], 'required'],
             [['updated_at'], 'safe'],
-            [['name'], 'string', 'max' => 250],
-            [['key', 'subject'], 'string', 'max' => 255],
+            [['key', 'subject', 'name'], 'string', 'max' => 255],
             [['key'], 'unique']
         ];
     }
@@ -59,19 +74,6 @@ class MailTemplate extends ActiveRecord
         ];
     }
 
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ],
-                'value' => date('Y-m-d H:i:s'),
-            ],
-        ];
-    }
-
     /**
      * Find template by key
      *
@@ -80,29 +82,22 @@ class MailTemplate extends ActiveRecord
      */
     public static function findByKey($key)
     {
-        return static::find()->where(['key' => $key])->one();
+        return static::findOne(['key' => $key]);
     }
 
     /**
      * Replace placeholders in template to concrete data
      *
-     * @param $placeholders array
-     * @return string
+     * @param array $placeholders
+     * @throws \Exception
      */
     public function replacePlaceholders(array $placeholders)
     {
-        foreach ($this->getPlaceholdersList() as $placeholderName) {
-            $this->body = str_replace("{{$placeholderName}}", $placeholders[$placeholderName], $this->body);
+        foreach ($placeholders as $placeholderName => $value) {
+            if (!in_array($placeholderName, $this->placeholdersList)) {
+                throw new \Exception("Getting unknown placeholders name: $placeholderName");
+            }
+            $this->body = str_replace("{{$placeholderName}}", $value, $this->body);
         }
-    }
-
-    /**
-     * Return array with placeholders name
-     *
-     * @return array
-     */
-    protected function getPlaceholdersList()
-    {
-        return (array)$this->placeholdersList;
     }
 }

@@ -8,7 +8,7 @@ use yii\base\Model;
 class Mail extends Model
 {
     /** @var MailTemplate */
-    public $template = null;
+    protected $template = null;
 
     /** @var string */
     public $fromName = 'Yii2 application';
@@ -17,21 +17,13 @@ class Mail extends Model
     public $fromEmail = 'admin@example.com';
 
     /**
-     * @inheritdoc
+     * Set template
+     *
+     * @param MailTemplate $template
      */
-    public function rules()
+    public function setTemplate(MailTemplate $template)
     {
-        return [
-            [['template'], 'required'],
-            ['template', function ($attribute, $params) {
-                if (!$this->$attribute instanceof \app\modules\mailTemplate\models\MailTemplate) {
-                    $this->addError(
-                        $attribute,
-                        "$attribute must be instance of \\app\\modules\\mailTemplate\\models\\MailTemplate"
-                    );
-                }
-            }],
-        ];
+        $this->template = $template;
     }
 
     /**
@@ -39,11 +31,12 @@ class Mail extends Model
      *
      * @param $emailTo
      * @return bool
+     * @throws \Exception
      */
     public function sendTo($emailTo)
     {
-        if (!$this->validate()) {
-            return false;
+        if (null === $this->template) {
+            throw new \Exception('First set template instance of class \app\modules\mailTemplate\models\MailTemplate');
         }
         try {
             Yii::$app->mailer->compose()
