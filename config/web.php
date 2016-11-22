@@ -1,8 +1,10 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-$routes = require(__DIR__ . '/routes.php');
-$routesMailTemplate = require(dirname(__DIR__) . '/modules/mailTemplate/config/routes.php');
+$routes = \yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/routes.php'),
+    require(__DIR__ . '/../modules/mailTemplate/config/routes.php')
+);
 
 $config = [
     'id' => 'basic',
@@ -47,7 +49,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => array_merge($routes, $routesMailTemplate),
+            'rules' => $routes,
         ],
 
         'i18n' => [
