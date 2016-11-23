@@ -14,12 +14,17 @@ return [
         'mailer' => [
             'useFileTransport' => true,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'urlManager' => [
-            'showScriptName' => true,
+            'showScriptName' => false,
+            'enablePrettyUrl' => true,
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-        ],        
+            'identityClass' => 'app\modules\user\models\User',
+            'enableAutoLogin' => true,
+        ],
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
@@ -31,5 +36,9 @@ return [
             */
         ],        
     ],
-    'params' => $params,
+    'params' => $params,'modules' => [
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
+    ],
 ];

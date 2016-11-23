@@ -10,6 +10,7 @@ namespace app\modules\user\models\forms;
 
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -31,13 +32,12 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
-            [['firstName', 'lastName', 'password', 'passwordRepeat', 'email', 'verifyCode'], 'required'],
+            [['firstName', 'lastName', 'password', 'passwordRepeat', 'email'], 'required'],
             ['email', 'email'],
-            [['email', 'verifyCode'], 'string'],
+            ['email', 'string'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
             ['password', 'string', 'min' => 6, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
-            ['verifyCode', 'captcha', 'captchaAction' => 'user/auth/captcha'],
         ];
     }
 
@@ -47,12 +47,11 @@ class RegistrationForm extends Model
     public function attributeLabels()
     {
         return [
-            'firstName' => 'First name',
-            'lastName' => 'Last name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'passwordRepeat' => 'Repeat password',
-            'verifyCode' => 'Verification Code',
+            'firstName' => Yii::t('user', 'First name'),
+            'lastName' => Yii::t('user', 'Last name'),
+            'email' => Yii::t('user', 'Email'),
+            'password' => Yii::t('user', 'Password'),
+            'passwordRepeat' => Yii::t('user', 'Repeat password'),
         ];
     }
 

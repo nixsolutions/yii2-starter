@@ -44,10 +44,6 @@ $this->title = 'Registration';
 
         <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>
 
-        <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), ['captchaAction' => 'auth/captcha',
-        'template' => '<div class="row"><div class="col-lg-6">{image}</div><div class="col-lg-6">{input}</div></div>',
-    ]) ?>
-
 
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-11">
