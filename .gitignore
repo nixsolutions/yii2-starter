@@ -33,3 +33,4 @@ tests/_support/_generated
 .vagrant
 
 vm_build.log
+/config/mailer.php

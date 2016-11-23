@@ -1,16 +1,19 @@
 <?php
 $params = require(__DIR__ . '/params.php');
-$dbParams = require(__DIR__ . '/test_db.php');
+$routes = \yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/routes.php'),
+    require(__DIR__ . '/../modules/mailTemplate/config/routes.php')
+);
 
 /**
  * Application configuration shared by all test types
  */
 return [
     'id' => 'basic-tests',
-    'basePath' => dirname(__DIR__),    
+    'basePath' => dirname(__DIR__),
     'language' => 'en-US',
     'components' => [
-        'db' => $dbParams,
+        'db' => require(__DIR__ . '/test_db.php'),
         'mailer' => [
             'useFileTransport' => true,
         ],
@@ -18,8 +21,9 @@ return [
             'class' => 'yii\rbac\DbManager',
         ],
         'urlManager' => [
-            'showScriptName' => false,
             'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => $routes,
         ],
         'user' => [
             'identityClass' => 'app\modules\user\models\User',
@@ -34,11 +38,24 @@ return [
                 'domain' => 'localhost',
             ],
             */
-        ],        
+        ],
+        'i18n' => [
+            'translations' => [
+                'mailTemplate' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
+            ],
+        ],
     ],
-    'params' => $params,'modules' => [
+    'modules' => [
         'user' => [
             'class' => 'app\modules\user\Module',
         ],
+        'mailTemplate' => [
+            'class' => 'app\modules\mailTemplate\MailTemplate',
+        ],
     ],
+    'params' => $params,
 ];

@@ -7,6 +7,7 @@ class m161122_093935_create_admin_user extends Migration
     public function up()
     {
         $this->insert('users', [
+            'id' => '1',
             'first_name' => 'admin',
             'last_name' => 'admin',
             'email' => 'admin@admin.com',

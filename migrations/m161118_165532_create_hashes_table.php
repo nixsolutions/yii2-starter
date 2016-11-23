@@ -19,7 +19,7 @@ class m161118_165532_create_hashes_table extends Migration
             'type' => "ENUM('register','recover') DEFAULT 'register'"
         ]);
 
-        $this->addForeignKey('fk_user_id', 'hashes', 'user_id', 'users', 'id', 'cascade', 'cascade');
+        $this->addForeignKey('fk_user_id_hash', 'hashes', 'user_id', 'users', 'id', 'cascade', 'cascade');
     }
 
     /**
