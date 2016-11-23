@@ -4,6 +4,7 @@ namespace app\modules\mailTemplate\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class Mail
@@ -27,15 +28,6 @@ use yii\base\Model;
  */
 class Mail extends Model
 {
-    /** @var MailTemplate */
-    protected $template = null;
-
-    /** @var string */
-    public $fromName = 'Yii2 application';
-
-    /** @var string */
-    public $fromEmail = 'admin@example.com';
-
     /**
      * Set template
      *
@@ -58,10 +50,12 @@ class Mail extends Model
         if (null === $this->template) {
             throw new \Exception('First set template instance of class \app\modules\mailTemplate\models\MailTemplate');
         }
+        $fromName = ArrayHelper::getValue(Yii::$app->params, 'mail.fromName', 'Yii starter');
+        $fromEmail = ArrayHelper::getValue(Yii::$app->params, 'mail.fromEmail', 'admin@example.com');
         try {
             Yii::$app->mailer->compose()
                 ->setTo($emailTo)
-                ->setFrom([$this->fromEmail => $this->fromName])
+                ->setFrom([$fromEmail => $fromName])
                 ->setSubject($this->template->subject)
                 ->setHtmlBody($this->template->body)
                 ->send();

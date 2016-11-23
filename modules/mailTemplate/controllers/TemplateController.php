@@ -2,6 +2,7 @@
 
 namespace app\modules\mailTemplate\controllers;
 
+use app\modules\mailTemplate\models\Mail;
 use Yii;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\mailTemplate\models\SearchMailTemplate;
@@ -37,12 +38,32 @@ class TemplateController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view'],
+                        'actions' => ['index', 'view' ,'test'],
                         'roles' => ['?', '@']
                     ],
                 ]
             ]
         ];
+    }
+
+    public function actionTest()
+    {
+        if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
+            throw new \Exception('Template not found in database');
+        }
+
+        $mailTemplate->replacePlaceholders([
+            'user' => 'vasia',
+            'data' => '21.03.2018',
+            'link' => 'https://www.google.com.ua',
+            'password' => 'qwerty',
+            'password2' => '123456',
+            'password3' => '123456',
+        ]);
+
+        $sendMail = new Mail();
+        $sendMail->setTemplate($mailTemplate);
+        $sendMail->sendTo('goodeveningproj@gmail.com');
     }
 
     /**
