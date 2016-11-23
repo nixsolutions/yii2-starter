@@ -2,6 +2,7 @@
 
 namespace app\modules\mailTemplate\models;
 
+use app\modules\mailTemplate\MailTemplate;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -28,6 +29,11 @@ use yii\helpers\ArrayHelper;
  */
 class Mail extends Model
 {
+    /**
+     * @var MailTemplate
+     */
+    protected $template = null;
+
     /**
      * Set template
      *

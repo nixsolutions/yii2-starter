@@ -61,6 +61,9 @@ $config = [
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\MailTemplate',
         ],
+        'users' => [
+            'class' => 'app\modules\user\Module',
+        ],
     ],
     'params' => $params,
 ];
