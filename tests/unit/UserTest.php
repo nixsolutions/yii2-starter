@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\user\models\forms\RegistrationForm;
 use app\modules\user\models\User;
 
 class UserTest extends \Codeception\Test\Unit
@@ -9,16 +10,16 @@ class UserTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    public function createUser()
+    public function testCreateUser()
     {
         $user = new User();
-        $testData = [
-            'first_name' => 'test',
-            'last_name' => 'test',
-            'password' => '123456',
-            'email' => 'test@test.com',
-        ];
-        $user->create($testData);
-        $this->assertNotEmpty($user->create($testData));
+        $form = new RegistrationForm();
+        $form->firstName = 'test';
+        $form->lastName = 'test';
+        $form->email = 'test@test.com';
+        $form->password = '123456';
+
+        $user->create($form);
+        $this->assertNotEmpty($user->create($form));
     }
 }

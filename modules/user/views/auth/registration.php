@@ -13,12 +13,12 @@ $this->registerCssFile('@web/css/user-module.css', ['depends' => [BootstrapAsset
 $this->title = 'Registration';
 ?>
 <div class="site-register">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title); ?></h1>
 
     <?php if (Yii::$app->session->hasFlash('confirmRegistration')): ?>
 
         <div class="alert alert-success">
-            Please, check your email to confirm registration.
+            <?= Yii::t('user', 'Please, check your email to confirm registration.'); ?>
         </div>
 
     <?php else: ?>
@@ -34,20 +34,20 @@ $this->title = 'Registration';
             ],
         ]); ?>
 
-        <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]); ?>
 
-        <?= $form->field($model, 'lastName')->textInput() ?>
+        <?= $form->field($model, 'lastName')->textInput(); ?>
 
-        <?= $form->field($model, 'email')->textInput() ?>
+        <?= $form->field($model, 'email')->textInput(); ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(); ?>
 
-        <?= $form->field($model, 'passwordRepeat')->passwordInput() ?>
+        <?= $form->field($model, 'passwordRepeat')->passwordInput(); ?>
 
 
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-11">
-                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+                <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
             </div>
         </div>
 
