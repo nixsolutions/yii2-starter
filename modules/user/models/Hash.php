@@ -20,7 +20,7 @@ class Hash extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'hash';
+        return 'hashes';
     }
 
     /**
