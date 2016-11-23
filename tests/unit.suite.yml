@@ -9,3 +9,8 @@ modules:
       - Asserts
       - Yii2:
             part: [orm, email]
+      - Db:
+            dsn: 'mysql:host=localhost;dbname=yii_starter_tests'
+            user: 'root'
+            password: ''
+            dump: tests/_data/dump.sql

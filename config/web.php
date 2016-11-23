@@ -1,6 +1,10 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$routes = \yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/routes.php'),
+    require(__DIR__ . '/../modules/mailTemplate/config/routes.php')
+);
 
 $config = [
     'id' => 'basic',
@@ -24,13 +28,7 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
+        'mailer' => require(__DIR__ . '/mailer.php'),
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -41,14 +39,31 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => $routes,
+        ],
+
+        'i18n' => [
+            'translations' => [
+                'mailTemplate' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
             ],
         ],
-        */
+
+    ],
+    'modules' => [
+        'mailTemplate' => [
+            'class' => 'app\modules\mailTemplate\MailTemplate',
+        ],
+        'users' => [
+            'class' => 'app\modules\user\Module',
+        ],
     ],
     'params' => $params,
 ];
@@ -58,13 +73,12 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['*'],
+        'allowedIPs' => ['192.168.10.1'],
     ];
 }
 
