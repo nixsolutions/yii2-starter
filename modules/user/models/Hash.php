@@ -49,6 +49,10 @@ class Hash extends ActiveRecord
         ];
     }
 
+    /**
+     * @param $user_id
+     * @return string
+     */
     public function create($user_id)
     {
         $this->user_id = $user_id;

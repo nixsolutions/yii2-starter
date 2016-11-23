@@ -8,8 +8,6 @@
 
 namespace app\modules\user\models\forms;
 
-use app\modules\user\models\Hash;
-use app\modules\user\models\User;
 use Yii;
 use yii\base\Model;
 
