@@ -33,37 +33,17 @@ class TemplateController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update',],
+                        'actions' => ['update'],
                         'roles' => ['@']
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view' ,'test'],
+                        'actions' => ['index', 'view'],
                         'roles' => ['?', '@']
                     ],
                 ]
             ]
         ];
-    }
-
-    public function actionTest()
-    {
-        if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
-            throw new \Exception('Template not found in database');
-        }
-
-        $mailTemplate->replacePlaceholders([
-            'user' => 'vasia',
-            'data' => '21.03.2018',
-            'link' => 'https://www.google.com.ua',
-            'password' => 'qwerty',
-            'password2' => '123456',
-            'password3' => '123456',
-        ]);
-
-        $sendMail = new Mail();
-        $sendMail->setTemplate($mailTemplate);
-        $sendMail->sendTo('goodeveningproj@gmail.com');
     }
 
     /**

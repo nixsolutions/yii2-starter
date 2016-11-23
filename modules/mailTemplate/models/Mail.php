@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
  * How to use
  *
     if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
-        throw new \Exception('Template not found in database');
+        throw new NotFoundHttpException('Template not found in database');
     }
     $mailTemplate->replacePlaceholders([
         'user' => 'vasia',
