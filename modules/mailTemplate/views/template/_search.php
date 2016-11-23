@@ -15,21 +15,21 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id'); ?>
 
-    <?= $form->field($model, 'body') ?>
+    <?= $form->field($model, 'body'); ?>
 
-    <?= $form->field($model, 'key') ?>
+    <?= $form->field($model, 'key'); ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'name'); ?>
 
-    <?= $form->field($model, 'updated_at') ?>
+    <?= $form->field($model, 'updated_at'); ?>
 
-    <?= $form->field($model, 'subject') ?>
+    <?= $form->field($model, 'subject'); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']); ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

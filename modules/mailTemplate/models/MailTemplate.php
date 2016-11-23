@@ -86,7 +86,6 @@ class MailTemplate extends ActiveRecord
      * Replace placeholders in template to concrete data
      *
      * @param array $placeholders
-     * @throws \Exception
      */
     public function replacePlaceholders(array $placeholders)
     {

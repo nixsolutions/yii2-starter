@@ -12,10 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mail-template-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title); ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
     </p>
 
     <?= DetailView::widget([
@@ -26,12 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'key',
             'updated_at:datetime',
             [
-                'label' => \Yii::t('mailTemplate', 'Body'),
+                'label' => Yii::t('mailTemplate', 'Body'),
                 'attribute' => 'body',
                 'format' => 'raw',
                 'value' => $model->body,
             ],
         ],
-    ]) ?>
+    ]); ?>
 
 </div>
