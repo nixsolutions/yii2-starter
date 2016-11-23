@@ -165,4 +165,23 @@ class User extends ActiveRecord implements IdentityInterface
 
         return $this;
     }
+
+    /**
+     * @param $formData
+     * @return array|bool
+     */
+    public function register($formData)
+    {
+        $user = new User();
+        $user->create($formData);
+
+        $hash = new Hash();
+        if ($hashKey = $hash->create($user->id)) {
+            return [
+                'user_id' => $user->id,
+                'hash' => $hashKey,
+            ];
+        }
+        return false;
+    }
 }

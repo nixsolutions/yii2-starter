@@ -54,20 +54,4 @@ class RegistrationForm extends Model
             'passwordRepeat' => Yii::t('user', 'Repeat password'),
         ];
     }
-
-
-    public function register()
-    {
-        $user = new User();
-        $user->create($this);
-
-        $hash = new Hash();
-        if ($hashKey = $hash->create($user->id)) {
-            return [
-                'user_id' => $user->id,
-                'hash' => $hashKey,
-            ];
-        }
-        return false;
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\user\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -52,7 +53,8 @@ class AuthController extends Controller
         $registrationForm = new RegistrationForm();
 
         if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
-            $registrationForm->register();
+            $user = new User();
+            $user->register($registrationForm);
             Yii::$app->session->setFlash('confirmRegistration');
             return $this->refresh();
         }
