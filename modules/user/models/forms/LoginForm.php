@@ -33,6 +33,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['email', 'email']
         ];
     }
 
@@ -47,7 +48,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword(Yii::$app->security->generatePasswordHash($this->password))) {
+            if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect email or password.');
             }
         }
@@ -60,13 +61,17 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $user = $this->getUser();
+            $user->last_login_at = date('Y-m-d H:i:s');
+            if (Yii::$app->user->login($user, $this->rememberMe ? 3600*24*7 : 0)) {
+                return $user->update();
+            }
         }
         return false;
     }
 
     /**
-     * Finds user by [[email]]
+     * Finds user by email
      *
      * @return User|null
      */
@@ -75,7 +80,6 @@ class LoginForm extends Model
         if ($this->_user === false) {
             $this->_user = User::findByEmail($this->email);
         }
-
         return $this->_user;
     }
 }

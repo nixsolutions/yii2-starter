@@ -4,6 +4,7 @@ namespace app\modules\user\controllers;
 
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
+use app\modules\user\models\forms\LoginForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
@@ -102,5 +103,26 @@ class AuthController extends Controller
             }
         }
         return false;
+    }
+
+    /**
+     * Login action.
+     *
+     * @return string
+     */
+    public function actionLogin()
+    {
+
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 }
