@@ -20,9 +20,22 @@ use yii\web\IdentityInterface;
  * @property string $created_at
  * @property string $last_login_at
  * @property string $auth_key
+ *
+ * @property AuthAssignment[] $authAssignments
+ * @property AuthItem[] $itemNames
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    /**
+     * Role user
+     */
+    const ROLE_USER = 'user';
+
+    /**
+     * Role admin
+     */
+    const ROLE_ADMIN = 'admin';
+
     public $rememberMe;
 
     /**
@@ -80,6 +93,22 @@ class User extends ActiveRecord implements IdentityInterface
                 'value' => date('Y-m-d H:i:s')
             ],
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthAssignments()
+    {
+        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemNames()
+    {
+        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'id']);
     }
 
     /**
