@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\web\View;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -37,8 +38,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
+            ['label' => 'Users', 'url' => ['/users/user/index']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -55,6 +57,14 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+        <?php
+        $this->registerJs("$('div .alert').animate({opacity: 1.0}, 4000).fadeOut('slow');", View::POS_END, 'my-options');
+        foreach (Yii::$app->session->getAllFlashes() as $key => $message): ?>
+            <div class="alert alert-<?= $key; ?>">
+                <strong><?= ucfirst($key) ?>!</strong> <?= $message ?>
+            </div>
+        <?php endforeach; ?>
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
