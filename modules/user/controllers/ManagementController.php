@@ -13,9 +13,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * UserController implements the CRU actions for Users model.
+ * ManagementController implements the CRU actions for Users model.
  */
-class UserController extends Controller
+class ManagementController extends Controller
 {
     /**
      * @inheritdoc
@@ -66,36 +66,6 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new Users model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     *
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $user = new User();
-        $authAssignmentModel = new AuthAssignment;
-        $roles = ArrayHelper::map(AuthItem::find()->all(), 'name', 'name');
-
-        if (!$user->load(Yii::$app->request->post()) || !$user->validate()) {
-            return $this->render('create', compact('user', 'authAssignmentModel', 'roles'));
-        }
-
-        $transaction = $user->getDb()->beginTransaction();
-        if (!$user->save(false)) {
-            $transaction->rollBack();
-            return $this->render('create', compact('user', 'authAssignmentModel', 'roles'));
-        }
-
-        $authAssignmentModel->load(Yii::$app->request->post());
-        $authAssignmentModel->link('user', $user);
-        $transaction->commit();
-
-        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User created'));
-        return $this->redirect(['view', 'id' => $user->id]);
-    }
-
-    /**
      * Updates an existing Users model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
@@ -105,32 +75,13 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $user = $this->findModel($id);
-        $authAssignmentModel = AuthAssignment::findOne(['user_id' => $id]) ?: new AuthAssignment();
         $roles = ArrayHelper::map(AuthItem::find()->all(), 'name', 'name');
 
-        $postData = Yii::$app->request->post();
-        if (!$user->load($postData) || !$authAssignmentModel->load($postData)) {
-            return $this->render('create', compact('user', 'authAssignmentModel', 'roles'));
+        if ($user->load(Yii::$app->request->post()) && $user->save() ){
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
+            return $this->redirect(['view', 'id' => $user->id]);
         }
-
-        if (!$user->validate()) {
-            return $this->render('create', compact('user', 'authAssignmentModel', 'roles'));
-        }
-        $transaction = $user->getDb()->beginTransaction();
-        $user->save(false);
-
-        if ($authAssignmentModel->isNewRecord) {
-            $authAssignmentModel->user_id = $user->getId();
-        }
-        if (!$authAssignmentModel->validate()) {
-            $transaction->rollBack();
-            return $this->render('create', compact('user', 'authAssignmentModel', 'roles'));
-        }
-        $authAssignmentModel->save(false);
-        $transaction->commit();
-
-        Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
-        return $this->redirect(['view', 'id' => $user->id]);
+        return $this->render('update', compact('user', 'roles'));
     }
 
     /**

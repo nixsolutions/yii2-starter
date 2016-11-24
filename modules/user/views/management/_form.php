@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $user app\modules\user\models\Users */
+/* @var $user app\modules\user\models\User */
 /* @var $authAssignmentModel app\modules\user\models\AuthAssignment */
 /* @var $roles array */
 /* @var $form yii\widgets\ActiveForm */
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($authAssignmentModel, 'item_name')->dropDownList($roles); ?>
+    <?= $form->field($user->authAssignments, 'item_name')->dropDownList($roles); ?>
 
     <div class="form-group">
         <?= Html::submitButton(

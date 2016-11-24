@@ -2,15 +2,13 @@
 
 namespace app\modules\user\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\user\models\Users;
 
 /**
  * SearchUser represents the model behind the search form about `app\modules\user\models\Users`.
  */
-class SearchUser extends Users
+class SearchUser extends User
 {
     /**
      * @inheritdoc
@@ -19,7 +17,20 @@ class SearchUser extends Users
     {
         return [
             [['id'], 'integer'],
-            [['first_name', 'last_name', 'email', 'password', 'avatar', 'status', 'created_at', 'last_login_at', 'auth_key'], 'safe'],
+            [
+                [
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'password',
+                    'avatar',
+                    'status',
+                    'created_at',
+                    'last_login_at',
+                    'auth_key'
+                ],
+                'safe'
+            ],
         ];
     }
 
@@ -41,7 +52,7 @@ class SearchUser extends Users
      */
     public function search($params)
     {
-        $query = Users::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 

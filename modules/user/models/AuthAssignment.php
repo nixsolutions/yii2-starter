@@ -12,7 +12,7 @@ use Yii;
  * @property integer $created_at
  *
  * @property AuthItem $itemName
- * @property Users $user
+ * @property User $user
  */
 class AuthAssignment extends \yii\db\ActiveRecord
 {
@@ -33,8 +33,19 @@ class AuthAssignment extends \yii\db\ActiveRecord
             [['item_name', 'user_id'], 'required'],
             [['user_id', 'created_at'], 'integer'],
             [['item_name'], 'string', 'max' => 64],
-            [['item_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthItem::className(), 'targetAttribute' => ['item_name' => 'name']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [
+                ['item_name'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => AuthItem::className(),
+                'targetAttribute' => ['item_name' => 'name']
+            ],
+            [['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ],
         ];
     }
 
@@ -63,6 +74,6 @@ class AuthAssignment extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

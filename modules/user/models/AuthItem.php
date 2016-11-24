@@ -16,7 +16,7 @@ use Yii;
  * @property integer $updated_at
  *
  * @property AuthAssignment[] $authAssignments
- * @property Users[] $users
+ * @property User[] $users
  * @property AuthRule $ruleName
  * @property AuthItemChild[] $authItemChildren
  * @property AuthItemChild[] $authItemChildren0
@@ -43,7 +43,13 @@ class AuthItem extends \yii\db\ActiveRecord
             [['type', 'created_at', 'updated_at'], 'integer'],
             [['description', 'data'], 'string'],
             [['name', 'rule_name'], 'string', 'max' => 64],
-            [['rule_name'], 'exist', 'skipOnError' => true, 'targetClass' => AuthRule::className(), 'targetAttribute' => ['rule_name' => 'name']],
+            [
+                ['rule_name'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => AuthRule::className(),
+                'targetAttribute' => ['rule_name' => 'name']
+            ],
         ];
     }
 
@@ -76,7 +82,8 @@ class AuthItem extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'user_id'])->viaTable('auth_assignment', ['item_name' => 'name']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+            ->viaTable('auth_assignment', ['item_name' => 'name']);
     }
 
     /**
@@ -108,7 +115,8 @@ class AuthItem extends \yii\db\ActiveRecord
      */
     public function getChildren()
     {
-        return $this->hasMany(AuthItem::className(), ['name' => 'child'])->viaTable('auth_item_child', ['parent' => 'name']);
+        return $this->hasMany(AuthItem::className(), ['name' => 'child'])
+            ->viaTable('auth_item_child', ['parent' => 'name']);
     }
 
     /**
@@ -116,6 +124,7 @@ class AuthItem extends \yii\db\ActiveRecord
      */
     public function getParents()
     {
-        return $this->hasMany(AuthItem::className(), ['name' => 'parent'])->viaTable('auth_item_child', ['child' => 'name']);
+        return $this->hasMany(AuthItem::className(), ['name' => 'parent'])
+            ->viaTable('auth_item_child', ['child' => 'name']);
     }
 }

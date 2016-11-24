@@ -5,7 +5,7 @@ namespace app\modules\mailTemplate;
 /**
  * mailTemplate module definition class
  */
-class MailTemplate extends \yii\base\Module
+class Module extends \yii\base\Module
 {
     /**
      * @inheritdoc

@@ -38,7 +38,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
-            ['label' => 'Users', 'url' => ['/users/user/index']],
+            ['label' => 'Users Management', 'url' => ['/users/management/index']],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
