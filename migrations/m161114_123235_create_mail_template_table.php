@@ -14,7 +14,7 @@ class m161114_123235_create_mail_template_table extends Migration
      */
     public function up()
     {
-        $this->createTable('mail_template', [
+        $this->createTable('mail_templates', [
             'id' => $this->primaryKey(),
             'key' => $this->string(255)->unique(),
             'body' => $this->text(),

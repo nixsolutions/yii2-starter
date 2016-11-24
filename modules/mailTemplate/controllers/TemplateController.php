@@ -2,14 +2,13 @@
 
 namespace app\modules\mailTemplate\controllers;
 
-use app\modules\mailTemplate\models\Mail;
+use app\modules\user\models\User;
 use Yii;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\mailTemplate\models\SearchMailTemplate;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TemplateController implements the CRUD actions for MailTemplate model.
@@ -22,24 +21,13 @@ class TemplateController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update'],
-                        'roles' => ['@']
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'view'],
-                        'roles' => ['?', '@']
+                        'actions' => ['index', 'view', 'update'],
+                        'roles' => [User::ROLE_ADMIN],
                     ],
                 ]
             ]
@@ -87,6 +75,7 @@ class TemplateController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Template saved'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
