@@ -87,7 +87,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @return bool
+     * @return bool|\yii\web\Response
      */
     public function actionConfirm()
     {
@@ -96,6 +96,9 @@ class AuthController extends Controller
                 $user = User::findIdentity($user_id);
                 $user->status = 'active';
                 $user->update();
+                if ($user->login()) {
+                    return $this->goHome();
+                }
             }
         }
         return false;

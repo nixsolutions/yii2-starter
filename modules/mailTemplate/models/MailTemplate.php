@@ -7,7 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "mail_template".
+ * This is the model class for table "mail_templates".
  *
  * @property integer $id
  * @property string $body
@@ -39,7 +39,7 @@ class MailTemplate extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'mail_template';
+        return 'mail_templates';
     }
 
     /**

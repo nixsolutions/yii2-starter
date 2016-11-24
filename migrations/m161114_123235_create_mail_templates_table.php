@@ -7,14 +7,14 @@ use yii\db\Migration;
  * Has foreign keys to the tables:
  *
  */
-class m161114_123235_create_mail_template_table extends Migration
+class m161114_123235_create_mail_templates_table extends Migration
 {
     /**
      * @inheritdoc
      */
     public function up()
     {
-        $this->createTable('mail_template', [
+        $this->createTable('mail_templates', [
             'id' => $this->primaryKey(),
             'key' => $this->string(255)->unique(),
             'body' => $this->text(),
@@ -29,6 +29,6 @@ class m161114_123235_create_mail_template_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('mail_template');
+        $this->dropTable('mail_templates');
     }
 }
