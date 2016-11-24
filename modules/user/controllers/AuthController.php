@@ -26,10 +26,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['registration'],
+                'only' => ['registration', 'login'],
                 'rules' => [
                     [
-                        'actions' => ['registration'],
+                        'actions' => ['registration', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -112,7 +112,6 @@ class AuthController extends Controller
      */
     public function actionLogin()
     {
-
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

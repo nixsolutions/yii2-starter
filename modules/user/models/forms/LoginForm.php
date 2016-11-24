@@ -62,9 +62,11 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             $user = $this->getUser();
-            $user->last_login_at = date('Y-m-d H:i:s');
-            if (Yii::$app->user->login($user, $this->rememberMe ? 3600*24*7 : 0)) {
+            if ($user->status == 'active' && Yii::$app->user->login($user, $this->rememberMe ? 3600*24*7 : 0)) {
+                $user->last_login_at = date('Y-m-d H:i:s');
                 return $user->update();
+            } else {
+                $this->addError('email', 'Your account is not active.');
             }
         }
         return false;
