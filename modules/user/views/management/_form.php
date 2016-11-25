@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($user, 'email')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'status')->dropDownList(
+    <?= $form->field($user, 'status',  ['enableAjaxValidation' => true])->dropDownList(
         [
             'created' => Yii::t('user', 'Created'),
             'active' => Yii::t('user', 'Active'),
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($user, 'role')->dropDownList($roles); ?>
+    <?= $form->field($user, 'role', ['enableAjaxValidation' => true])->dropDownList($roles); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>

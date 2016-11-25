@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * ManagementController implements the CRU actions for Users model.
@@ -78,6 +79,12 @@ class ManagementController extends Controller
         $userForm->firstName = $user->first_name;
         $userForm->lastName= $user->last_name;
         $userForm->role = ArrayHelper::getValue($user->authAssignments, 'item_name', '');
+
+
+        if (Yii::$app->request->isAjax && $userForm->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return $userForm->validate();
+        }
 
         if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
             $userForm->update();
