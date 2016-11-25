@@ -124,4 +124,10 @@ class AuthController extends Controller
             'model' => $model,
         ]);
     }
+
+
+    public function actionRecovery()
+    {
+        return $this->render('recovery');
+    }
 }
