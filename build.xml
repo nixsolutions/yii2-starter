@@ -1,0 +1,27 @@
+<project name="name-of-project" default="build" basedir=".">
+    <target name="build" depends="prepare,phpunit">
+    </target>
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="build/coverage">
+
+        </delete>
+        <delete dir="build/logs">
+        </delete>
+    </target>
+
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="build/coverage">
+
+        </mkdir>
+        <mkdir dir="build/logs">
+        </mkdir>
+    </target>
+
+    <target name="phpunit" description="Run unit tests with PHPUnit">
+        <exec executable="phpunit" failonerror="true">
+            <arg line="--bootstrap vendor/autoload.php tests/unit --coverage-clover build/logs/clover.xml --whitelist whitelist.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml">
+            </arg>
+        </exec>
+    </target>
+
+</project>
