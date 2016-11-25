@@ -80,7 +80,6 @@ class ManagementController extends Controller
         $userForm->lastName= $user->last_name;
         $userForm->role = ArrayHelper::getValue($user->authAssignments, 'item_name', '');
 
-
         if (Yii::$app->request->isAjax && $userForm->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return $userForm->validate();
