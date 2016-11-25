@@ -55,7 +55,8 @@ class UpdateUserForm extends Model
             ['email', 'email'],
             ['email', 'string'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
-            [['status'], 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_BLOCKED, User::STATUS_CREATED]],
+            [['status'], 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_BLOCKED, User::STATUS_CREATED], 'message' => 'Wrong status'],
+            [['role'], 'in', 'range' => [User::ROLE_ADMIN, User::ROLE_USER], 'message' => 'Wrong role'],
         ];
     }
 
