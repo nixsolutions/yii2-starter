@@ -23,6 +23,11 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    /**
+     * Active user status
+     */
+    const STATUS_ACTIVE = 'active';
+
     public $rememberMe;
 
     /**

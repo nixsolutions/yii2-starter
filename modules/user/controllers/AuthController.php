@@ -77,7 +77,8 @@ class AuthController extends Controller
                 $mail->setTemplate($mailTemplate);
                 $mail->sendTo($user->email);
 
-                Yii::$app->session->setFlash('confirmRegistration');
+                Yii::$app->session->setFlash('success',
+                    Yii::t('user', 'Please, check your email to confirm registration.'));
                 return $this->refresh();
             }
         }
@@ -94,7 +95,7 @@ class AuthController extends Controller
         if (($user_id = Yii::$app->request->get('user_id')) && ($hash = Yii::$app->request->get('hash'))) {
             if (Hash::find()->where(['user_id' => $user_id, 'hash' => $hash])) {
                 $user = User::findIdentity($user_id);
-                $user->status = 'active';
+                $user->status = User::STATUS_ACTIVE;
                 $user->update();
                 if ($user->login()) {
                     return $this->goHome();
