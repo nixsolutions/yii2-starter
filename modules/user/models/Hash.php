@@ -50,14 +50,25 @@ class Hash extends ActiveRecord
     }
 
     /**
-     * @param $user_id
+     * @param $userId
      * @return string
      */
-    public function create($user_id)
+    public function create($userId)
     {
-        $this->user_id = $user_id;
+        $this->user_id = $userId;
         $this->hash = Yii::$app->security->generateRandomString();
         $this->save();
         return $this->hash;
+    }
+
+    /**
+     * Finds hash by userId
+     *
+     * @param $userId
+     * @return static
+     */
+    public static function findByUserID($userId)
+    {
+        return static::findOne(['user_id' => $userId]);
     }
 }

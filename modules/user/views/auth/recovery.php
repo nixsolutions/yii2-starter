@@ -15,11 +15,23 @@ $this->title = 'Password recovery';
 
     <p>Please enter your email to reset password:</p>
 
-    <?= Html::beginForm('recovery', 'post', ['class' => 'form-horizontal', 'role' => 'form']); ?>
-    <?= Html::label('Email', 'email', ['class' => 'col-lg-2 control-label']); ?>
-    <div class="col-lg-3">
-        <?= Html::input('email', 'email', null, ['label' => 'Email', 'class' => 'form-control']); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'recovery-form',
+        'layout' => 'horizontal',
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
+            <?= Html::submitButton('Send', ['class' => 'btn btn-primary', 'name' => 'send-button']) ?>
+        </div>
     </div>
-    <?= Html::endForm(); ?>
+
+    <?php ActiveForm::end(); ?>
 
 </div>

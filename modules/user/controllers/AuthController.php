@@ -5,6 +5,8 @@ namespace app\modules\user\controllers;
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\user\models\forms\LoginForm;
+use app\modules\user\models\forms\PasswordForm;
+use app\modules\user\models\forms\RecoveryForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
@@ -95,7 +97,7 @@ class AuthController extends Controller
         if (($user_id = Yii::$app->request->get('user_id')) && ($hash = Yii::$app->request->get('hash'))) {
             if (Hash::find()->where(['user_id' => $user_id, 'hash' => $hash])) {
                 $user = User::findIdentity($user_id);
-                $user->status = 'active';
+                $user->status = User::STATUS_ACTIVE;
                 $user->update();
                 if ($user->login()) {
                     return $this->goHome();
@@ -125,9 +127,55 @@ class AuthController extends Controller
         ]);
     }
 
-
+    /**
+     * Sends link for password recovery on user email
+     *
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
     public function actionRecovery()
     {
-        return $this->render('recovery');
+        $recoveryForm = new RecoveryForm();
+        if ($recoveryForm->load(Yii::$app->request->post()) && $recoveryForm->validate()) {
+
+            if (($user = User::findByEmail($recoveryForm->email)) && ($user->status == User::STATUS_ACTIVE)) {
+
+                if (!$mailTemplate = MailTemplate::findByKey('RECOVER')) {
+                    throw new NotFoundHttpException('Template not found in database');
+                }
+
+                $hashKey = Hash::findByUserID($user->id);
+                $hashKey->type = 'recover';
+                $hashKey->update();
+                $mailTemplate->replacePlaceholders([
+                    'name' => $user->first_name,
+                    'link' => Yii::$app->urlManager->createAbsoluteUrl(['user/auth/change-password',
+                        'user_id' => $user->id,
+                        'hash' => $hashKey->hash
+                    ]),
+                ]);
+
+                $mail = new Mail();
+                $mail->setTemplate($mailTemplate);
+                $mail->sendTo($user->email);
+
+                Yii::$app->session->setFlash('success',
+                    Yii::t('user', 'Please check your email and follow instructions to recover password.'));
+                return $this->refresh();
+            }
+        }
+        return $this->render('recovery', [
+            'model' => $recoveryForm,
+        ]);
     }
+
+    public function actionChangePassword()
+    {
+        $passwordForm = new PasswordForm();
+
+        return $this->render('change-password', [
+            'model' => $passwordForm,
+        ]);
+    }
+
 }
