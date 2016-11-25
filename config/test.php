@@ -39,7 +39,12 @@ return [
             'translations' => [
                 'mailTemplate' => [
                     'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
+                    'basePath' => '@app/modules/mailTemplate/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
+                'user' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
                 ],
             ],

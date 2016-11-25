@@ -27,9 +27,9 @@ class SearchUser extends User
                     'status',
                     'created_at',
                     'last_login_at',
-                    'auth_key'
+                    'auth_key',
                 ],
-                'safe'
+                'safe',
             ],
         ];
     }

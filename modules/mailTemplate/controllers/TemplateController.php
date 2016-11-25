@@ -27,7 +27,7 @@ class TemplateController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'update'],
-                        'roles' => [User::ROLE_ADMIN],
+                        'roles' => ['?', User::ROLE_ADMIN],
                     ],
                 ]
             ]

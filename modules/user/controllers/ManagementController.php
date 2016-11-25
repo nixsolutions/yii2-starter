@@ -2,8 +2,8 @@
 
 namespace app\modules\user\controllers;
 
-use app\modules\user\models\AuthAssignment;
 use app\modules\user\models\AuthItem;
+use app\modules\user\models\forms\UpdateUserForm;
 use app\modules\user\models\User;
 use Yii;
 use app\modules\user\models\SearchUser;
@@ -46,10 +46,7 @@ class ManagementController extends Controller
         $searchModel = new SearchUser();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index', compact('searchModel', 'dataProvider'));
     }
 
     /**
@@ -74,14 +71,22 @@ class ManagementController extends Controller
      */
     public function actionUpdate($id)
     {
+        $userForm = new UpdateUserForm();
+        $userForm->id = $id;
         $user = $this->findModel($id);
-        $roles = ArrayHelper::map(AuthItem::find()->all(), 'name', 'name');
+        $userForm->email = $user->email;
+        $userForm->firstName = $user->first_name;
+        $userForm->lastName= $user->last_name;
+        $userForm->role = ArrayHelper::getValue($user->authAssignments, 'item_name', '');
 
-        if ($user->load(Yii::$app->request->post()) && $user->save() ){
+        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
+            $userForm->update();
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
-            return $this->redirect(['view', 'id' => $user->id]);
+            return $this->redirect(['view', 'id' => $userForm->id]);
         }
-        return $this->render('update', compact('user', 'roles'));
+
+        $roles = ArrayHelper::map(AuthItem::find()->all(), 'name', 'name');
+        return $this->render('update', compact('userForm', 'roles'));
     }
 
     /**

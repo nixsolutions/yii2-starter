@@ -12,11 +12,11 @@ use yii\widgets\ActiveForm;
 
 <div class="users-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>
 
-    <?= $form->field($user, 'first_name')->textInput(['maxlength' => true]); ?>
+    <?= $form->field($user, 'firstName')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'last_name')->textInput(['maxlength' => true]); ?>
+    <?= $form->field($user, 'lastName')->textInput(['maxlength' => true]); ?>
 
     <?= $form->field($user, 'email')->textInput(['maxlength' => true]); ?>
 
@@ -28,13 +28,10 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($user->authAssignments, 'item_name')->dropDownList($roles); ?>
+    <?= $form->field($user, 'role')->dropDownList($roles); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(
-            $user->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
-            ['class' => $user->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-        ); ?>
+        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

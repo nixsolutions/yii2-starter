@@ -26,6 +26,10 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_BLOCKED = 'blocked';
+    const STATUS_CREATED = 'created';
+
     /**
      * Role user
      */
@@ -165,12 +169,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Logs in a user using the provided username and password.
+     *
      * @return boolean whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this, $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
     }

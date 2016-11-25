@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $user app\modules\user\models\User */
+/* @var $userForm \app\modules\user\models\forms\UpdateUserForm */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Users',
-]) . $user->id;
+]) . $userForm->firstName;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $user->id, 'url' => ['view', 'id' => $user->id]];
+$this->params['breadcrumbs'][] = ['label' => $userForm->firstName, 'url' => ['view', 'id' => $userForm->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="users-update">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <h1><?= Html::encode($this->title); ?></h1>
 
     <?= $this->render('_form', [
-        'user' => $user,
+        'user' => $userForm,
         'roles' => $roles,
     ]); ?>
 

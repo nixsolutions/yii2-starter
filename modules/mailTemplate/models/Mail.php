@@ -37,10 +37,12 @@ class Mail extends Model
      * Set template
      *
      * @param MailTemplate $template
+     * @return $this
      */
     public function setTemplate(MailTemplate $template)
     {
         $this->template = $template;
+        return $this;
     }
 
     /**
