@@ -1,5 +1,5 @@
 <project name="name-of-project" default="build" basedir=".">
-    <target name="build" depends="prepare,phpunit">
+    <target name="build" depends="prepare">
     </target>
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="build/coverage">
