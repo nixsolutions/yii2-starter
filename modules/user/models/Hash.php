@@ -63,6 +63,7 @@ class Hash extends ActiveRecord
         $this->hash = Yii::$app->security->generateRandomString();
         $this->type = $type;
         $this->save();
+
         return $this->hash;
     }
 }

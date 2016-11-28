@@ -70,6 +70,7 @@ class AuthController extends Controller
             if (!$mailTemplate = MailTemplate::findByKey('REGISTER_CONFIRM')) {
                 throw new NotFoundHttpException('Template does not exist.');
             }
+
             $hash = new Hash();
             $mailTemplate->replacePlaceholders([
                 'name' => $user->first_name,
@@ -102,17 +103,20 @@ class AuthController extends Controller
             throw new BadRequestHttpException();
         }
 
-        if (!Hash::find()->where(['hash' => $hash])) {
+        if (!Hash::findOne(['hash' => $hash])) {
             throw new NotFoundHttpException('Hash does not exist.');
         }
+
         if (!$user = User::findByHash($hash)) {
             throw new NotFoundHttpException('User does not exist.');
         }
         $user->status = User::STATUS_ACTIVE;
         $user->update();
+
         if (!$user->login()) {
             throw new Exception('Invalid user data.');
         }
+
         return $this->goHome();
     }
 }

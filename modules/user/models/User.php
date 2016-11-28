@@ -147,6 +147,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if ($this->validate()) {
             $this->last_login_at = date('Y-m-d H:i:s');
+
             if (Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
                 return $this->update();
             }
