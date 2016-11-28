@@ -183,7 +183,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findByHash($hash)
     {
         if (!$hash = Hash::findOne(['hash' => $hash])) {
-            throw new NotFoundHttpException('Hash is not found in database');
+            throw new NotFoundHttpException('Hash does not exist.');
         }
         return static::findOne(['id' => $hash->user_id]);
     }

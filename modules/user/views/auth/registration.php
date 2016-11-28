@@ -7,7 +7,7 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->registerCssFile('@web/css/user-module.css', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile('@web/css/modules/user/register.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
 ?>

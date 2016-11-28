@@ -64,16 +64,17 @@ class AuthController extends Controller
             $user = new User();
 
             if (!$user = $user->create($registrationForm)) {
-                throw new Exception('Data could not be saved into database.');
+                throw new Exception('User could not be created.');
             }
 
-            if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
-                throw new NotFoundHttpException('Template is not found in database.');
+            if (!$mailTemplate = MailTemplate::findByKey('REGISTER_CONFIRM')) {
+                throw new NotFoundHttpException('Template does not exist.');
             }
             $hash = new Hash();
             $mailTemplate->replacePlaceholders([
                 'name' => $user->first_name,
-                'link' => Yii::$app->urlManager->createAbsoluteUrl(['user/auth/confirm-registration',
+                'link' => Yii::$app->urlManager->createAbsoluteUrl([
+                    'user/auth/confirm-registration',
                     'hash' => $hash->generate(Hash::TYPE_REGISTER, $user->id)
                 ]),
             ]);
@@ -81,7 +82,7 @@ class AuthController extends Controller
             $mail = new Mail();
             $mail->setTemplate($mailTemplate);
             if (!$mail->sendTo($user->email)) {
-                throw new Exception('Email couldn\'t be sent. Check your email account please.');
+                throw new Exception('Email couldn\'t be sent.');
             }
             Yii::$app->session->setFlash('success',
                 Yii::t('user', 'Please, check your email to confirm registration.'));
@@ -104,9 +105,11 @@ class AuthController extends Controller
         }
 
         if (!Hash::find()->where(['hash' => $hash])) {
-            throw new Exception('Hash is not found in database.');
+            throw new NotFoundHttpException('Hash does not exist.');
         }
-        $user = User::findByHash($hash);
+        if (!$user = User::findByHash($hash)) {
+            throw new NotFoundHttpException('User does not exist.');
+        }
         $user->status = User::STATUS_ACTIVE;
         $user->update();
         if (!$user->login()) {
