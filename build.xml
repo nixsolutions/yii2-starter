@@ -16,11 +16,6 @@
         </mkdir>
     </target>
 
-    <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="phpunit" failonerror="true">
-            <arg line="--bootstrap vendor/autoload.php test/UrlTest.php --coverage-clover build/logs/clover.xml --whitelist whitelist.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml">
-            </arg>
-        </exec>
-    </target>
+
 
 </project>
