@@ -11,6 +11,7 @@ use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use app\modules\user\models\forms\RegistrationForm;
 use yii\web\NotFoundHttpException;
@@ -171,8 +172,23 @@ class AuthController extends Controller
 
     public function actionChangePassword()
     {
+        if (!$hash = Yii::$app->request->get('hash')) {
+            throw new BadRequestHttpException();
+        }
+        if (!Hash::find()->where(['hash' => $hash])) {
+            throw new NotFoundHttpException('Hash does not exist.');
+        }
+        if (!$user = User::findByHash($hash)) {
+            throw new NotFoundHttpException('User does not exist.');
+        }
         $passwordForm = new PasswordForm();
-
+        if ($passwordForm->load(Yii::$app->request->post()) && $passwordForm->validate()) {
+            $user->password = Yii::$app->security->generatePasswordHash($passwordForm->newPassword);
+            $user->update();
+            if ($user->login()) {
+                return $this->goHome();
+            }
+        }
         return $this->render('change-password', [
             'model' => $passwordForm,
         ]);
