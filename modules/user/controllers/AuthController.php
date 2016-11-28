@@ -81,9 +81,7 @@ class AuthController extends Controller
 
             $mail = new Mail();
             $mail->setTemplate($mailTemplate);
-            if (!$mail->sendTo($user->email)) {
-                throw new Exception('Email couldn\'t be sent.');
-            }
+            $mail->sendTo($user->email);
             Yii::$app->session->setFlash('success',
                 Yii::t('user', 'Please, check your email to confirm registration.'));
         }
