@@ -103,10 +103,6 @@ class AuthController extends Controller
             throw new BadRequestHttpException();
         }
 
-        if (!Hash::findOne(['hash' => $hash])) {
-            throw new NotFoundHttpException('Hash does not exist.');
-        }
-
         if (!$user = User::findByHash($hash)) {
             throw new NotFoundHttpException('User does not exist.');
         }
