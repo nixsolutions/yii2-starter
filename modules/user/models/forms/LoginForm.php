@@ -5,6 +5,7 @@ namespace app\modules\user\models\forms;
 use app\modules\user\models\User;
 use Yii;
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 /**
  * LoginForm is the model behind the login form.
@@ -18,7 +19,7 @@ class LoginForm extends Model
     public $password;
     public $rememberMe = true;
 
-    private $_user = false;
+    private $user = false;
 
 
     /**
@@ -27,11 +28,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // email and password are both required
             [['email', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
             ['email', 'email']
         ];
@@ -56,17 +54,20 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided email and password.
-     * @return bool whether the user is logged in successfully
+     * @return bool|false|int
+     * @throws NotFoundHttpException
      */
     public function login()
     {
         if ($this->validate()) {
-            $user = $this->getUser();
+            if (!$user = $this->getUser()) {
+                throw new NotFoundHttpException('User does not exist.');
+            }
             if ($user->status == 'active' && Yii::$app->user->login($user, $this->rememberMe ? 3600*24*7 : 0)) {
                 $user->last_login_at = date('Y-m-d H:i:s');
                 return $user->update();
             } else {
-                $this->addError('email', 'Your account is not active.');
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             }
         }
         return false;
@@ -79,9 +80,9 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByEmail($this->email);
+        if ($this->user === false) {
+            $this->user = User::findByEmail($this->email);
         }
-        return $this->_user;
+        return $this->user;
     }
 }
