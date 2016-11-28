@@ -4,13 +4,12 @@
 /* @var $form yii\bootstrap\ActiveForm */
 
 use yii\bootstrap\BootstrapAsset;
-use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->registerCssFile('@web/css/user-module.css', ['depends' => [BootstrapAsset::className()]]);
 
-$this->title = 'Registration';
+$this->title = Yii::t('user', 'Registration');
 ?>
 <div class="site-register">
     <h1><?= Html::encode($this->title); ?></h1>
@@ -39,7 +38,7 @@ $this->title = 'Registration';
 
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-11">
-            <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
+            <?= Html::submitButton(Yii::t('user', 'Register'), ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
         </div>
     </div>
 

@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "users".
@@ -146,7 +147,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         if ($this->validate()) {
             $this->last_login_at = date('Y-m-d H:i:s');
-            if (Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
+            if (Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
                 return $this->update();
             }
         }
@@ -176,19 +177,23 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @param $formData
-     * @return array|bool
+     * @return User
      */
     public function register($formData)
     {
-        $this->create($formData);
+        return $this->create($formData);
+    }
 
-        $hash = new Hash();
-        if ($hashKey = $hash->create($this->id)) {
-            return [
-                'user_id' => $this->id,
-                'hash' => $hashKey,
-            ];
+    /**
+     * @param $hash
+     * @return static
+     * @throws NotFoundHttpException
+     */
+    public static function findByHash($hash)
+    {
+        if (!$hash = Hash::findOne(['hash' => $hash])) {
+            throw new NotFoundHttpException('Hash is not found in database');
         }
-        return false;
+        return static::findOne(['id' => $hash->user_id]);
     }
 }
