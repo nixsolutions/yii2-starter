@@ -107,7 +107,7 @@ class ManagementController extends Controller
     {
         $model = User::findOne($id);
         if (null === $model) {
-            throw new NotFoundHttpException(Yii::t('user', 'The requested page does not exist.'));
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
         return $model;
     }

@@ -2,10 +2,11 @@
 
 namespace app\modules\mailTemplate\models;
 
+use Exception;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use yii\web\NotFoundHttpException;
 
 /**
  * Class Mail
@@ -35,7 +36,9 @@ class Mail extends Model
     protected $template = null;
 
     const FROM_NAME = 'Yii starter';
+
     const FROM_EMAIL = 'admin@example.com';
+
     /**
      * Set template
      *
@@ -52,23 +55,26 @@ class Mail extends Model
      * Send mail to user
      *
      * @param $emailTo
-     * @return bool
-     * @throws NotFoundHttpException
-     * @throws \Exception
+     * @throws InvalidConfigException
+     * @throws MailNotSendException
      */
     public function sendTo($emailTo)
     {
         if (null === $this->template) {
-            throw new NotFoundHttpException(Yii::t('mailTemplate', 'Template does not exist.'));
+            throw new InvalidConfigException('Template does not exist. First set template');
         }
         $fromName = ArrayHelper::getValue(Yii::$app->params, 'mail.fromName', self::FROM_NAME);
         $fromEmail = ArrayHelper::getValue(Yii::$app->params, 'mail.fromEmail', self::FROM_EMAIL);
 
-        Yii::$app->mailer->compose()
-            ->setTo($emailTo)
-            ->setFrom([$fromEmail => $fromName])
-            ->setSubject($this->template->subject)
-            ->setHtmlBody($this->template->body)
-            ->send();
+        try {
+            Yii::$app->mailer->compose()
+                ->setTo($emailTo)
+                ->setFrom([$fromEmail => $fromName])
+                ->setSubject($this->template->subject)
+                ->setHtmlBody($this->template->body)
+                ->send();
+        } catch (Exception $e) {
+            throw new MailNotSendException("Cannot send email to $emailTo", $e->getCode(), $e);
+        }
     }
 }
