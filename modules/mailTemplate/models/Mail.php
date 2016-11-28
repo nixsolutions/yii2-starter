@@ -5,6 +5,7 @@ namespace app\modules\mailTemplate\models;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class Mail
@@ -50,12 +51,13 @@ class Mail extends Model
      *
      * @param $emailTo
      * @return bool
+     * @throws NotFoundHttpException
      * @throws \Exception
      */
     public function sendTo($emailTo)
     {
         if (null === $this->template) {
-            throw new \Exception('First set template instance of class \app\modules\mailTemplate\models\MailTemplate');
+            throw new NotFoundHttpException('Template does not exist.');
         }
         $fromName = ArrayHelper::getValue(Yii::$app->params, 'mail.fromName', 'Yii starter');
         $fromEmail = ArrayHelper::getValue(Yii::$app->params, 'mail.fromEmail', 'admin@example.com');
@@ -68,7 +70,7 @@ class Mail extends Model
                 ->send();
             return true;
         } catch (\Exception $e) {
-            return false;
+            throw $e;
         }
     }
 }
