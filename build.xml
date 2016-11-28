@@ -1,42 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Composer Targets" default="build">
-
-    <property name="builddir" value="${basedir}/build"/>
-    <property name="composer" value="${builddir}/composer.phar"/>
-
-    <target name="php-check">
-        <condition property="php" value="php">
-            <not>
-                <isset property="${php}"/>
-            </not>
-        </condition>
+<project name="name-of-project" default="build" basedir=".">
+    <target name="build" depends="prepare,phpunit">
+    </target>
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="build/coverage">
+        </delete>
+        <delete dir="build/logs">
+        </delete>
     </target>
 
-    <target name="prepare">
-        <mkdir dir="${builddir}" />
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="build/coverage">
+
+        </mkdir>
+        <mkdir dir="build/logs">
+        </mkdir>
     </target>
 
-    <target name="composer-check" depends="prepare">
-        <available file="${composer}" property="composer.present"/>
-    </target>
-
-    <target name="composer-download" depends="composer-check" unless="composer.present">
-        <property name="composer.noselfupdate" value="true"/>
-        <get src="https://getcomposer.org/composer.phar" dest="${composer}"/>
-    </target>
-
-    <target name="composer-selfupdate" depends="php-check,composer-download" unless="composer.noselfupdate">
-        <exec executable="${php}">
-            <arg value="${composer}"/>
-            <arg value="self-update"/>
-            <arg value="--quiet"/>
-        </exec>
-    </target>
-
-    <target name="composer" depends="composer-selfupdate" unless="composer.noupdate" description="Run composer update">
-        <exec executable="${php}">
-            <arg value="${composer}"/>
-            <arg value="update"/>
+    <target name="phpunit" description="Run unit tests with PHPUnit">
+        <exec executable="phpunit" failonerror="true">
+            <arg line="--bootstrap vendor/autoload.php test/UrlTest.php --coverage-clover build/logs/clover.xml --whitelist whitelist.xml --coverage-crap4j build/logs/crap4j.xml --log-junit build/logs/junit.xml">
+            </arg>
         </exec>
     </target>
 
