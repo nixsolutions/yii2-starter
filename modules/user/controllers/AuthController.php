@@ -63,7 +63,7 @@ class AuthController extends Controller
         if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
             $user = new User();
 
-            if (!$user = $user->register($registrationForm)) {
+            if (!$user = $user->create($registrationForm)) {
                 throw new Exception('Data could not be saved into database.');
             }
 

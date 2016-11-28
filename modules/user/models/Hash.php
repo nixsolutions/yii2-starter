@@ -16,7 +16,7 @@ use yii\db\ActiveRecord;
 class Hash extends ActiveRecord
 {
     const TYPE_REGISTER = 'register';
-    const TYPE_RECOVERY = 'recovery';
+    const TYPE_RECOVER = 'recover';
 
     /**
      * @inheritdoc

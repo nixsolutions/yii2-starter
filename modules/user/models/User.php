@@ -176,15 +176,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $formData
-     * @return User
-     */
-    public function register($formData)
-    {
-        return $this->create($formData);
-    }
-
-    /**
      * @param $hash
      * @return static
      * @throws NotFoundHttpException
