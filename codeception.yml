@@ -25,3 +25,5 @@ coverage:
     whitelist:
         include:
             - modules/*
+        exclude:
+            - modules/mailTemplate/messages/*
