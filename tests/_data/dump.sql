@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 CREATE DATABASE  IF NOT EXISTS `yii_starter_tests` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `yii_starter_tests`;
 -- MySQL dump 10.13  Distrib 5.5.52, for debian-linux-gnu (x86_64)
