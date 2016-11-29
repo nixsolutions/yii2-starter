@@ -120,7 +120,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Login action.
      * @return string|\yii\web\Response
      * @throws Exception
      */
@@ -130,17 +129,17 @@ class AuthController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        $loginForm = new LoginForm();
+        if ($loginForm->load(Yii::$app->request->post()) && $loginForm->validate()) {
 
-            $user = User::findByEmail($model->email);
+            $user = User::findByEmail($loginForm->email);
             if (!$user->login()) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             }
             return $this->goBack();
         }
         return $this->render('login', [
-            'model' => $model,
+            'model' => $loginForm,
         ]);
     }
 }
