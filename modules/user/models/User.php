@@ -148,11 +148,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function login()
     {
-        if ($this->validate()) {
-            if ($this->status == 'active' && Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
-                $this->last_login_at = date('Y-m-d H:i:s');
-                return $this->update();
-            }
+        if ($this->status == 'active' && Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
+            $this->last_login_at = date('Y-m-d H:i:s');
+            return $this->update();
         }
         return false;
     }
