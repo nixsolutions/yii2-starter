@@ -8,13 +8,15 @@ use app\modules\user\models\forms\LoginForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use app\modules\user\models\forms\RegistrationForm;
 use yii\web\NotFoundHttpException;
 
 /**
- * Default controller for the `user` module
+ * AuthController for the `user` module
  */
 class AuthController extends Controller
 {
@@ -52,6 +54,7 @@ class AuthController extends Controller
 
     /**
      * @return string|\yii\web\Response
+     * @throws Exception
      * @throws NotFoundHttpException
      */
     public function actionRegistration()
@@ -61,27 +64,32 @@ class AuthController extends Controller
         if ($registrationForm->load(Yii::$app->request->post()) && $registrationForm->validate()) {
             $user = new User();
 
-            if ($hashData = $user->register($registrationForm)) {
-
-                if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
-                    throw new NotFoundHttpException('Template not found in database');
-                }
-                $mailTemplate->replacePlaceholders([
-                    'name' => $user->first_name,
-                    'link' => Yii::$app->urlManager->createAbsoluteUrl(['user/auth/confirm',
-                        'user_id' => $hashData['user_id'],
-                        'hash' => $hashData['hash']
-                    ]),
-                ]);
-
-                $mail = new Mail();
-                $mail->setTemplate($mailTemplate);
-                $mail->sendTo($user->email);
-
-                Yii::$app->session->setFlash('confirmRegistration');
-                return $this->refresh();
+            if (!$user = $user->create($registrationForm)) {
+                throw new Exception('User could not be created.');
             }
+
+            if (!$mailTemplate = MailTemplate::findByKey('REGISTER_CONFIRM')) {
+                throw new NotFoundHttpException('Template does not exist.');
+            }
+
+            $hash = new Hash();
+            $mailTemplate->replacePlaceholders([
+                'name' => $user->first_name,
+                'link' => Yii::$app->urlManager->createAbsoluteUrl([
+                    'user/auth/confirm-registration',
+                    'hash' => $hash->generate(Hash::TYPE_REGISTER, $user->id)
+                ]),
+            ]);
+
+            $mail = new Mail();
+            $mail->setTemplate($mailTemplate);
+            $mail->sendTo($user->email);
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t('user', 'Please, check your email to confirm registration.')
+            );
         }
+
         return $this->render('registration', [
             'model' => $registrationForm,
         ]);
@@ -89,20 +97,26 @@ class AuthController extends Controller
 
     /**
      * @return bool|\yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws Exception
      */
-    public function actionConfirm()
+    public function actionConfirmRegistration()
     {
-        if (($user_id = Yii::$app->request->get('user_id')) && ($hash = Yii::$app->request->get('hash'))) {
-            if (Hash::find()->where(['user_id' => $user_id, 'hash' => $hash])) {
-                $user = User::findIdentity($user_id);
-                $user->status = 'active';
-                $user->update();
-                if ($user->login()) {
-                    return $this->goHome();
-                }
-            }
+        if (!$hash = Yii::$app->request->get('hash')) {
+            throw new BadRequestHttpException();
         }
-        return false;
+
+        if (!$user = User::findByHash($hash)) {
+            throw new NotFoundHttpException('User does not exist.');
+        }
+        $user->status = User::STATUS_ACTIVE;
+        $user->update();
+
+        if (!$user->login()) {
+            throw new Exception('Invalid user data.');
+        }
+
+        return $this->goHome();
     }
 
     /**

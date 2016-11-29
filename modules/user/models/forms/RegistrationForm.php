@@ -22,7 +22,6 @@ class RegistrationForm extends Model
     public $email;
     public $password;
     public $passwordRepeat;
-    public $verifyCode;
 
     /**
      * @return array the validation rules.
@@ -35,7 +34,7 @@ class RegistrationForm extends Model
             ['email', 'string'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
             ['password', 'string', 'min' => 6, 'max' => 32],
-            ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match."],
         ];
     }
 

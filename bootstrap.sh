@@ -5,8 +5,6 @@ DB_PORT='3306'
 DB_PASSWORD='root'
 DB_NAME='yii_starter'
 
-GIT_TOKEN='your_token'
-
 
 echo "Updating packages..."
 echo vagrant | sudo -S apt-get update
@@ -51,7 +49,11 @@ curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
 echo vagrant | sudo mv composer.phar /usr/local/bin/composer > /dev/null 2>&1
 
 echo "Installing app..."
-composer config github-oauth.github.com $GIT_TOKEN
+sudo cp /vagrant/set-github-oauth-token.sh.sample /vagrant/set-github-oauth-token.sh
+if [ -f /vagrant/set-github-oauth-token.sh ]
+then
+    /vagrant/set-github-oauth-token.sh
+fi
 composer global require "fxp/composer-asset-plugin:^1.2.1" > /dev/null 2>&1
 
 cd /vagrant
@@ -59,8 +61,9 @@ composer install > /dev/null 2>&1
 
 sudo cp config/db.php.sample config/db.php
 sudo cp config/params.php.sample config/params.php
+sudo cp config/mailer.php.sample config/mailer.php
 
 echo "Migrating..."
 echo y | php yii migrate --migrationPath=@yii/rbac/migrations/
-echo y | php yii migrate/up
 echo y | php yii rbac/init
+echo y | php yii migrate/up

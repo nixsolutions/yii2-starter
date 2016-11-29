@@ -7,7 +7,7 @@ class m161123_152129_add_register_confirm_template extends Migration
     public function up()
     {
         $this->insert('mail_templates', [
-            'key' => 'REGISTER',
+            'key' => 'REGISTER_CONFIRM',
             'body' => '<p>Hello, {{name}}!</p>'
                 . '<p>Thank you for registration! To activate your account, click here please {{link}}.</p>'
                 . '<p>After confirmation you will be automatically logged in.</p>',
@@ -19,6 +19,6 @@ class m161123_152129_add_register_confirm_template extends Migration
 
     public function down()
     {
-        $this->delete('mail_templates', ['key' => 'REGISTER']);
+        $this->delete('mail_templates', ['key' => 'REGISTER_CONFIRM']);
     }
 }
