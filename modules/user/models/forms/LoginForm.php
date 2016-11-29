@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\user\models\forms;
 
 use Yii;
 use yii\base\Model;
@@ -47,7 +47,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || !$user->validatePassword(Yii::$app->security->generatePasswordHash($this->password))) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }

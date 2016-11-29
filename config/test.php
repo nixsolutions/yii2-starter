@@ -17,13 +17,17 @@ return [
         'mailer' => [
             'useFileTransport' => true,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => $routes,
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\modules\user\models\User',
+            'enableAutoLogin' => true,
         ],
         'request' => [
             'cookieValidationKey' => 'test',
@@ -46,6 +50,9 @@ return [
         ],
     ],
     'modules' => [
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\MailTemplate',
         ],
