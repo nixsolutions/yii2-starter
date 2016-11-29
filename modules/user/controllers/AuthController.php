@@ -141,8 +141,8 @@ class AuthController extends Controller
 
             if (($user = User::findByEmail($recoveryForm->email)) && ($user->status == User::STATUS_ACTIVE)) {
 
-                if (!$mailTemplate = MailTemplate::findByKey('RECOVER')) {
-                    throw new NotFoundHttpException('Template not found in database');
+                if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
+                    throw new NotFoundHttpException('Template does not exist.');
                 }
 
                 $hashKey = Hash::findByUserID($user->id);
@@ -174,9 +174,6 @@ class AuthController extends Controller
     {
         if (!$hash = Yii::$app->request->get('hash')) {
             throw new BadRequestHttpException();
-        }
-        if (!Hash::find()->where(['hash' => $hash])) {
-            throw new NotFoundHttpException('Hash does not exist.');
         }
         if (!$user = User::findByHash($hash)) {
             throw new NotFoundHttpException('User does not exist.');
