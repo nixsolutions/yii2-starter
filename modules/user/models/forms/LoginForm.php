@@ -54,7 +54,7 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided email and password.
-     * @return bool|false|int
+     * @return bool
      * @throws NotFoundHttpException
      */
     public function login()
@@ -63,12 +63,10 @@ class LoginForm extends Model
             if (!$user = $this->getUser()) {
                 throw new NotFoundHttpException('User does not exist.');
             }
-            if ($user->status == 'active' && Yii::$app->user->login($user, $this->rememberMe ? 3600*24*7 : 0)) {
-                $user->last_login_at = date('Y-m-d H:i:s');
-                return $user->update();
-            } else {
+            if (!$user->login()) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             }
+            return true;
         }
         return false;
     }
