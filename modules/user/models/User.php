@@ -93,7 +93,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne($id);
     }
 
     /**
@@ -186,6 +186,6 @@ class User extends ActiveRecord implements IdentityInterface
         if (!$hash = Hash::findOne(['hash' => $hash])) {
             throw new NotFoundHttpException('Hash does not exist.');
         }
-        return static::findOne(['id' => $hash->user_id]);
+        return static::findOne($hash->user_id);
     }
 }

@@ -83,8 +83,10 @@ class AuthController extends Controller
             $mail = new Mail();
             $mail->setTemplate($mailTemplate);
             $mail->sendTo($user->email);
-            Yii::$app->session->setFlash('success',
-                Yii::t('user', 'Please, check your email to confirm registration.'));
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t('user', 'Please, check your email to confirm registration.')
+            );
         }
 
         return $this->render('registration', [
