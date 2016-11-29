@@ -22,7 +22,6 @@ class RegistrationForm extends Model
     public $email;
     public $password;
     public $passwordRepeat;
-    public $verifyCode;
 
     /**
      * @return array the validation rules.
