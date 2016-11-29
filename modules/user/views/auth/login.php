@@ -3,16 +3,18 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
+use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile('@web/css/modules/user/login.css', ['depends' => [BootstrapAsset::className()]]);
+
+$this->title = Yii::t('user', 'Login');
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <p><?= Yii::t('user', 'Please fill out the following fields to login:'); ?></p>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -23,23 +25,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'email')->textInput(['autofocus' => true]); ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(); ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
             'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+        ]); ?>
 
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
 
     <div class="col-lg-offset-1">
-        <?= Html::a('Click here to create an account.', '/registration') ?>
+        <?= Html::a(Yii::t('user', 'Click here to create an account.'), '/registration'); ?>
     </div>
 </div>

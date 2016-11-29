@@ -121,8 +121,8 @@ class AuthController extends Controller
 
     /**
      * Login action.
-     *
-     * @return string
+     * @return string|\yii\web\Response
+     * @throws Exception
      */
     public function actionLogin()
     {
@@ -131,8 +131,12 @@ class AuthController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $user = $model->getUser()) {
-            $user->login();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $user = User::findByEmail($model->email);
+            if (!$user->login()) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
+            }
             return $this->goBack();
         }
         return $this->render('login', [
