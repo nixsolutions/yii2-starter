@@ -14,7 +14,14 @@ use yii\base\Model;
 
 /**
  * Class RegistrationForm
+ *
  * @package app\modules\user\models\forms
+ *
+ * @property string $firstName
+ * @property string $lastName
+ * @property string $email
+ * @property string $password
+ * @property string $passwordRepeat
  */
 class RegistrationForm extends Model
 {
@@ -30,10 +37,15 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
+            'emailUnique'   => [
+                'email',
+                'unique',
+                'targetClass' => new User(),
+                'message' => Yii::t('user', 'This email has already been taken.')
+            ],
             [['firstName', 'lastName', 'password', 'passwordRepeat', 'email'], 'required'],
-            ['email', 'email'],
             ['email', 'string'],
-            ['email', 'validateEmail'],
+            ['email', 'email'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
             ['password', 'string', 'min' => 6, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match."],
@@ -52,20 +64,5 @@ class RegistrationForm extends Model
             'password' => Yii::t('user', 'Password'),
             'passwordRepeat' => Yii::t('user', 'Repeat password'),
         ];
-    }
-
-    /**
-     * Validates the email.
-     * This method serves as the inline validation for email.
-     *
-     * @param string $attribute the attribute currently being validated
-     */
-    public function validateEmail($attribute)
-    {
-        if (!$this->hasErrors()) {
-            if ($user = User::findByEmail($this->email)) {
-                $this->addError($attribute, Yii::t('user', 'User with such email address already exists.'));
-            }
-        }
     }
 }

@@ -133,10 +133,15 @@ class AuthController extends Controller
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->validate()) {
 
             $user = User::findByEmail($loginForm->email);
-            if (!$user->login()) {
-                throw new Exception('User could not be logged in.');
+
+            if (!$user || !$user->validatePassword($loginForm->password)) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
+            } elseif ($user && $user->status != User::STATUS_ACTIVE) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
+            } else {
+                $user->login();
+                return $this->goBack();
             }
-            return $this->goBack();
         }
         return $this->render('login', [
             'model' => $loginForm,
