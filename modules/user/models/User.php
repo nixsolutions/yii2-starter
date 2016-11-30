@@ -225,6 +225,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $auth = Yii::$app->authManager;
         $userRole = $auth->getRolesByUser($this->id);
+        if (empty($userRole)) {
+            return false;
+        }
         return array_shift($userRole)->name;
     }
 

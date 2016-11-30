@@ -29,6 +29,7 @@ return [
         'user' => [
             'identityClass' => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
+            'loginUrl'=>['/login'],
         ],
         'request' => [
             'cookieValidationKey' => 'test',
@@ -50,11 +51,6 @@ return [
                 'user' => [
                     'class' => 'yii\i18n\GettextMessageSource',
                     'basePath' => '@app/modules/user/messages',
-                    'sourceLanguage' => 'en_US',
-                ],
-                'user' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
                     'sourceLanguage' => 'en_US',
                 ]
             ],

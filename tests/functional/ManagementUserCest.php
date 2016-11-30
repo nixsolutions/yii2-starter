@@ -6,8 +6,8 @@ class ManagementUserCest
 {
     public function _before(FunctionalTester $I)
     {
-//        $I->amOnRoute('site/login');
-//        $I->amLoggedInAs(1);
+        $I->amOnRoute('/login');
+        $I->amLoggedInAs(1);
     }
 
     public function _after(FunctionalTester $I)
@@ -51,7 +51,7 @@ class ManagementUserCest
 
     public function updateUserInfoSuccess(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/update?id=2'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [

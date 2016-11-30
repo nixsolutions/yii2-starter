@@ -6,8 +6,8 @@ class MailTemplateCest
 {
     public function _before(FunctionalTester $I)
     {
-//        $I->amOnRoute('site/login');
-//        $I->amLoggedInAs(1);
+        $I->amOnRoute('/login');
+        $I->amLoggedInAs(1);
     }
 
     public function _after(FunctionalTester $I)

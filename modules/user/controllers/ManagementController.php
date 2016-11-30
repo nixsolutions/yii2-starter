@@ -29,10 +29,10 @@ class ManagementController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update'],
-                        'roles' => ['?', User::ROLE_ADMIN],
+                        'actions' => ['index', 'view', 'update'],
+                        'roles' => [User::ROLE_ADMIN],
                     ],
-                ],
+                ]
             ],
         ];
     }
