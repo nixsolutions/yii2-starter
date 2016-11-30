@@ -38,7 +38,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
-            ['label' => 'Users Management', 'url' => ['/users/management/index']],
+            ['label' => 'Users Management', 'url' => ['/user/management/index']],
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -58,7 +58,6 @@ AppAsset::register($this);
 
     <div class="container">
         <?php
-        $this->registerJs("$('div .flash.alert').animate({opacity: 1.0}, 4000).fadeOut('slow');", View::POS_END, 'my-options');
         foreach (Yii::$app->session->getAllFlashes() as $key => $message): ?>
             <div class="flash alert alert-<?= $key; ?>">
                 <strong><?= ucfirst($key) ?>!</strong> <?= $message ?>

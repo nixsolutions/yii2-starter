@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 CREATE DATABASE  IF NOT EXISTS `yii_starter_tests` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `yii_starter_tests`;
 -- MySQL dump 10.13  Distrib 5.5.52, for debian-linux-gnu (x86_64)
@@ -158,13 +157,13 @@ LOCK TABLES `hashes` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `mail_template`
+-- Table structure for table `mail_templates`
 --
 
-DROP TABLE IF EXISTS `mail_template`;
+DROP TABLE IF EXISTS `mail_templates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mail_template` (
+CREATE TABLE `mail_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `body` text,
@@ -177,12 +176,12 @@ CREATE TABLE `mail_template` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mail_template`
+-- Dumping data for table `mail_templates`
 --
 
-LOCK TABLES `mail_template` WRITE;
-/*!40000 ALTER TABLE `mail_template` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mail_template` ENABLE KEYS */;
+LOCK TABLES `mail_templates` WRITE;
+/*!40000 ALTER TABLE `mail_templates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,7 +204,7 @@ CREATE TABLE `migration` (
 
 LOCK TABLES `migration` WRITE;
 /*!40000 ALTER TABLE `migration` DISABLE KEYS */;
-INSERT INTO `migration` VALUES ('m000000_000000_base',1479461437),('m140506_102106_rbac_init',1479461437),('m161114_123235_create_mail_template_table',1479909417),('m161118_100631_create_users_table',1479909417),('m161118_100646_assign_admin_role',1479909417),('m161118_165532_create_hashes_table',1479909418),('m161122_093935_create_admin_user',1479909418),('m161123_092314_add_fk_user_assignment',1479909418);
+INSERT INTO `migration` VALUES ('m000000_000000_base',1479461437),('m140506_102106_rbac_init',1479461437),('m161114_123235_create_mail_templates_table',1479909417),('m161118_100631_create_users_table',1479909417),('m161118_100646_assign_admin_role',1479909417),('m161118_165532_create_hashes_table',1479909418),('m161122_093935_create_admin_user',1479909418),('m161123_092314_add_fk_user_assignment',1479909418);
 /*!40000 ALTER TABLE `migration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,9 +240,9 @@ INSERT INTO `users` VALUES (1,'admin','admin','admin@admin.com','$2y$13$c/a//d76
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `mail_template`;
+DROP TABLE IF EXISTS `mail_templates`;
 
-CREATE TABLE `mail_template` (
+CREATE TABLE `mail_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `body` text,
@@ -254,11 +253,11 @@ CREATE TABLE `mail_template` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `mail_template` */
+/*Data for the table `mail_templates` */
 
-LOCK TABLES `mail_template` WRITE;
+LOCK TABLES `mail_templates` WRITE;
 
-insert  into `mail_template`(`id`,`key`,`body`,`name`,`updated_at`,`subject`) values (1,'REGISTER','<p>Hello {{user}}</p>\r\n\r\n\r\n\r\n<p>In {{data}}</p>\r\n\r\n\r\n\r\n<p>Visit link {{link}}</p>\r\n\r\n\r\n\r\n<p>Restore password {{password}}</p>\r\n\r\n\r\n\r\n<p>Second password {{password2}}</p>\r\n\r\n\r\n\r\n<p>{{wrong}}</p>\r\n\r\n\r\n\r\n<p>&nbsp;</p>\r\n\r\n','Register','2016-12-22 17:16:52','Test regisret user');
+insert  into `mail_templates`(`id`,`key`,`body`,`name`,`updated_at`,`subject`) values (1,'REGISTER','<p>Hello {{user}}</p>\r\n\r\n\r\n\r\n<p>In {{data}}</p>\r\n\r\n\r\n\r\n<p>Visit link {{link}}</p>\r\n\r\n\r\n\r\n<p>Restore password {{password}}</p>\r\n\r\n\r\n\r\n<p>Second password {{password2}}</p>\r\n\r\n\r\n\r\n<p>{{wrong}}</p>\r\n\r\n\r\n\r\n<p>&nbsp;</p>\r\n\r\n','Register','2016-12-22 17:16:52','Test regisret user');
 
 UNLOCK TABLES;
 

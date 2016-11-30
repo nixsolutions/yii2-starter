@@ -20,9 +20,6 @@ return [
         'mailer' => [
             'useFileTransport' => true,
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -63,9 +60,6 @@ return [
         ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
-        ],
-        'users' => [
-            'class' => 'app\modules\user\Module',
         ],
     ],
     'params' => $params,

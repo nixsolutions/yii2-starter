@@ -2,7 +2,6 @@
 
 namespace app\modules\user\models;
 
-use Exception;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -220,7 +219,6 @@ class User extends ActiveRecord implements IdentityInterface
         $userRole = $auth->getRolesByUser($this->id);
         return array_shift($userRole)->name;
     }
-}
 
     /**
      * @param $hash

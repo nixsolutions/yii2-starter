@@ -17,7 +17,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'bLuSJSHg9WzzV8RhMeAe-EnGQOxVJRAR',
+            'cookieValidationKey' => 'bLuSJS-EnGQOxVJRARHg9WzzV8RhMeAe',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -57,11 +57,6 @@ $config = [
                     'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
                 ],
-                'user' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
-                    'sourceLanguage' => 'en_US',
-                ]
             ],
         ],
     ],
