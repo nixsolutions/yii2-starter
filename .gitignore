@@ -34,3 +34,7 @@ tests/_support/_generated
 
 vm_build.log
 /config/mailer.php
+
+set-github-oauth-token.sh
+
+@webroot

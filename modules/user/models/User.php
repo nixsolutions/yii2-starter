@@ -3,9 +3,11 @@
 namespace app\modules\user\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "users".
@@ -47,6 +49,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['id', 'integer'],
             [['status'], 'string'],
             ['email', 'email'],
+            ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
             [['auth_key', 'avatar', 'email', 'password'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64]
@@ -92,7 +95,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne($id);
     }
 
     /**
@@ -148,18 +151,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return boolean whether the user is logged in successfully
+     * @throws Exception
      */
     public function login()
     {
-        if ($this->validate()) {
-            $this->last_login_at = date('Y-m-d H:i:s');
-            if (Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
-                return $this->update();
-            }
+        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
+            throw new Exception('User could not be logged in.');
         }
-        return false;
+        $this->last_login_at = date('Y-m-d H:i:s');
+        $this->update();
     }
 
     /**
@@ -184,20 +184,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $formData
-     * @return array|bool
+     * @param $hash
+     * @return static
+     * @throws NotFoundHttpException
      */
-    public function register($formData)
+    public static function findByHash($hash)
     {
-        $this->create($formData);
-
-        $hash = new Hash();
-        if ($hashKey = $hash->create($this->id)) {
-            return [
-                'user_id' => $this->id,
-                'hash' => $hashKey,
-            ];
+        if (!$hash = Hash::findOne(['hash' => $hash])) {
+            throw new NotFoundHttpException('Hash does not exist.');
         }
-        return false;
+        return static::findOne($hash->user_id);
     }
 }

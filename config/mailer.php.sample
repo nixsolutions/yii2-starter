@@ -4,8 +4,8 @@ return [
     'transport' => [
         'class' => 'Swift_SmtpTransport',
         'host' => 'smtp.gmail.com',
-        'username' => '',
-        'password' => '',
+        'username' => 'yii2starter@gmail.com',
+        'password' => '123456qw',
         'port' => '587',
         'encryption' => 'tls',
     ],

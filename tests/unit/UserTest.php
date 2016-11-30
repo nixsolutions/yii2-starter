@@ -19,7 +19,7 @@ class UserTest extends \Codeception\Test\Unit
         $form->email = 'test@test.com';
         $form->password = '123456';
 
-        $user->create($form);
-        $this->assertNotEmpty($user->create($form));
+        $user = $user->create($form);
+        $this->assertNotEmpty($user);
     }
 }

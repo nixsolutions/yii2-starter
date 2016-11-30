@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m161123_092314_add_fk_user_assignment extends Migration
+class m161118_100633_add_fk_user_assignment extends Migration
 {
     public function up()
     {

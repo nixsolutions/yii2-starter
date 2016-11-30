@@ -15,6 +15,9 @@ use yii\db\ActiveRecord;
  */
 class Hash extends ActiveRecord
 {
+    const TYPE_REGISTER = 'register';
+    const TYPE_RECOVER = 'recover';
+
     /**
      * @inheritdoc
      */
@@ -50,14 +53,18 @@ class Hash extends ActiveRecord
     }
 
     /**
+
+     * @param $type
      * @param $userId
      * @return string
      */
-    public function create($userId)
+    public function generate($type, $userId)
     {
         $this->user_id = $userId;
         $this->hash = Yii::$app->security->generateRandomString();
+        $this->type = $type;
         $this->save();
+
         return $this->hash;
     }
 
