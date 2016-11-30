@@ -4,8 +4,8 @@ namespace app\modules\user\controllers;
 
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
+use app\modules\user\models\forms\ChangePasswordForm;
 use app\modules\user\models\forms\LoginForm;
-use app\modules\user\models\forms\PasswordForm;
 use app\modules\user\models\forms\RecoveryForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
@@ -30,10 +30,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['registration', 'login'],
+                'only' => ['registration', 'login', 'recovery'],
                 'rules' => [
                     [
-                        'actions' => ['registration', 'login'],
+                        'actions' => ['registration', 'login', 'recovery'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -113,10 +113,7 @@ class AuthController extends Controller
         }
         $user->status = User::STATUS_ACTIVE;
         $user->update();
-
-        if (!$user->login()) {
-            throw new Exception('Invalid user data.');
-        }
+        $user->login();
 
         return $this->goHome();
     }
@@ -153,45 +150,54 @@ class AuthController extends Controller
     /**
      * Sends link for password recovery on user email
      *
-     * @return string|\yii\web\Response
+     * @throws Exception
      * @throws NotFoundHttpException
      */
     public function actionRecovery()
     {
         $recoveryForm = new RecoveryForm();
+
         if ($recoveryForm->load(Yii::$app->request->post()) && $recoveryForm->validate()) {
 
-            if (($user = User::findByEmail($recoveryForm->email)) && ($user->status == User::STATUS_ACTIVE)) {
-
-                if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
-                    throw new NotFoundHttpException('Template does not exist.');
-                }
-
-                $hashKey = Hash::findByUserID($user->id);
-                $hashKey->type = 'recover';
-                $hashKey->update();
-                $mailTemplate->replacePlaceholders([
-                    'name' => $user->first_name,
-                    'link' => Yii::$app->urlManager->createAbsoluteUrl(['user/auth/change-password',
-                        'user_id' => $user->id,
-                        'hash' => $hashKey->hash
-                    ]),
-                ]);
-
-                $mail = new Mail();
-                $mail->setTemplate($mailTemplate);
-                $mail->sendTo($user->email);
-
-                Yii::$app->session->setFlash('success',
-                    Yii::t('user', 'Please check your email and follow instructions to recover password.'));
-                return $this->refresh();
+            if (!$user = User::findByEmail($recoveryForm->email)) {
+                throw new NotFoundHttpException('User does not exist.');
             }
+            if ($user->status != User::STATUS_ACTIVE) {
+                throw new Exception('User is not active.');
+            }
+
+            if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
+                throw new NotFoundHttpException('Template does not exist.');
+            }
+
+            $hash = new Hash();
+            $mailTemplate->replacePlaceholders([
+                'name' => $user->first_name,
+                'link' => Yii::$app->urlManager->createAbsoluteUrl([
+                    'user/auth/change-password',
+                    'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id)
+                ]),
+            ]);
+
+            $mail = new Mail();
+            $mail->setTemplate($mailTemplate);
+            $mail->sendTo($user->email);
+
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t('user', 'Please check your email and follow instructions to recover password.')
+            );
         }
         return $this->render('recovery', [
             'model' => $recoveryForm,
         ]);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     */
     public function actionChangePassword()
     {
         if (!$hash = Yii::$app->request->get('hash')) {
@@ -200,16 +206,17 @@ class AuthController extends Controller
         if (!$user = User::findByHash($hash)) {
             throw new NotFoundHttpException('User does not exist.');
         }
-        $passwordForm = new PasswordForm();
-        if ($passwordForm->load(Yii::$app->request->post()) && $passwordForm->validate()) {
-            $user->password = Yii::$app->security->generatePasswordHash($passwordForm->newPassword);
+        $changePasswordForm = new ChangePasswordForm();
+
+        if ($changePasswordForm->load(Yii::$app->request->post()) && $changePasswordForm->validate()) {
+            $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
             $user->update();
-            if ($user->login()) {
-                return $this->goHome();
-            }
+            $user->login();
+
+            return $this->goHome();
         }
         return $this->render('change-password', [
-            'model' => $passwordForm,
+            'model' => $changePasswordForm,
         ]);
     }
 

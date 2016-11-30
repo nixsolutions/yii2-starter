@@ -53,7 +53,6 @@ class Hash extends ActiveRecord
     }
 
     /**
-
      * @param $type
      * @param $userId
      * @return string

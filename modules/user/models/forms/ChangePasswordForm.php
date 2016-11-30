@@ -8,7 +8,7 @@ use yii\base\Model;
 /**
  * PasswordForm is the model behind the changing password form.
  */
-class PasswordForm extends Model
+class ChangePasswordForm extends Model
 {
     public $newPassword;
     public $repeatPassword;

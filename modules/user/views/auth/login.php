@@ -7,8 +7,7 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-
-$this->registerCssFile('@web/css/modules/user/login.css', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile('@app/web/css/modules/user/login.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
@@ -27,22 +26,25 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'email')->textInput(['autofocus' => true]); ?>
+    <?= $form->field($model, 'email')->textInput(['autofocus' => true]); ?>
 
-        <?= $form->field($model, 'password')->passwordInput(); ?>
+    <?= $form->field($model, 'password')->passwordInput(); ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
+    <?= $form->field($model, 'rememberMe')->checkbox([
+        'template' => "<div class=\"col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-12\">{error}</div>",
+    ]); ?>
 
-            'template' => "<div class=\"col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-12\">{error}</div>",
-        ]); ?>
-        
-        <?= Html::a('Forgot password?', '/recovery'); ?>
-
-        <div class="form-group">
-            <div class="col-lg-12">
-                <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
-            </div>
+    <div class="form-group">
+        <div class="col-lg-12">
+            <?= Html::a('Forgot password?', '/recovery'); ?>
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-12">
+            <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
+        </div>
+    </div>
 
     <?php ActiveForm::end(); ?>
 

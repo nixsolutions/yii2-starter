@@ -7,8 +7,10 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->registerCssFile('@web/css/user-module.css', ['depends' => [BootstrapAsset::className()]]);
-$this->title = 'Password recovery';
+$this->registerCssFile('@app/web/css/modules/user/recovery.css', ['depends' => [BootstrapAsset::className()]]);
+
+$this->title = Yii::t('user', 'Password recovery');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-recovery">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -19,16 +21,16 @@ $this->title = 'Password recovery';
         'id' => 'recovery-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-12 control-label'],
         ],
     ]); ?>
 
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
     <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Send', ['class' => 'btn btn-primary', 'name' => 'send-button']) ?>
+        <div class="col-lg-12">
+            <?= Html::submitButton(Yii::t('user', 'Send'), ['class' => 'btn btn-primary', 'name' => 'send-button']) ?>
         </div>
     </div>
 

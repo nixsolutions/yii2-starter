@@ -12,8 +12,8 @@ class m161129_090146_add_change_password_template extends Migration
                 . '<p>To change your password, click here please {{link}}.</p>'
                 . '<p>After setting new password you will be automatically logged in.</p>',
             'updated_at' => date('Y-m-d H:i:s'),
-            'name' => 'Confirm registration',
-            'subject' => 'Registration confirmation'
+            'name' => 'Password recovery',
+            'subject' => 'Password recovery'
         ]);
     }
 
