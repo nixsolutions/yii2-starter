@@ -4,6 +4,7 @@ DB_USER='root'
 DB_PORT='3306'
 DB_PASSWORD='root'
 DB_NAME='yii_starter'
+DB_NAME_TEST='yii_starter_tests'
 
 
 echo "Updating packages..."
@@ -38,6 +39,9 @@ echo vagrant | sudo -S sed -i "s/^bind-address.*127.0.0.1/bind-address=0.0.0.0/"
 
 echo "Creating DB..."
 mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /vagrant/vm_build.log 2>&1
+
+echo "Creating DB for test environment"
+mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /vagrant/vm_build.log 2>&1
 
 echo "Installing php 7.0..."
 echo vagrant | sudo -S add-apt-repository ppa:ondrej/php
