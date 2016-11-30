@@ -1,11 +1,11 @@
 <?php
 
+use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $user app\modules\user\models\User */
-/* @var $authAssignmentModel app\modules\user\models\AuthAssignment */
 /* @var $roles array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
@@ -28,7 +28,10 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($user, 'role')->dropDownList($roles); ?>
+    <?= $form->field($user, 'role')->dropDownList([
+        User::ROLE_USER => ucfirst(User::ROLE_USER),
+        User::ROLE_ADMIN => ucfirst(User::ROLE_ADMIN),
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>

@@ -77,20 +77,16 @@ class ManagementController extends Controller
     {
         $user = $this->findModel($id);
         $userForm = new UserForm();
+        $userForm->attributes = $user->attributes;
+        $userForm->role = $user->getRoleName();
 
-        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
-            $userForm->update($user);
+        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate() && $userForm->update($user)) {
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
             return $this->redirect(['view', 'id' => $user->id]);
         }
 
-        $roles = ArrayHelper::toArray(Yii::$app->authManager->getRoles(), ['yii\rbac\Role' => ['name']]);
-        $roles = ArrayHelper::map($roles, 'name', 'name');
-        $userForm->attributes = $user->attributes;
-        $userForm->role = $user->getRoleName();
         return $this->render('update', [
             'userForm' => $userForm,
-            'roles' => $roles,
             'id' => $user->id,
         ]);
     }
