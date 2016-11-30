@@ -59,10 +59,14 @@ class ManagementUserCest
             'UserForm[last_name]' => 'test',
             'UserForm[email]' => 'test.key@sd.sd',
             'UserForm[status]' => 'created',
-            'UserForm[role]' => 'admin',
+            'UserForm[role]' => 'user',
         ]);
         $I->expectTo('see that user info updated successful');
         $I->see('test name');
+        $I->see('test');
+        $I->see('test.key@sd.sd');
+        $I->see('created');
+        $I->see('user');
     }
 
     public function updateUserWithWrongData(FunctionalTester $I)

@@ -185,30 +185,6 @@ LOCK TABLES `mail_templates` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `migration`
---
-
-DROP TABLE IF EXISTS `migration`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `migration`
---
-
-LOCK TABLES `migration` WRITE;
-/*!40000 ALTER TABLE `migration` DISABLE KEYS */;
-INSERT INTO `migration` VALUES ('m000000_000000_base',1479461437),('m140506_102106_rbac_init',1479461437),('m161114_123235_create_mail_templates_table',1479909417),('m161118_100631_create_users_table',1479909417),('m161118_100646_assign_admin_role',1479909417),('m161118_165532_create_hashes_table',1479909418),('m161122_093935_create_admin_user',1479909418),('m161123_092314_add_fk_user_assignment',1479909418);
-/*!40000 ALTER TABLE `migration` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 
