@@ -55,11 +55,11 @@ class ManagementUserCest
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
-            'UpdateUserForm[firstName]' => 'test name',
-            'UpdateUserForm[lastName]' => 'test',
-            'UpdateUserForm[email]' => 'test.key@sd.sd',
-            'UpdateUserForm[status]' => 'created',
-            'UpdateUserForm[role]' => 'admin',
+            'UserForm[first_name]' => 'test name',
+            'UserForm[last_name]' => 'test',
+            'UserForm[email]' => 'test.key@sd.sd',
+            'UserForm[status]' => 'created',
+            'UserForm[role]' => 'admin',
         ]);
         $I->expectTo('see that user info updated successful');
         $I->see('test name');
@@ -71,11 +71,11 @@ class ManagementUserCest
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
-            'UpdateUserForm[firstName]' => '',
-            'UpdateUserForm[lastName]' => '',
-            'UpdateUserForm[email]' => 't',
-            'UpdateUserForm[status]' => 'created',
-            'UpdateUserForm[role]' => 'admin',
+            'UserForm[first_name]' => '',
+            'UserForm[last_name]' => '',
+            'UserForm[email]' => 't',
+            'UserForm[status]' => 'created',
+            'UserForm[role]' => 'admin',
         ]);
         $I->expectTo('see validation errors');
         $I->see('First name cannot be blank.');
@@ -89,11 +89,11 @@ class ManagementUserCest
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
-            'UpdateUserForm[firstName]' => 'test',
-            'UpdateUserForm[lastName]' => 'test',
-            'UpdateUserForm[email]' => 'tss@sds.ss',
-            'UpdateUserForm[status]' => 'error',
-            'UpdateUserForm[role]' => 'error',
+            'UserForm[first_name]' => 'test',
+            'UserForm[last_name]' => 'test',
+            'UserForm[email]' => 'tss@sds.ss',
+            'UserForm[status]' => 'error',
+            'UserForm[role]' => 'error',
         ]);
         $I->expectTo('see validation errors');
         $I->see('Status is invalid.');

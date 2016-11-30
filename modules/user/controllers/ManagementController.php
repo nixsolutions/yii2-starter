@@ -3,7 +3,7 @@
 namespace app\modules\user\controllers;
 
 use app\modules\user\models\AuthItem;
-use app\modules\user\models\forms\UpdateUserForm;
+use app\modules\user\models\forms\UserForm;
 use app\modules\user\models\User;
 use Yii;
 use app\modules\user\models\SearchUser;
@@ -32,8 +32,8 @@ class ManagementController extends Controller
                         'actions' => ['index', 'view', 'create', 'update'],
                         'roles' => ['?', User::ROLE_ADMIN],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -47,7 +47,10 @@ class ManagementController extends Controller
         $searchModel = new SearchUser();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', compact('searchModel', 'dataProvider'));
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -72,27 +75,24 @@ class ManagementController extends Controller
      */
     public function actionUpdate($id)
     {
-        $userForm = new UpdateUserForm();
-        $userForm->id = $id;
         $user = $this->findModel($id);
-        $userForm->email = $user->email;
-        $userForm->firstName = $user->first_name;
-        $userForm->lastName= $user->last_name;
-        $userForm->role = ArrayHelper::getValue($user->authAssignments, 'item_name', '');
-
-        if (Yii::$app->request->isAjax && $userForm->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $userForm->validate();
-        }
+        $userForm = new UserForm();
 
         if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
-            $userForm->update();
+            $userForm->update($user);
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
-            return $this->redirect(['view', 'id' => $userForm->id]);
+            return $this->redirect(['view', 'id' => $user->id]);
         }
 
-        $roles = ArrayHelper::map(AuthItem::find()->all(), 'name', 'name');
-        return $this->render('update', compact('userForm', 'roles'));
+        $roles = ArrayHelper::toArray(Yii::$app->authManager->getRoles(), ['yii\rbac\Role' => ['name']]);
+        $roles = ArrayHelper::map($roles, 'name', 'name');
+        $userForm->attributes = $user->attributes;
+        $userForm->role = $user->getRoleName();
+        return $this->render('update', [
+            'userForm' => $userForm,
+            'roles' => $roles,
+            'id' => $user->id,
+        ]);
     }
 
     /**

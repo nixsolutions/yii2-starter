@@ -13,6 +13,9 @@ return [
     'basePath' => dirname(__DIR__),
     'language' => 'en-US',
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'db' => require(__DIR__ . '/test_db.php'),
         'mailer' => [
             'useFileTransport' => true,

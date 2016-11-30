@@ -2,6 +2,7 @@
 
 namespace app\modules\user\models;
 
+use Exception;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -20,14 +21,13 @@ use yii\web\IdentityInterface;
  * @property string $created_at
  * @property string $last_login_at
  * @property string $auth_key
- *
- * @property AuthAssignment[] $authAssignments
- * @property AuthItem[] $itemNames
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_ACTIVE = 'active';
+
     const STATUS_BLOCKED = 'blocked';
+
     const STATUS_CREATED = 'created';
 
     /**
@@ -61,7 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['created_at', 'last_login_at'], 'safe'],
             [['auth_key', 'avatar', 'email'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64],
-            ['password', 'string', 'max' => 32]
+            ['password', 'string', 'max' => 32],
         ];
     }
 
@@ -94,26 +94,9 @@ class User extends ActiveRecord implements IdentityInterface
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
                 ],
-                'value' => date('Y-m-d H:i:s')
+                'value' => date('Y-m-d H:i:s'),
             ],
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAuthAssignments()
-    {
-        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemNames()
-    {
-        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])
-            ->viaTable('auth_assignment', ['user_id' => 'id']);
     }
 
     /**
@@ -199,5 +182,37 @@ class User extends ActiveRecord implements IdentityInterface
         $auth->assign($userRole, $this->getId());
 
         return $this;
+    }
+
+    /**
+     * Assign role for user
+     *
+     * @param $roleName
+     */
+    public function assignRole($roleName)
+    {
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRole($roleName);
+        $auth->assign($userRole, $this->getId());
+    }
+
+    /**
+     * Revoke all assigned roles for user
+     */
+    public function revokeAllRoles()
+    {
+        Yii::$app->authManager->revokeAll($this->id);
+    }
+
+    /**
+     * Return role for user
+     *
+     * @return string
+     */
+    public function getRoleName()
+    {
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRolesByUser($this->id);
+        return array_shift($userRole)->name;
     }
 }

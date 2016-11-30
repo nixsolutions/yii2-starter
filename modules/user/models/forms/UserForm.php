@@ -1,0 +1,77 @@
+<?php
+
+namespace app\modules\user\models\forms;
+
+use app\modules\user\models\User;
+use Yii;
+use yii\base\Model;
+
+/**
+ * UserForm is the model behind the update user.
+ *
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $status
+ * @property string $role
+ *
+ * @package app\modules\user\models\forms
+ */
+class UserForm extends Model
+{
+    public $first_name;
+    public $last_name;
+    public $email;
+    public $status;
+    public $role;
+
+    /**
+     * @return array the validation rules.
+     */
+    public function rules()
+    {
+        return [
+            [['first_name', 'last_name', 'email', 'role'], 'required'],
+            ['email', 'email'],
+            ['email', 'string'],
+            [['first_name', 'last_name'], 'string', 'max' => 64],
+            [
+                ['status'], 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_BLOCKED, User::STATUS_CREATED],
+                'message' => Yii::t('user', 'Status is invalid.'),
+            ],
+            [
+                ['role'], 'in', 'range' => [User::ROLE_ADMIN, User::ROLE_USER],
+                'message' => Yii::t('user', 'Role is invalid.'),
+            ],
+        ];
+    }
+
+    /**
+     * @return array customized attribute labels
+     */
+    public function attributeLabels()
+    {
+        return [
+            'first_name' => Yii::t('user', 'First name'),
+            'last_name' => Yii::t('user', 'Last name'),
+            'email' => Yii::t('user', 'Email'),
+        ];
+    }
+
+    /**
+     * Save data to User and AuthAssignment tables
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function update(User $user)
+    {
+        $user->attributes = $this->attributes;
+        if (false === $user->update(false, ['first_name', 'last_name', 'email', 'status'])) {
+            return false;
+        }
+        $user->revokeAllRoles();
+        $user->assignRole($this->role);
+        return true;
+    }
+}

@@ -25,7 +25,10 @@ $this->params['breadcrumbs'][] = $model->first_name;
             'first_name',
             'last_name',
             'email:email',
-            'authAssignments.item_name',
+            [
+                'label' => Yii::t('user', 'Role'),
+                'value' => $model->getRoleName(),
+            ],
             'status',
             'created_at',
             'last_login_at',

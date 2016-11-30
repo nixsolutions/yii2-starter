@@ -3,7 +3,6 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\user\models\SearchUser */
@@ -15,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="users-index">
 
     <h1><?= Html::encode($this->title); ?></h1>
-    <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -45,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => \Yii::t('user', 'Role'),
                 'attribute' => 'authAssignments.item_name',
                 'value' => function ($model) {
-                    return ArrayHelper::getValue($model->authAssignments, 'item_name', 'no role');
+                    return $model->getRoleName() ?: 'no role';
                 },
             ],
             [
@@ -57,4 +55,3 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-    <?php Pjax::end(); ?></div>

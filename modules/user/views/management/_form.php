@@ -14,13 +14,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>
 
-    <?= $form->field($user, 'firstName')->textInput(['maxlength' => true]); ?>
+    <?= $form->field($user, 'first_name')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'lastName')->textInput(['maxlength' => true]); ?>
+    <?= $form->field($user, 'last_name')->textInput(['maxlength' => true]); ?>
 
     <?= $form->field($user, 'email')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'status',  ['enableAjaxValidation' => true])->dropDownList(
+    <?= $form->field($user, 'status')->dropDownList(
         [
             'created' => Yii::t('user', 'Created'),
             'active' => Yii::t('user', 'Active'),
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         ]
     ); ?>
 
-    <?= $form->field($user, 'role', ['enableAjaxValidation' => true])->dropDownList($roles); ?>
+    <?= $form->field($user, 'role')->dropDownList($roles); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>

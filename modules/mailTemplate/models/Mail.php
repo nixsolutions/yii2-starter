@@ -13,18 +13,18 @@ use yii\helpers\ArrayHelper;
  *
  * How to use
  *
- * if (!$mailTemplate = MailTemplate::findByKey('REGISTER')) {
+ * if (!$mailTemplate = MailTemplate::findByKey('YOUR_KEY')) {
  * throw new NotFoundHttpException('Template not found in database');
  * }
  * $mailTemplate->replacePlaceholders([
- * 'user' => 'vasia',
- * 'link' => 'https://www.google.com.ua',
- * 'password' => 'qwerty
+ * 'key1' => 'value1',
+ * 'key2' => 'value2',
+ * 'key3' => 'value3',
  * ]);
  *
  * $sendMail = new Mail();
  * $sendMail->setTemplate($mailTemplate);
- * $sendMail->sendTo('goodeveningproj@gmail.com');
+ * $sendMail->sendTo('recipient@gmail.com');
  *
  * @package app\modules\mailTemplate\models
  */

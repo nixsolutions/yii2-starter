@@ -6,8 +6,8 @@ class MailTemplateCest
 {
     public function _before(FunctionalTester $I)
     {
-        $I->amOnRoute('site/login');
-        $I->amLoggedInAs(100);
+//        $I->amOnRoute('site/login');
+//        $I->amLoggedInAs(100);
     }
 
     public function _after(FunctionalTester $I)
@@ -37,6 +37,12 @@ class MailTemplateCest
         ]);
         $I->expectTo('see that name cannot be blank');
         $I->see('Name cannot be blank.');
+    }
+
+    public function updateNotExistUser(FunctionalTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/mailTemplate/template/update?id=1000'));
+        $I->seeResponseCodeIs(404);
     }
 
     public function updateFormSuccessful(FunctionalTester $I)

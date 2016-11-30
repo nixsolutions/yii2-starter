@@ -58,7 +58,7 @@ AppAsset::register($this);
 
     <div class="container">
         <?php
-        $this->registerJs("$('div .flash .alert').animate({opacity: 1.0}, 4000).fadeOut('slow');", View::POS_END, 'my-options');
+        $this->registerJs("$('div .flash.alert').animate({opacity: 1.0}, 4000).fadeOut('slow');", View::POS_END, 'my-options');
         foreach (Yii::$app->session->getAllFlashes() as $key => $message): ?>
             <div class="flash alert alert-<?= $key; ?>">
                 <strong><?= ucfirst($key) ?>!</strong> <?= $message ?>
