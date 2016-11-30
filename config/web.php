@@ -3,7 +3,8 @@
 $params = require(__DIR__ . '/params.php');
 $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/routes.php'),
-    require(__DIR__ . '/../modules/mailTemplate/config/routes.php')
+    require(__DIR__ . '/../modules/mailTemplate/config/routes.php'),
+    require(__DIR__ . '/../modules/user/config/routes.php')
 );
 
 $config = [
@@ -39,13 +40,11 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => $routes,
         ],
-
         'i18n' => [
             'translations' => [
                 'mailTemplate' => [
@@ -58,16 +57,20 @@ $config = [
                     'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
                 ],
+                'user' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ]
             ],
         ],
-
     ],
     'modules' => [
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
-        ],
-        'users' => [
-            'class' => 'app\modules\user\Module',
         ],
     ],
     'params' => $params,

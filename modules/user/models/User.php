@@ -7,6 +7,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "users".
@@ -24,20 +25,19 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    /** Active user status */
     const STATUS_ACTIVE = 'active';
 
+    /** Blocked user status */
     const STATUS_BLOCKED = 'blocked';
 
+    /** Created user status */
     const STATUS_CREATED = 'created';
 
-    /**
-     * Role user
-     */
+    /** Role user */
     const ROLE_USER = 'user';
 
-    /**
-     * Role admin
-     */
+    /** Role admin */
     const ROLE_ADMIN = 'admin';
 
     public $rememberMe;
@@ -56,12 +56,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['id', 'integer'],
             [['status'], 'string'],
             ['email', 'email'],
             [['created_at', 'last_login_at'], 'safe'],
-            [['auth_key', 'avatar', 'email'], 'string'],
-            [['first_name', 'last_name'], 'string', 'max' => 64],
-            ['password', 'string', 'max' => 32],
+            [['auth_key', 'avatar', 'email', 'password'], 'string'],
+            [['first_name', 'last_name'], 'string', 'max' => 64]
         ];
     }
 
@@ -71,15 +71,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'first_name' => 'First name',
-            'last_name' => 'Last name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'avatar' => 'Avatar',
-            'status' => 'Status',
-            'created_at' => 'Registration time',
-            'last_login_at' => 'Last sign in',
+            'id' => Yii::t('user', 'ID'),
+            'first_name' => Yii::t('user', 'First name'),
+            'last_name' => Yii::t('user', 'Last name'),
+            'email' => Yii::t('user', 'Email'),
+            'password' => Yii::t('user', 'Password'),
+            'avatar' => Yii::t('user', 'Avatar'),
+            'status' => Yii::t('user', 'Status'),
+            'created_at' => Yii::t('user', 'Registration time'),
+            'last_login_at' => Yii::t('user', 'Last sign in'),
         ];
     }
 
@@ -94,7 +94,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
                 ],
-                'value' => date('Y-m-d H:i:s'),
+                'value' => date('Y-m-d H:i:s')
             ],
         ];
     }
@@ -104,7 +104,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne($id);
     }
 
     /**
@@ -158,6 +158,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function login()
     {
         if ($this->validate()) {
+
+            if (Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
+                $this->last_login_at = date('Y-m-d H:i:s');
+                return $this->update();
+            }
             return Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         return false;
@@ -214,5 +219,19 @@ class User extends ActiveRecord implements IdentityInterface
         $auth = Yii::$app->authManager;
         $userRole = $auth->getRolesByUser($this->id);
         return array_shift($userRole)->name;
+    }
+}
+
+    /**
+     * @param $hash
+     * @return static
+     * @throws NotFoundHttpException
+     */
+    public static function findByHash($hash)
+    {
+        if (!$hash = Hash::findOne(['hash' => $hash])) {
+            throw new NotFoundHttpException('Hash does not exist.');
+        }
+        return static::findOne($hash->user_id);
     }
 }
