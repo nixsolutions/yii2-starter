@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * How to use
  *
  * if (!$mailTemplate = MailTemplate::findByKey('YOUR_KEY')) {
- * throw new NotFoundHttpException('Template not found in database');
+ * throw new NotFoundHttpException('Template not found in database.');
  * }
  * $mailTemplate->replacePlaceholders([
  * 'key1' => 'value1',
@@ -61,7 +61,7 @@ class Mail extends Model
     public function sendTo($emailTo)
     {
         if (null === $this->template) {
-            throw new InvalidConfigException('Template does not exist. First set template');
+            throw new InvalidConfigException('Template does not exist. First set template.');
         }
         $fromName = ArrayHelper::getValue(Yii::$app->params, 'mail.fromName', self::FROM_NAME);
         $fromEmail = ArrayHelper::getValue(Yii::$app->params, 'mail.fromEmail', self::FROM_EMAIL);
@@ -74,7 +74,7 @@ class Mail extends Model
                 ->setHtmlBody($this->template->body)
                 ->send();
         } catch (Exception $e) {
-            throw new MailNotSendException("Cannot send email to $emailTo", $e->getCode(), $e);
+            throw new MailNotSendException("Cannot send email to $emailTo.", $e->getCode(), $e);
         }
     }
 }

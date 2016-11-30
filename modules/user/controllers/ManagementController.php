@@ -81,7 +81,7 @@ class ManagementController extends Controller
         $userForm->role = $user->getRoleName();
 
         if ($userForm->load(Yii::$app->request->post()) && $userForm->validate() && $userForm->update($user)) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved'));
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved.'));
             return $this->redirect(['view', 'id' => $user->id]);
         }
 

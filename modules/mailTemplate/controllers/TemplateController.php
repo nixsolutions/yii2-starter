@@ -75,7 +75,7 @@ class TemplateController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Template saved'));
+            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Template saved.'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
