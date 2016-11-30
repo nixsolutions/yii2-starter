@@ -16,7 +16,7 @@ class ManagementUserCest
 
     public function seeUsersGrid(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/index'));
+        $I->amOnPage(Url::toRoute('/user/management/index'));
         $I->seeResponseCodeIs(200);
         $I->see('Users');
         $I->expectTo('See users greed');
@@ -34,7 +34,7 @@ class ManagementUserCest
 
     public function seeUserDescription(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/view?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/view?id=1'));
         $I->seeResponseCodeIs(200);
         $I->expectTo('see information about user');
         $I->see('admin', 'td');
@@ -44,14 +44,14 @@ class ManagementUserCest
 
     public function seeUpdateButton(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/view?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/view?id=1'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'a');
     }
 
     public function updateUserInfoSuccess(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/update?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
@@ -67,7 +67,7 @@ class ManagementUserCest
 
     public function updateUserWithWrongData(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/update?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
@@ -85,7 +85,7 @@ class ManagementUserCest
 
     public function updateUserWithWrongStatusAndRole(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/users/management/update?id=1'));
+        $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
         $I->submitForm('#userForm', [
@@ -104,7 +104,5 @@ class ManagementUserCest
     {
         $I->amOnPage(Url::toRoute('/users/management/update?id=1000'));
         $I->seeResponseCodeIs(404);
-        $I->expectTo('see that page not found');
-        $I->see('The requested page does not exist');
     }
 }
