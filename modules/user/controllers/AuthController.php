@@ -4,6 +4,7 @@ namespace app\modules\user\controllers;
 
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
+use app\modules\user\models\forms\LoginForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
@@ -27,10 +28,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['registration'],
+                'only' => ['registration', 'login'],
                 'rules' => [
                     [
-                        'actions' => ['registration'],
+                        'actions' => ['registration', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -116,5 +117,34 @@ class AuthController extends Controller
         }
 
         return $this->goHome();
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     * @throws Exception
+     */
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $loginForm = new LoginForm();
+        if ($loginForm->load(Yii::$app->request->post()) && $loginForm->validate()) {
+
+            $user = User::findByEmail($loginForm->email);
+
+            if (!$user || !$user->validatePassword($loginForm->password)) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
+            } elseif ($user && $user->status != User::STATUS_ACTIVE) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
+            } else {
+                $user->login();
+                return $this->goBack();
+            }
+        }
+        return $this->render('login', [
+            'model' => $loginForm,
+        ]);
     }
 }

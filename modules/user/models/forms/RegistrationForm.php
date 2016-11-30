@@ -8,12 +8,20 @@
 
 namespace app\modules\user\models\forms;
 
+use app\modules\user\models\User;
 use Yii;
 use yii\base\Model;
 
 /**
  * Class RegistrationForm
+ *
  * @package app\modules\user\models\forms
+ *
+ * @property string $firstName
+ * @property string $lastName
+ * @property string $email
+ * @property string $password
+ * @property string $passwordRepeat
  */
 class RegistrationForm extends Model
 {
@@ -29,9 +37,15 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
+            'emailUnique'   => [
+                'email',
+                'unique',
+                'targetClass' => new User(),
+                'message' => Yii::t('user', 'This email has already been taken.')
+            ],
             [['firstName', 'lastName', 'password', 'passwordRepeat', 'email'], 'required'],
-            ['email', 'email'],
             ['email', 'string'],
+            ['email', 'email'],
             [['firstName', 'lastName'], 'string', 'max' => 64],
             ['password', 'string', 'min' => 6, 'max' => 32],
             ['passwordRepeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match."],
