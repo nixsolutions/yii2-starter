@@ -10,6 +10,7 @@ use yii\bootstrap\ActiveForm;
 $this->registerCssFile('@web/css/modules/user/login.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Login');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -20,7 +21,7 @@ $this->title = Yii::t('user', 'Login');
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
@@ -30,18 +31,18 @@ $this->title = Yii::t('user', 'Login');
         <?= $form->field($model, 'password')->passwordInput(); ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "<div class=\"col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-12\">{error}</div>",
         ]); ?>
 
         <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
+            <div class="col-lg-12">
                 <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
 
-    <div class="col-lg-offset-1">
+    <div>
         <?= Html::a(Yii::t('user', 'Click here to create an account.'), '/registration'); ?>
     </div>
 </div>
