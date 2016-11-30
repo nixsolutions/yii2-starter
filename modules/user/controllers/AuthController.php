@@ -134,7 +134,7 @@ class AuthController extends Controller
 
             $user = User::findByEmail($loginForm->email);
             if (!$user->login()) {
-                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
+                throw new Exception('User could not be logged in.');
             }
             return $this->goBack();
         }
