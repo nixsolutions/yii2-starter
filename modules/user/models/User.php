@@ -3,6 +3,7 @@
 namespace app\modules\user\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -58,6 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['id', 'integer'],
             [['status'], 'string'],
             ['email', 'email'],
+            ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
             [['auth_key', 'avatar', 'email', 'password'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64]
@@ -115,6 +117,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @param $email
+     * @return static
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email]);
+    }
+
+    /**
      * @inheritdoc
      */
     public function getId()
@@ -146,25 +157,22 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === Yii::$app->security->generatePasswordHash($password);
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**
      * Logs in a user using the provided username and password.
      *
      * @return boolean whether the user is logged in successfully
+     * @throws Exception
      */
     public function login()
     {
-        if ($this->validate()) {
-
-            if (Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
-                $this->last_login_at = date('Y-m-d H:i:s');
-                return $this->update();
-            }
-            return Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
+            throw new Exception('User could not be logged in.');
         }
-        return false;
+        $this->last_login_at = date('Y-m-d H:i:s');
+        $this->update();
     }
 
     /**

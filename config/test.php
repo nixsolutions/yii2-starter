@@ -2,7 +2,8 @@
 $params = require(__DIR__ . '/params.php');
 $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/routes.php'),
-    require(__DIR__ . '/../modules/mailTemplate/config/routes.php')
+    require(__DIR__ . '/../modules/mailTemplate/config/routes.php'),
+    require(__DIR__ . '/../modules/user/config/routes.php')
 );
 
 /**
@@ -51,6 +52,11 @@ return [
                     'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
                 ],
+                'user' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ]
             ],
         ],
     ],

@@ -176,11 +176,12 @@ CREATE TABLE `mail_templates` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mail_templates`
+-- Dumping data for table `mail_template`
 --
 
 LOCK TABLES `mail_templates` WRITE;
 /*!40000 ALTER TABLE `mail_templates` DISABLE KEYS */;
+INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation');
 /*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +203,8 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `last_login_at` datetime DEFAULT NULL,
   `auth_key` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

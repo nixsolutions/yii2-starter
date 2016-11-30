@@ -38,9 +38,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
-            ['label' => 'Users Management', 'url' => ['/user/management/index']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

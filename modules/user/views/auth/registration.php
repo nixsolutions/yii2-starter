@@ -10,6 +10,7 @@ use yii\bootstrap\ActiveForm;
 $this->registerCssFile('@web/css/modules/user/registration.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-register">
     <h1><?= Html::encode($this->title); ?></h1>
@@ -20,7 +21,7 @@ $this->title = Yii::t('user', 'Registration');
         'id' => 'registration-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-7\">{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
         ],
     ]); ?>
@@ -37,7 +38,7 @@ $this->title = Yii::t('user', 'Registration');
 
 
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-11">
+        <div class="col-lg-12">
             <?= Html::submitButton(Yii::t('user', 'Register'), ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
         </div>
     </div>
