@@ -1,19 +1,19 @@
 <?php
 
-namespace app\modules\mailTemplate\controllers;
+namespace app\modules\user\controllers;
 
+use app\modules\user\models\forms\UserForm;
 use app\modules\user\models\User;
 use Yii;
-use app\modules\mailTemplate\models\MailTemplate;
-use app\modules\mailTemplate\models\SearchMailTemplate;
+use app\modules\user\models\SearchUser;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * TemplateController implements the CRUD actions for MailTemplate model.
+ * ManagementController implements the CRU actions for Users model.
  */
-class TemplateController extends Controller
+class ManagementController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,19 +29,19 @@ class TemplateController extends Controller
                         'actions' => ['index', 'view', 'update'],
                         'roles' => [User::ROLE_ADMIN],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
     /**
-     * Lists all MailTemplate models.
+     * Lists all Users models.
      *
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchMailTemplate();
+        $searchModel = new SearchUser();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -51,7 +51,7 @@ class TemplateController extends Controller
     }
 
     /**
-     * Displays a single MailTemplate model.
+     * Displays a single Users model.
      *
      * @param integer $id
      * @return mixed
@@ -64,7 +64,7 @@ class TemplateController extends Controller
     }
 
     /**
-     * Updates an existing MailTemplate model.
+     * Updates an existing Users model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param integer $id
@@ -72,28 +72,37 @@ class TemplateController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
+        $userForm = new UserForm();
+        $userForm->setAttributes($user->attributes);
+        $userForm->role = $user->getRoleName();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Template saved.'));
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
+            $user->setAttributes($userForm->attributes);
+            $user->update(false);
+            $user->setRole($userForm->role);
+
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved.'));
+            return $this->redirect(['view', 'id' => $user->id]);
         }
+
         return $this->render('update', [
-            'model' => $model,
+            'userForm' => $userForm,
+            'id' => $user->id,
         ]);
     }
 
     /**
-     * Finds the MailTemplate model based on its primary key value.
+     * Finds the Users model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
      * @param integer $id
-     * @return MailTemplate the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $model = MailTemplate::findOne($id);
+        $model = User::findOne($id);
         if (null === $model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

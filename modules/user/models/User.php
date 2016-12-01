@@ -25,10 +25,20 @@ use yii\web\NotFoundHttpException;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    /**
-     * Active user status
-     */
+    /** Active user status */
     const STATUS_ACTIVE = 'active';
+
+    /** Blocked user status */
+    const STATUS_BLOCKED = 'blocked';
+
+    /** Created user status */
+    const STATUS_CREATED = 'created';
+
+    /** Role user */
+    const ROLE_USER = 'user';
+
+    /** Role admin */
+    const ROLE_ADMIN = 'admin';
 
     public $rememberMe;
 
@@ -52,7 +62,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
             [['auth_key', 'avatar', 'email', 'password'], 'string'],
-            [['first_name', 'last_name'], 'string', 'max' => 64]
+            [['first_name', 'last_name'], 'string', 'max' => 64],
         ];
     }
 
@@ -85,7 +95,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
                 ],
-                'value' => date('Y-m-d H:i:s')
+                'value' => date('Y-m-d H:i:s'),
             ],
         ];
     }
@@ -151,11 +161,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Logs in a user using the provided username and password.
+     *
+     * @return boolean whether the user is logged in successfully
      * @throws Exception
      */
     public function login()
     {
-        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
+        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
             throw new Exception('User could not be logged in.');
         }
         $this->last_login_at = date('Y-m-d H:i:s');
@@ -175,12 +188,33 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_key = Yii::$app->security->generateRandomString();
 
         $this->save();
-
-        $auth = Yii::$app->authManager;
-        $userRole = $auth->getRole('user');
-        $auth->assign($userRole, $this->getId());
-
+        $this->setRole(self::ROLE_USER);
         return $this;
+    }
+
+    /**
+     * Set new role
+     *
+     * @param $role
+     */
+    public function setRole($role)
+    {
+        $auth = Yii::$app->authManager;
+        $auth->revokeAll($this->id);
+        $userRole = $auth->getRole($role);
+        $auth->assign($userRole, $this->getId());
+    }
+
+    /**
+     * Return role for user
+     *
+     * @return string
+     */
+    public function getRoleName()
+    {
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRolesByUser($this->id);
+        return !empty($userRole) ? array_shift($userRole)->name : '';
     }
 
     /**
