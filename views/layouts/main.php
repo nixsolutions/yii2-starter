@@ -39,6 +39,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
             ['label' => 'Users Management', 'url' => ['/user/management/index']],
+            ['label' => 'Profile', 'url' => ['/user/default/profile']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/login']]
             ) : (
