@@ -15,4 +15,9 @@ class HashTest extends \Codeception\Test\Unit
         $hash = new Hash();
         $this->assertNotEmpty($hash->generate('register', 1));
     }
+
+    public function testFindByUserID()
+    {
+        $this->assertNotEmpty(Hash::findByUserID(1));
+    }
 }
