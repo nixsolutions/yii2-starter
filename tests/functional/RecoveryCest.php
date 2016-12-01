@@ -3,14 +3,11 @@
 
 class RecoveryCest
 {
-    public function _before(FunctionalTester $I)
-    {
-        $I->amOnPage('/user/auth/login');
-        $I->seeResponseCodeIs(200);
-    }
 
     public function seeRecoveryPage(FunctionalTester $I)
     {
+        $I->amOnPage('/login');
+        $I->seeResponseCodeIs(200);
         $I->click('Forgot password?');
         $I->seeResponseCodeIs(200);
         $I->see('Password recovery');
@@ -20,6 +17,8 @@ class RecoveryCest
 
     public function sendRecoveryOnEmptyEmail(FunctionalTester $I)
     {
+        $I->amOnPage('/recovery');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#recovery-form',[
             'RecoveryForm[email]' => '',
         ]);
@@ -29,6 +28,8 @@ class RecoveryCest
 
     public function sendRecoveryOnNotValidEmail(FunctionalTester $I)
     {
+        $I->amOnPage('/recovery');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#recovery-form',[
             'RecoveryForm[email]' => 'admin',
         ]);
@@ -38,6 +39,8 @@ class RecoveryCest
 
     public function sendRecoveryOnCorrectEmail(FunctionalTester $I)
     {
+        $I->amOnPage('/recovery');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#recovery-form',[
             'RecoveryForm[email]' => 'admin@admin.com',
         ]);
@@ -48,6 +51,7 @@ class RecoveryCest
 
     public function seeChangePasswordPage(FunctionalTester $I)
     {
+        $I->amOnRoute('/user/auth/change-password?hash=1111');
         $I->seeResponseCodeIs(200);
         $I->see('Password changing');
         $I->see('New password');
@@ -57,6 +61,8 @@ class RecoveryCest
 
     public function changePasswordWithEmptyFields(FunctionalTester $I)
     {
+        $I->amOnPage('/user/auth/change-password?hash=1111');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#change-password-form',[
             'ChangePasswordForm[newPassword]' => '',
             'ChangePasswordForm[repeatPassword]' => '',
@@ -68,6 +74,8 @@ class RecoveryCest
 
     public function changePasswordWithShortPassword(FunctionalTester $I)
     {
+        $I->amOnRoute('/user/auth/change-password?hash=1111');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#change-password-form',[
             'ChangePasswordForm[newPassword]' => '1111',
             'ChangePasswordForm[repeatPassword]' => '222222',
@@ -78,6 +86,8 @@ class RecoveryCest
 
     public function changePasswordWithDifferentPasswords(FunctionalTester $I)
     {
+        $I->amOnRoute('/user/auth/change-password?hash=1111');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#change-password-form',[
             'ChangePasswordForm[newPassword]' => '111111',
             'ChangePasswordForm[repeatPassword]' => '222222',
@@ -88,12 +98,14 @@ class RecoveryCest
 
     public function changePasswordWithCorrectPasswords(FunctionalTester $I)
     {
+        $I->amOnRoute('/user/auth/change-password?hash=1111');
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#change-password-form',[
             'ChangePasswordForm[newPassword]' => '111111',
             'ChangePasswordForm[repeatPassword]' => '111111',
         ]);
         $I->expectTo('be logged in');
         $I->seeResponseCodeIs(200);
-        $I->see('Logout.');
+        $I->see('Logout');
     }
 }

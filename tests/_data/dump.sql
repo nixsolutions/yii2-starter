@@ -153,6 +153,7 @@ CREATE TABLE `hashes` (
 
 LOCK TABLES `hashes` WRITE;
 /*!40000 ALTER TABLE `hashes` DISABLE KEYS */;
+INSERT INTO `hashes` VALUES (1,'1','1111','register');
 /*!40000 ALTER TABLE `hashes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ CREATE TABLE `mail_templates` (
 
 LOCK TABLES `mail_templates` WRITE;
 /*!40000 ALTER TABLE `mail_templates` DISABLE KEYS */;
-INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation');
+INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation'),(2,'CHANGE_PASSWORD','<p>Hello, {{name}}!</p><p>To change your password, click here please {{link}}.</p><p>After setting new password you will be automatically logged in.</p>','Password recovery','2016-11-30 15:04:28','Password recovery');
 /*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
