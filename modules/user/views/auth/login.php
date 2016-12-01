@@ -13,7 +13,7 @@ $this->title = Yii::t('user', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title); ?></h1>
 
     <p><?= Yii::t('user', 'Please fill out the following fields to login:'); ?></p>
 
@@ -26,19 +26,25 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'email')->textInput(['autofocus' => true]); ?>
+    <?= $form->field($model, 'email')->textInput(['autofocus' => true]); ?>
 
-        <?= $form->field($model, 'password')->passwordInput(); ?>
+    <?= $form->field($model, 'password')->passwordInput(); ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-12\">{error}</div>",
-        ]); ?>
+    <?= $form->field($model, 'rememberMe')->checkbox([
+        'template' => "<div class=\"col-lg-12\">{input} {label}</div>\n<div class=\"col-lg-12\">{error}</div>",
+    ]); ?>
 
-        <div class="form-group">
-            <div class="col-lg-12">
-                <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
-            </div>
+    <div class="form-group">
+        <div class="col-lg-12">
+            <?= Html::a('Forgot password?', '/recovery'); ?>
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-12">
+            <?= Html::submitButton(Yii::t('user', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']); ?>
+        </div>
+    </div>
 
     <?php ActiveForm::end(); ?>
 
