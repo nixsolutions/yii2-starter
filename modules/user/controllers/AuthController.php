@@ -170,7 +170,7 @@ class AuthController extends Controller
                 throw new NotFoundHttpException('Template does not exist.');
             }
 
-            $hash = new Hash();
+            $hash = Hash::findByUserID($user->id);
             $mailTemplate->replacePlaceholders([
                 'name' => $user->first_name,
                 'link' => Yii::$app->urlManager->createAbsoluteUrl([

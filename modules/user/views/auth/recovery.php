@@ -7,7 +7,7 @@ use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->registerCssFile('@app/web/css/modules/user/recovery.css', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile('@web/css/modules/user/recovery.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Password recovery');
 $this->params['breadcrumbs'][] = $this->title;
