@@ -73,7 +73,7 @@ class Hash extends ActiveRecord
      * @param $userId
      * @return static
      */
-    public static function findByUserID($userId)
+    public static function findByUserId($userId)
     {
         return static::findOne(['user_id' => $userId]);
     }

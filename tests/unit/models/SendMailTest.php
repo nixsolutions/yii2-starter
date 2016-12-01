@@ -1,7 +1,9 @@
 <?php
 
 use app\modules\mailTemplate\models\Mail;
+use app\modules\mailTemplate\models\MailNotSendException;
 use app\modules\mailTemplate\models\MailTemplate;
+use yii\base\InvalidConfigException;
 
 class SendMailTest extends \Codeception\Test\Unit
 {
@@ -26,7 +28,7 @@ class SendMailTest extends \Codeception\Test\Unit
         });
     }
 
-    public function testTrySetPlaceholderNotExistInTemplate()
+    public function testSetPlaceholderNotExistInTemplate()
     {
         /** @var Mail $model */
         $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')
@@ -36,7 +38,34 @@ class SendMailTest extends \Codeception\Test\Unit
         $template = MailTemplate::findByKey('REGISTER');
         $template->replacePlaceholders(['user name' => 'vasia']);
         $this->model->setTemplate($template);
-        expect_that($this->model->sendTo('admin@example.com'));
+        expect($this->model->sendTo('admin@example.com'));
+    }
+
+    public function testMailFalse()
+    {
+        /** @var Mail $model */
+        $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')
+            ->setMethods(['validate'])
+            ->getMock();
+
+        $template = MailTemplate::findByKey('REGISTER');
+        $template->replacePlaceholders(['user name' => 'vasia']);
+        $this->model->setTemplate($template);
+
+        $this->tester->expectException(MailNotSendException::class, function() {
+            $this->model->sendTo('1111');
+        });
+    }
+    public function testTrySendMailWithoutPlaceholders()
+    {
+        /** @var Mail $model */
+        $this->model = $this->getMockBuilder('app\modules\mailTemplate\models\Mail')
+            ->setMethods(['validate'])
+            ->getMock();
+
+        $this->tester->expectException(InvalidConfigException::class, function() {
+            $this->model->sendTo('admin@example.com');
+        });
     }
 
     public function testSendingEmail()
@@ -54,7 +83,7 @@ class SendMailTest extends \Codeception\Test\Unit
             'password' => 'qwerty',
         ]);
         $this->model->setTemplate($template);
-        expect_that($this->model->sendTo('admin@example.com'));
+        expect($this->model->sendTo('admin@example.com'));
 
         // using Yii2 module actions to check email was sent
         $this->tester->seeEmailIsSent();
