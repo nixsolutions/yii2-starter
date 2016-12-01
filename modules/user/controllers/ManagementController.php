@@ -29,7 +29,7 @@ class ManagementController extends Controller
                         'actions' => ['index', 'view', 'update'],
                         'roles' => [User::ROLE_ADMIN],
                     ],
-                ]
+                ],
             ],
         ];
     }
@@ -74,10 +74,14 @@ class ManagementController extends Controller
     {
         $user = $this->findModel($id);
         $userForm = new UserForm();
-        $userForm->attributes = $user->attributes;
+        $userForm->setAttributes($user->attributes);
         $userForm->role = $user->getRoleName();
 
-        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate() && $userForm->update($user)) {
+        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
+            $user->setAttributes($userForm->attributes);
+            $user->update(false);
+            $user->setRole($userForm->role);
+
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Information saved.'));
             return $this->redirect(['view', 'id' => $user->id]);
         }

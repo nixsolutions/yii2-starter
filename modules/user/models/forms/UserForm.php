@@ -57,21 +57,4 @@ class UserForm extends Model
             'email' => Yii::t('user', 'Email'),
         ];
     }
-
-    /**
-     * Save data to User and AuthAssignment tables
-     *
-     * @param User $user
-     * @return bool
-     */
-    public function update(User $user)
-    {
-        $user->attributes = $this->attributes;
-        if (false === $user->update(false, ['first_name', 'last_name', 'email', 'status'])) {
-            return false;
-        }
-        $user->revokeAllRoles();
-        $user->assignRole($this->role);
-        return true;
-    }
 }
