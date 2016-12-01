@@ -62,7 +62,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
             [['auth_key', 'avatar', 'email', 'password'], 'string'],
-            [['first_name', 'last_name'], 'string', 'max' => 64]
+            [['first_name', 'last_name'], 'string', 'max' => 64],
         ];
     }
 
@@ -95,7 +95,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
                 ],
-                'value' => date('Y-m-d H:i:s')
+                'value' => date('Y-m-d H:i:s'),
             ],
         ];
     }
@@ -168,7 +168,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function login()
     {
-        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600*24*7 : 0)) {
+        if (!Yii::$app->user->login($this, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
             throw new Exception('User could not be logged in.');
         }
         $this->last_login_at = date('Y-m-d H:i:s');
@@ -225,10 +225,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $auth = Yii::$app->authManager;
         $userRole = $auth->getRolesByUser($this->id);
-        if (empty($userRole)) {
-            return false;
-        }
-        return array_shift($userRole)->name;
+        return !empty($userRole) ? array_shift($userRole)->name : '';
     }
 
     /**
