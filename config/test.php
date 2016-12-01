@@ -14,12 +14,12 @@ return [
     'basePath' => dirname(__DIR__),
     'language' => 'en-US',
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'db' => require(__DIR__ . '/test_db.php'),
         'mailer' => [
             'useFileTransport' => true,
-        ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -29,6 +29,7 @@ return [
         'user' => [
             'identityClass' => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
+            'loginUrl'=>['/login'],
         ],
         'request' => [
             'cookieValidationKey' => 'test',
@@ -44,12 +45,12 @@ return [
             'translations' => [
                 'mailTemplate' => [
                     'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
+                    'basePath' => '@app/modules/mailTemplate/messages',
                     'sourceLanguage' => 'en_US',
                 ],
                 'user' => [
                     'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
+                    'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
                 ]
             ],
@@ -60,7 +61,7 @@ return [
             'class' => 'app\modules\user\Module',
         ],
         'mailTemplate' => [
-            'class' => 'app\modules\mailTemplate\MailTemplate',
+            'class' => 'app\modules\mailTemplate\Module',
         ],
     ],
     'params' => $params,

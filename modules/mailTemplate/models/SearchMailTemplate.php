@@ -19,7 +19,8 @@ class SearchMailTemplate extends MailTemplate
     {
         return [
             [['id'], 'integer'],
-            [['key', 'body', 'name', 'updated_at',], 'safe'],
+            [['key', 'name'], 'string', 'max' => 255],
+            [['updated_at',], 'safe'],
         ];
     }
 

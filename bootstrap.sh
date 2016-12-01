@@ -4,6 +4,7 @@ DB_USER='root'
 DB_PORT='3306'
 DB_PASSWORD='root'
 DB_NAME='yii_starter'
+DB_NAME_TEST='yii_starter_tests'
 
 
 echo "Updating packages..."
@@ -39,10 +40,13 @@ echo vagrant | sudo -S sed -i "s/^bind-address.*127.0.0.1/bind-address=0.0.0.0/"
 echo "Creating DB..."
 mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /vagrant/vm_build.log 2>&1
 
+echo "Creating DB for test environment"
+mysql -uroot -p$DB_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME_TEST CHARACTER SET utf8 COLLATE utf8_general_ci;" >> /vagrant/vm_build.log 2>&1
+
 echo "Installing php 7.0..."
 echo vagrant | sudo -S add-apt-repository ppa:ondrej/php
 echo vagrant | sudo -S apt-get update
-echo vagrant | sudo -S apt-get install php7.0 php7.0-cgi php7.0-fpm php7.0-dom php7.0-mysql php7.0-gd php7.0-mbstring -y > /dev/null 2>&1
+echo vagrant | sudo -S apt-get install php7.0 php7.0-cgi php7.0-fpm  php7.0-curl php7.0-dom php7.0-mysql php7.0-gd php7.0-mbstring -y > /dev/null 2>&1
 
 echo "Installing composer..."
 curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
