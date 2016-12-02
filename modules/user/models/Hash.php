@@ -59,6 +59,9 @@ class Hash extends ActiveRecord
      */
     public function generate($type, $userId)
     {
+        if (($hash = self::findByUserId($userId)) && ($type == $hash->type)) {
+            $hash->delete();
+        }
         $this->user_id = $userId;
         $this->hash = Yii::$app->security->generateRandomString();
         $this->type = $type;

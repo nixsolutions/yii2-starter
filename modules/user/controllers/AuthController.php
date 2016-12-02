@@ -114,6 +114,7 @@ class AuthController extends Controller
         $user->status = User::STATUS_ACTIVE;
         $user->update();
         $user->login();
+        Hash::findByUserId($user->id)->delete();
 
         return $this->goHome();
     }
@@ -169,7 +170,7 @@ class AuthController extends Controller
                     throw new NotFoundHttpException('Template does not exist.');
                 }
 
-                $hash = Hash::findByUserId($user->id);
+                $hash = new Hash();
                 $mailTemplate->replacePlaceholders([
                     'name' => $user->first_name,
                     'link' => Yii::$app->urlManager->createAbsoluteUrl([
@@ -212,6 +213,7 @@ class AuthController extends Controller
             $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
             $user->update();
             $user->login();
+            Hash::findByUserId($user->id)->delete();
 
             return $this->goHome();
         }
