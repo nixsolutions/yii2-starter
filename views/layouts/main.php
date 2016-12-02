@@ -37,9 +37,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
-            ['label' => 'Users Management', 'url' => ['/user/management/index']],
-            ['label' => 'Profile', 'url' => ['/user/default/profile']],
+            ['label' => 'Mail Templates', 'url' => ['/mailTemplate']],
+            ['label' => 'Users', 'url' => ['/user/management/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/login']]
             ) : (

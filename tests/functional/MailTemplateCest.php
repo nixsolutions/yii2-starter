@@ -1,5 +1,6 @@
 <?php
 
+use app\tests\fixtures\MailTemplateFixture;
 use yii\helpers\Url;
 
 class MailTemplateCest
@@ -39,7 +40,7 @@ class MailTemplateCest
         $I->see('Name cannot be blank.');
     }
 
-    public function updateNotExistUser(FunctionalTester $I)
+    public function updateNotExistTemplate(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/template/update?id=1000'));
         $I->seeResponseCodeIs(404);
