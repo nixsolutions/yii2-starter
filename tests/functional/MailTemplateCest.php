@@ -17,7 +17,7 @@ class MailTemplateCest
 
     public function seeTemplatesList(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/mailTemplate'));
+        $I->amOnPage(Url::toRoute('/mail-template'));
         $I->see('Mail Templates');
         $I->expectTo('See templates greed');
         $I->see('Name');
