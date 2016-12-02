@@ -77,10 +77,7 @@ class ManagementController extends Controller
         $userForm->setAttributes($user->attributes);
         $userForm->role = $user->getRoleName();
 
-        if ($userForm->load(Yii::$app->request->post())
-            && $userForm->validate()
-            && User::ROLE_ADMIN !== $user->getRoleName()
-        ) {
+        if ($userForm->load(Yii::$app->request->post()) && $userForm->validate()) {
             $user->setAttributes($userForm->attributes);
             $user->update(false);
             $user->setRole($userForm->role);

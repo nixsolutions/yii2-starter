@@ -56,15 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['width' => '35'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view}  {update}',
-                'buttons' => [
-                    'view' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url);
-                    },
-                    'update' => function ($url, $model) {
-                        return User::ROLE_ADMIN === $model->getRoleName() ? ''
-                            : Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url);
-                    },
-                ],
             ],
         ],
     ]); ?>
