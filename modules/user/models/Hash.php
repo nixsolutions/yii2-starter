@@ -83,6 +83,6 @@ class Hash extends ActiveRecord
         if (!$hash = Hash::findOne(['user_id' => $userId])) {
             throw new NotFoundHttpException('Hash does not exist.');
         }
-        return static::findOne(['user_id' => $userId]);
+        return $hash;
     }
 }
