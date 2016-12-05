@@ -13,6 +13,10 @@ $this->params['breadcrumbs'][] = $model->first_name;
 
     <h1><?= Html::encode($model->first_name); ?></h1>
 
+    <p>
+        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
