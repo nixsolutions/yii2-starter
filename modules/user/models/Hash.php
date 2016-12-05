@@ -4,6 +4,7 @@ namespace app\modules\user\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "hash".
@@ -59,7 +60,7 @@ class Hash extends ActiveRecord
      */
     public function generate($type, $userId)
     {
-        if (($hash = self::findByUserId($userId)) && ($type == $hash->type)) {
+        if ($hash = self::findOne(['user_id' => $userId, 'type' => $type])) {
             $hash->delete();
         }
         $this->user_id = $userId;
@@ -75,9 +76,13 @@ class Hash extends ActiveRecord
      *
      * @param $userId
      * @return static
+     * @throws NotFoundHttpException
      */
     public static function findByUserId($userId)
     {
+        if (!$hash = Hash::findOne(['user_id' => $userId])) {
+            throw new NotFoundHttpException('Hash does not exist.');
+        }
         return static::findOne(['user_id' => $userId]);
     }
 }
