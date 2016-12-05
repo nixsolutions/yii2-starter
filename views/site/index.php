@@ -34,7 +34,7 @@ $this->title = Yii::t('site', 'NIX Yii2 Application');
                         <li><?= Html::a(Yii::t('site', 'users profiles (with ability of editing information)'),
                                 '/user/default/profile'); ?>;</li>
                         <li><?= Html::a(Yii::t('site', 'users management (changing user role and status)'), '/user/management'); ?>;</li>
-                        <li><?= Html::a(Yii::t('site', 'mail templates management (modifying templates)'), '/mailTemplate'); ?>.</li>
+                        <li><?= Html::a(Yii::t('site', 'mail templates management (modifying templates)'), '/mail-template'); ?>.</li>
                     </ul>
 
                     <p><?= Yii::t('site', 'To test our application you may login as admin/123456.'); ?></p>
