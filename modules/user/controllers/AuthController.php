@@ -136,7 +136,7 @@ class AuthController extends Controller
 
             if (!$user || !$user->validatePassword($loginForm->password)) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
-            } elseif ($user->status != User::STATUS_ACTIVE) {
+            } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             } else {
                 $user->login();
@@ -162,7 +162,7 @@ class AuthController extends Controller
 
             if (!$user = User::findByEmail($recoveryForm->email)) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User does not exist.'));
-            } elseif ($user->status != User::STATUS_ACTIVE) {
+            } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User is not active.'));
             } else {
 
