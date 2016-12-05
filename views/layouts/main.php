@@ -43,7 +43,7 @@ AppAsset::register($this);
             'label' => 'Manage',
             'items' => [
                 ['label' => 'Mail Templates', 'url' => ['/mail-template']],
-                ['label' => 'Users', 'url' => ['/user/management/index']],
+                ['label' => 'Users', 'url' => ['/users']],
             ],
         ];
     }

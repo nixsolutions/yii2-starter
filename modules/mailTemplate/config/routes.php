@@ -1,4 +1,4 @@
 <?php
 return [
-    'mail-template' => 'mailTemplate/template/index',
+    'mail-template' => 'mailTemplate/management/index',
 ];

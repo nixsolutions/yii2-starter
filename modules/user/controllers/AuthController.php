@@ -131,20 +131,19 @@ class AuthController extends Controller
 
         $loginForm = new LoginForm();
         if ($loginForm->load(Yii::$app->request->post()) && $loginForm->validate()) {
-            $user = User::findByEmail($loginForm->email);
-            $isValidCredential = $user->validatePassword($loginForm->password);
-            $isActiveUser = User::STATUS_ACTIVE === $user->status;
 
-            if ($user && $isActiveUser && $isValidCredential) {
+            $user = User::findByEmail($loginForm->email);
+
+            if (!$user || !$user->validatePassword($loginForm->password)) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
+            } elseif ($user && $user->status != User::STATUS_ACTIVE) {
+                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
+            } else {
                 $user->login();
                 return $this->goBack();
             }
-            if (!$user || !$isValidCredential) {
-                Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
-            } elseif ($user && !$isActiveUser) {
-                Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
-            }
         }
+
         return $this->render('login', [
             'model' => $loginForm,
         ]);

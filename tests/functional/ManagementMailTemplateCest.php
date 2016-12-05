@@ -3,12 +3,13 @@
 use app\tests\fixtures\MailTemplateFixture;
 use yii\helpers\Url;
 
-class MailTemplateCest
+class ManagementMailTemplateCest
 {
     public function _before(FunctionalTester $I)
     {
         $I->amOnRoute('/login');
         $I->amLoggedInAs(1);
+//        $I->haveFixtures(['mailTemplate' => \tests\codeception\fixtures\MailTemplateFixture::className()]);
     }
 
     public function _after(FunctionalTester $I)
@@ -28,7 +29,7 @@ class MailTemplateCest
 
     public function updateFormWithEmptyName(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/mailTemplate/template/update?id=1'));
+        $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->submitForm('#mailTemplateForm', [
             'MailTemplate[name]' => '',
@@ -42,13 +43,13 @@ class MailTemplateCest
 
     public function updateNotExistTemplate(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/mailTemplate/template/update?id=1000'));
+        $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1000'));
         $I->seeResponseCodeIs(404);
     }
 
     public function updateFormSuccessful(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/mailTemplate/template/update?id=1'));
+        $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->submitForm('#mailTemplateForm', [
             'MailTemplate[name]' => 'test name',
@@ -62,7 +63,7 @@ class MailTemplateCest
 
     public function seeTemplateDescription(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/mailTemplate/template/view?id=1'));
+        $I->amOnPage(Url::toRoute('/mailTemplate/management/view?id=1'));
         $I->seeResponseCodeIs(200);
 
         $I->expectTo('see full template descriptions');
