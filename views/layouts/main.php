@@ -38,18 +38,19 @@ AppAsset::register($this);
 
     $menuItems = [];
     $user = Yii::$app->user;
-    if ($user->can(User::ROLE_ADMIN)) {
-        $menuItems[] = [
-            'label' => 'Manage',
-            'items' => [
-                ['label' => 'Mail Templates', 'url' => ['/mail-template']],
-                ['label' => 'Users', 'url' => ['/users']],
-            ],
-        ];
-    }
+
     if ($user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
     } else {
+        if ($user->can(User::ROLE_ADMIN)) {
+            $menuItems[] = [
+                'label' => 'Manage',
+                'items' => [
+                    ['label' => 'Mail Templates', 'url' => ['/mail-template']],
+                    ['label' => 'Users', 'url' => ['/users']],
+                ],
+            ];
+        }
         $menuItems[] = ['label' => 'Profile', 'url' => ['/user/default/profile']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
