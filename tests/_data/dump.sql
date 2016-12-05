@@ -153,7 +153,6 @@ CREATE TABLE `hashes` (
 
 LOCK TABLES `hashes` WRITE;
 /*!40000 ALTER TABLE `hashes` DISABLE KEYS */;
-INSERT INTO `hashes` VALUES (1,'1','1111','register');
 /*!40000 ALTER TABLE `hashes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,15 +228,10 @@ CREATE TABLE `mail_templates` (
 
 /*Data for the table `mail_templates` */
 
-LOCK TABLES `mail_templates` WRITE;
-
-insert  into `mail_templates`(`id`,`key`,`body`,`name`,`updated_at`,`subject`) values (1,'REGISTER','<p>Hello {{user}}</p>\r\n\r\n\r\n\r\n<p>In {{data}}</p>\r\n\r\n\r\n\r\n<p>Visit link {{link}}</p>\r\n\r\n\r\n\r\n<p>Restore password {{password}}</p>\r\n\r\n\r\n\r\n<p>Second password {{password2}}</p>\r\n\r\n\r\n\r\n<p>{{wrong}}</p>\r\n\r\n\r\n\r\n<p>&nbsp;</p>\r\n\r\n','Register','2016-12-22 17:16:52','Test regisret user');
-
-UNLOCK TABLES;
 
 LOCK TABLES `mail_templates` WRITE;
 /*!40000 ALTER TABLE `mail_templates` DISABLE KEYS */;
-INSERT INTO `mail_templates` VALUES (2,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation');
+INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation'),(2,'CHANGE_PASSWORD','<p>Hello, {{name}}!</p><p>To change your password, click here please {{link}}.</p><p>After setting new password you will be automatically logged in.</p>','Password recovery','2016-11-30 15:04:28','Password recovery');
 /*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
