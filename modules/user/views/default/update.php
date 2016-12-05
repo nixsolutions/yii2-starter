@@ -8,8 +8,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Users',
 ]) . $userForm->first_name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $userForm->first_name, 'url' => ['view', 'id' => $id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Profile'), 'url' => ['profile']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="users-update">

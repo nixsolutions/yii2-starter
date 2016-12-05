@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($user, 'last_name')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'email')->textInput(['maxlength' => true]); ?>
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
     </div>
