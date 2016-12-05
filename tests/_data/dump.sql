@@ -210,7 +210,7 @@ INSERT INTO `users` VALUES (2,'admin2','admin2','admin2@admin.com','$2y$13$c/a//
 UNLOCK TABLES;
 
 --
--- Dumping data for table `mail_template`
+-- Dumping data for table `mail_templates`
 --
 
 DROP TABLE IF EXISTS `mail_templates`;
