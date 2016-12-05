@@ -25,7 +25,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
-            'loginUrl'=>['/login'],
+            'loginUrl' => ['/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -56,6 +56,11 @@ $config = [
                 'user' => [
                     'class' => 'yii\i18n\GettextMessageSource',
                     'basePath' => '@app/modules/user/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
+                'site' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
                     'sourceLanguage' => 'en_US',
                 ],
                 'mailing' => [

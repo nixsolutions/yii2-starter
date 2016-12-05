@@ -176,10 +176,6 @@ CREATE TABLE `mail_templates` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mail_template`
---
-
---
 -- Table structure for table `users`
 --
 
@@ -213,6 +209,10 @@ INSERT INTO `users` VALUES (2,'admin2','admin2','admin2@admin.com','$2y$13$c/a//
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `mail_templates`
+--
+
 DROP TABLE IF EXISTS `mail_templates`;
 
 CREATE TABLE `mail_templates` (
@@ -228,15 +228,10 @@ CREATE TABLE `mail_templates` (
 
 /*Data for the table `mail_templates` */
 
-LOCK TABLES `mail_templates` WRITE;
-
-insert  into `mail_templates`(`id`,`key`,`body`,`name`,`updated_at`,`subject`) values (1,'REGISTER','<p>Hello {{user}}</p>\r\n\r\n\r\n\r\n<p>In {{data}}</p>\r\n\r\n\r\n\r\n<p>Visit link {{link}}</p>\r\n\r\n\r\n\r\n<p>Restore password {{password}}</p>\r\n\r\n\r\n\r\n<p>Second password {{password2}}</p>\r\n\r\n\r\n\r\n<p>{{wrong}}</p>\r\n\r\n\r\n\r\n<p>&nbsp;</p>\r\n\r\n','Register','2016-12-22 17:16:52','Test regisret user');
-
-UNLOCK TABLES;
 
 LOCK TABLES `mail_templates` WRITE;
 /*!40000 ALTER TABLE `mail_templates` DISABLE KEYS */;
-INSERT INTO `mail_templates` VALUES (2,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation');
+INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</p><p>Thank you for registration! To activate your account, click here please {{link}}.</p><p>After confirmation you will be automatically logged in.</p>','Confirm registration','2016-11-28 11:41:20','Registration confirmation'),(2,'CHANGE_PASSWORD','<p>Hello, {{name}}!</p><p>To change your password, click here please {{link}}.</p><p>After setting new password you will be automatically logged in.</p>','Password recovery','2016-11-30 15:04:28','Password recovery');
 /*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 

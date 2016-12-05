@@ -40,8 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     User::STATUS_BLOCKED => ucfirst(User::STATUS_BLOCKED),
                 ],
             ],
-            'created_at:datetime',
-            'last_login_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
+            [
+                'attribute' => 'last_login_at',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
             [
                 'class' => yii\grid\DataColumn::className(),
                 'label' => \Yii::t('user', 'Role'),
