@@ -16,7 +16,6 @@ class SearchUser extends User
     public function rules()
     {
         return [
-            [['id'], 'integer'],
             [
                 [
                     'first_name',
@@ -74,8 +73,6 @@ class SearchUser extends User
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'last_login_at' => $this->last_login_at,
         ]);
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
@@ -84,6 +81,8 @@ class SearchUser extends User
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'last_login_at', $this->last_login_at])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key]);
 
         return $dataProvider;

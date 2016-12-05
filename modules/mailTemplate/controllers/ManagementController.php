@@ -11,9 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * TemplateController implements the CRUD actions for MailTemplate model.
+ * ManagementController implements the CRUD actions for MailTemplate model.
  */
-class TemplateController extends Controller
+class ManagementController extends Controller
 {
     /**
      * @inheritdoc

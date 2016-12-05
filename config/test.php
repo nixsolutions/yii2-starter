@@ -52,7 +52,12 @@ return [
                     'class' => 'yii\i18n\GettextMessageSource',
                     'basePath' => '@app/modules/user/messages',
                     'sourceLanguage' => 'en_US',
-                ]
+                ],
+                'mailing' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/modules/mailing/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
             ],
         ],
     ],
@@ -62,6 +67,9 @@ return [
         ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
+        ],
+        'mailing' => [
+            'class' => 'app\modules\mailing\Module',
         ],
     ],
     'params' => $params,

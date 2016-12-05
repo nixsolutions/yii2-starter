@@ -12,19 +12,20 @@ use yii\helpers\ArrayHelper;
  * Class Mail
  *
  * How to use
- *
+ *```php
  * if (!$mailTemplate = MailTemplate::findByKey('YOUR_KEY')) {
- * throw new NotFoundHttpException('Template not found in database.');
+ *     throw new NotFoundHttpException('Template not found in database.');
  * }
  * $mailTemplate->replacePlaceholders([
- * 'key1' => 'value1',
- * 'key2' => 'value2',
- * 'key3' => 'value3',
+ *     'key1' => 'value1',
+ *     'key2' => 'value2',
+ *     'key3' => 'value3',
  * ]);
  *
  * $sendMail = new Mail();
  * $sendMail->setTemplate($mailTemplate);
  * $sendMail->sendTo('recipient@gmail.com');
+ *```
  *
  * @package app\modules\mailTemplate\models
  */

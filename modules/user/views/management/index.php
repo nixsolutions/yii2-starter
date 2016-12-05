@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\ArrayHelper;
+use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -34,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
-                'headerOptions' => ['width' => '100'],
+                'filter' => [
+                    User::STATUS_ACTIVE => ucfirst(User::STATUS_ACTIVE),
+                    User::STATUS_CREATED => ucfirst(User::STATUS_CREATED),
+                    User::STATUS_BLOCKED => ucfirst(User::STATUS_BLOCKED),
+                ],
             ],
             'created_at:datetime',
             'last_login_at:datetime',
@@ -55,3 +59,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+</div>

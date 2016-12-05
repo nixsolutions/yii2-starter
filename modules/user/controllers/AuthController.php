@@ -114,7 +114,10 @@ class AuthController extends Controller
         $user->status = User::STATUS_ACTIVE;
         $user->update();
         $user->login();
-        Hash::findByUserId($user->id)->delete();
+        if (!$hash = Hash::findByUserId($user->id)) {
+            throw new NotFoundHttpException('Hash does not exist.');
+        }
+        $hash->delete();
 
         return $this->goHome();
     }
@@ -143,6 +146,7 @@ class AuthController extends Controller
                 return $this->goBack();
             }
         }
+
         return $this->render('login', [
             'model' => $loginForm,
         ]);
@@ -213,7 +217,10 @@ class AuthController extends Controller
             $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
             $user->update();
             $user->login();
-            Hash::findByUserId($user->id)->delete();
+            if (!$hash = Hash::findByUserId($user->id)) {
+                throw new NotFoundHttpException('Hash does not exist.');
+            }
+            $hash->delete();
 
             return $this->goHome();
         }
