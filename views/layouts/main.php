@@ -40,6 +40,7 @@ AppAsset::register($this);
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
+        $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
     } else {
         if ($user->can(User::ROLE_ADMIN)) {
