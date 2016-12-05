@@ -11,9 +11,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * TemplateController implements the CRUD actions for MailTemplate model.
+ * ManagementController implements the CRUD actions for MailTemplate model.
  */
-class TemplateController extends Controller
+class ManagementController extends Controller
 {
     /**
      * @inheritdoc
@@ -75,7 +75,7 @@ class TemplateController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Template saved.'));
+            Yii::$app->getSession()->setFlash('success', Yii::t('mailTemplate', 'Information saved.'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [

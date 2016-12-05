@@ -2,9 +2,10 @@
 
 namespace app\modules\user\models\forms;
 
-use app\modules\user\models\User;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use app\modules\user\models\User;
 
 /**
  * UserForm is the model behind the update user.
@@ -24,6 +25,8 @@ class UserForm extends Model
     public $email;
     public $status;
     public $role;
+
+    const SCENARIO_PROFILE = 'profile';
 
     /**
      * @return array the validation rules.
@@ -56,5 +59,15 @@ class UserForm extends Model
             'last_name' => Yii::t('user', 'Last name'),
             'email' => Yii::t('user', 'Email'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name', 'email', 'status']]);
+        return $scenarios;
     }
 }

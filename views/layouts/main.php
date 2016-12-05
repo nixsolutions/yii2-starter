@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -34,28 +35,39 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Mail templates', 'url' => ['/mailTemplate']],
-            ['label' => 'Users Management', 'url' => ['/user/management/index']],
-            ['label' => 'Profile', 'url' => ['/user/default/profile']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->first_name . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
+
+    $menuItems = [];
+    $user = Yii::$app->user;
+
+    if ($user->isGuest) {
+        $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
+    } else {
+        if ($user->can(User::ROLE_ADMIN)) {
+            $menuItems[] = [
+                'label' => 'Manage',
+                'items' => [
+                    ['label' => 'Mail Templates', 'url' => ['/mail-template']],
+                    ['label' => 'Users', 'url' => ['/users']],
+                ],
+            ];
+        }
+        $menuItems[] = ['label' => 'Profile', 'url' => ['/user/default/profile']];
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                'Logout (' . $user->identity->first_name . ')',
+                ['class' => 'btn btn-link logout']
             )
-        ],
-    ]);
-    NavBar::end();
+            . Html::endForm()
+            . '</li>';
+
+    }
     ?>
+    <?= Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $menuItems,
+    ]); ?>
+    <?php NavBar::end(); ?>
 
     <div class="container">
         <?php

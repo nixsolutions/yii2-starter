@@ -142,6 +142,7 @@ class AuthController extends Controller
                 return $this->goBack();
             }
         }
+
         return $this->render('login', [
             'model' => $loginForm,
         ]);
