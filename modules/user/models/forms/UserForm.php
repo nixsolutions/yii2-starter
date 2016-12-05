@@ -67,7 +67,7 @@ class UserForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name']]);
+        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name', 'email', 'status']]);
         return $scenarios;
     }
 }
