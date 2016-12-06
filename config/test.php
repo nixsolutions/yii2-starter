@@ -58,6 +58,11 @@ return [
                     'basePath' => '@app/modules/mailing/messages',
                     'sourceLanguage' => 'en_US',
                 ],
+                'site' => [
+                    'class' => 'yii\i18n\GettextMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en_US',
+                ],
             ],
         ],
     ],
