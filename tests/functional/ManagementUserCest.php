@@ -77,14 +77,12 @@ class ManagementUserCest
         $I->submitForm('#userForm', [
             'UserForm[first_name]' => '',
             'UserForm[last_name]' => '',
-            'UserForm[email]' => 't',
             'UserForm[status]' => 'created',
             'UserForm[role]' => 'admin',
         ]);
         $I->expectTo('see validation errors');
         $I->see('First name cannot be blank.');
         $I->see('Last name cannot be blank.');
-        $I->see('Email is not a valid email address.');
     }
 
     public function updateUserWithWrongStatusAndRole(FunctionalTester $I)
@@ -95,7 +93,6 @@ class ManagementUserCest
         $I->submitForm('#userForm', [
             'UserForm[first_name]' => 'test',
             'UserForm[last_name]' => 'test',
-            'UserForm[email]' => 'tss@sds.ss',
             'UserForm[status]' => 'error',
             'UserForm[role]' => 'error',
         ]);
