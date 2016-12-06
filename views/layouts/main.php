@@ -39,8 +39,8 @@ AppAsset::register($this);
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
         $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
     } else {
         if ($user->can(User::ROLE_ADMIN)) {
             $menuItems[] = [
@@ -60,7 +60,6 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
-
     }
     ?>
     <?= Nav::widget([

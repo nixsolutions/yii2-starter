@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($user, 'last_name')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($user, 'email')->textInput(['maxlength' => true]); ?>
-
     <?= $form->field($user, 'status')->dropDownList(
         [
             'created' => Yii::t('user', 'Created'),

@@ -17,8 +17,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'subject')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($model, 'key')->textInput(['maxlength' => true]); ?>
-
     <h4><?= Yii::t('mailTemplate', 'Example placeholders {{user}} {{date}} {{link}} {{password}}'); ?></h4>
     <?= $form->field($model, 'body')->widget(CKEditor::className(), [
         'options' => ['rows' => 8],
