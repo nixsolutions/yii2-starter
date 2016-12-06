@@ -51,8 +51,6 @@ class MailTemplate extends ActiveRecord
             [['body'], 'string'],
             [['name',], 'required'],
             [['updated_at'], 'safe'],
-            [['!key', 'subject', 'name'], 'string', 'max' => 255],
-            [['!key'], 'unique']
         ];
     }
 
