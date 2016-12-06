@@ -113,6 +113,7 @@ class AuthController extends Controller
         }
         $user->status = User::STATUS_ACTIVE;
         $user->update();
+        Hash::findByUserId($user->id)->delete();
         $user->login();
 
         return $this->goHome();
@@ -135,7 +136,7 @@ class AuthController extends Controller
 
             if (!$user || !$user->validatePassword($loginForm->password)) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
-            } elseif ($user && $user->status != User::STATUS_ACTIVE) {
+            } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             } else {
                 $user->login();
@@ -162,7 +163,7 @@ class AuthController extends Controller
 
             if (!$user = User::findByEmail($recoveryForm->email)) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User does not exist.'));
-            } elseif ($user && $user->status != User::STATUS_ACTIVE) {
+            } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User is not active.'));
             } else {
 
@@ -170,7 +171,7 @@ class AuthController extends Controller
                     throw new NotFoundHttpException('Template does not exist.');
                 }
 
-                $hash = Hash::findByUserId($user->id);
+                $hash = new Hash();
                 $mailTemplate->replacePlaceholders([
                     'name' => $user->first_name,
                     'link' => Yii::$app->urlManager->createAbsoluteUrl([
@@ -212,6 +213,7 @@ class AuthController extends Controller
         if ($changePasswordForm->load(Yii::$app->request->post()) && $changePasswordForm->validate()) {
             $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
             $user->update();
+            Hash::findByUserId($user->id)->delete();
             $user->login();
 
             return $this->goHome();
