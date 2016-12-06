@@ -40,6 +40,7 @@ AppAsset::register($this);
 
     if ($user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
+        $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
     } else {
         if ($user->can(User::ROLE_ADMIN)) {
             $menuItems[] = [
