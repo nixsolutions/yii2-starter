@@ -153,6 +153,7 @@ CREATE TABLE `hashes` (
 
 LOCK TABLES `hashes` WRITE;
 /*!40000 ALTER TABLE `hashes` DISABLE KEYS */;
+INSERT INTO `hashes` VALUES (1,'1','1111','register');
 /*!40000 ALTER TABLE `hashes` ENABLE KEYS */;
 UNLOCK TABLES;
 
