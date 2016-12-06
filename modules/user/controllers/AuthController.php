@@ -12,6 +12,7 @@ use app\modules\user\models\User;
 use Yii;
 use yii\base\Exception;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use app\modules\user\models\forms\RegistrationForm;
@@ -86,10 +87,12 @@ class AuthController extends Controller
             $mail = new Mail();
             $mail->setTemplate($mailTemplate);
             $mail->sendTo($user->email);
+
             Yii::$app->session->setFlash(
                 'success',
                 Yii::t('user', 'Please, check your email to confirm registration.')
             );
+            return $this->redirect(Url::home());
         }
 
         return $this->render('registration', [
@@ -188,6 +191,7 @@ class AuthController extends Controller
                     'success',
                     Yii::t('user', 'Please check your email and follow instructions to recover password.')
                 );
+                return $this->redirect(Url::home());
             }
         }
         return $this->render('recovery', [
