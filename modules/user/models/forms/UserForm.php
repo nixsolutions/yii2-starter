@@ -12,7 +12,6 @@ use app\modules\user\models\User;
  *
  * @property string $first_name
  * @property string $last_name
- * @property string $email
  * @property string $status
  * @property string $role
  *
@@ -22,7 +21,6 @@ class UserForm extends Model
 {
     public $first_name;
     public $last_name;
-    public $email;
     public $status;
     public $role;
 
@@ -34,9 +32,7 @@ class UserForm extends Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'email', 'role'], 'required'],
-            ['email', 'email'],
-            ['email', 'string'],
+            [['first_name', 'last_name', 'role'], 'required'],
             [['first_name', 'last_name'], 'string', 'max' => 64],
             [
                 ['status'], 'in', 'range' => [User::STATUS_ACTIVE, User::STATUS_BLOCKED, User::STATUS_CREATED],
@@ -57,7 +53,6 @@ class UserForm extends Model
         return [
             'first_name' => Yii::t('user', 'First name'),
             'last_name' => Yii::t('user', 'Last name'),
-            'email' => Yii::t('user', 'Email'),
         ];
     }
 
@@ -67,7 +62,7 @@ class UserForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name', '!email', 'status']]);
+        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name', 'status']]);
         return $scenarios;
     }
 }
