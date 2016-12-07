@@ -11,3 +11,10 @@ modules:
     enabled:
       - Filesystem
       - Yii2
+      - Db:
+          dsn: 'mysql:host=localhost;dbname=yii_starter_tests'
+          user: 'root'
+          password: 'root'
+          populate: true
+          cleanup: false
+          dump: tests/_data/dump.sql
