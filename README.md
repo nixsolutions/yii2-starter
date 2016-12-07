@@ -11,12 +11,6 @@ Get Bluz skeleton source files from GitHub repository:
 git clone git@bitbucket.org:nixsolutions/npr-310.git %path%
 ```
 
-Download `composer.phar` to the project folder:
-```
-cd %path%
-curl -s https://getcomposer.org/installer | php
-```
-
 Install composer dependencies with the following command:
 ```
 php composer.phar install
