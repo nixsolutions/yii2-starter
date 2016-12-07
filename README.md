@@ -6,14 +6,9 @@ Demo Yii2 application works with PHP 5.6 or later and MySQL 5.4 or later vagrant
 
 ### From repository
 
-Get Bluz skeleton source files from GitHub repository:
+Get Demo Yii2 application source files from GitHub repository:
 ```
 git clone git@bitbucket.org:nixsolutions/npr-310.git %path%
-```
-
-Install composer dependencies with the following command:
-```
-php composer.phar install
 ```
 Run virtual machine 
 ```
