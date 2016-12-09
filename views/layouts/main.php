@@ -36,6 +36,7 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [];
+    $menuItems[] = ['label' => 'About', 'url' => ['/about.html']];
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
@@ -48,6 +49,7 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Mail Templates', 'url' => ['/mail-template']],
                     ['label' => 'Users', 'url' => ['/users']],
+                    ['label' => 'Static Pages', 'url' => ['/static-pages']],
                 ],
             ];
         }

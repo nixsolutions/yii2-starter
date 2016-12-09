@@ -7,7 +7,7 @@ use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "users".
@@ -40,7 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
     /** Role admin */
     const ROLE_ADMIN = 'admin';
 
-    public $rememberMe;
+    public $rememberMe = true;
 
     /**
      * @inheritdoc
@@ -220,12 +220,12 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @param $hash
      * @return static
-     * @throws NotFoundHttpException
+     * @throws ServerErrorHttpException
      */
     public static function findByHash($hash)
     {
         if (!$hash = Hash::findOne(['hash' => $hash])) {
-            throw new NotFoundHttpException('Hash does not exist.');
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         return static::findOne($hash->user_id);
     }

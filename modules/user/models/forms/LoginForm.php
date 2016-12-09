@@ -3,6 +3,7 @@
 namespace app\modules\user\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 
 /**
@@ -42,5 +43,20 @@ class LoginForm extends Model
             'password' => Yii::t('user', 'Password'),
             'rememberMe' => Yii::t('user', 'Remember me'),
         ];
+    }
+
+    /**
+     * Logs in a provided user.
+     *
+     * @param $user
+     * @throws Exception
+     */
+    public function login($user)
+    {
+        if (!Yii::$app->user->login($user, $this->rememberMe ? 3600 * 24 * 7 : 0)) {
+            throw new Exception('User could not be logged in.');
+        }
+        $user->last_login_at = date('Y-m-d H:i:s');
+        $user->update();
     }
 }
