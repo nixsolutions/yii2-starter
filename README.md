@@ -4,6 +4,8 @@
 - [Vagrant](https://www.vagrantup.com/) (1.8.5)
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
+##Application works with PHP 5.4 or later and MySQL 5.6 or later
+
 ## Installation
 
 Get Demo Yii2 application source files from Git repository:
