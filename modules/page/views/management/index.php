@@ -24,7 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'content',
             'description',
-            'updated_at',
+            [
+                'attribute' => 'updated_at',
+                'headerOptions' => ['width' => '150'],
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('page', 'Actions'),
