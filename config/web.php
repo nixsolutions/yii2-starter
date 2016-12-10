@@ -10,7 +10,7 @@ $routes = \yii\helpers\ArrayHelper::merge(
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'option'],
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -48,24 +48,9 @@ $config = [
         ],
         'i18n' => [
             'translations' => [
-                'mailTemplate' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/modules/mailTemplate/messages',
-                    'sourceLanguage' => 'en_US',
-                ],
-                'user' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/modules/user/messages',
-                    'sourceLanguage' => 'en_US',
-                ],
                 'site' => [
                     'class' => 'yii\i18n\GettextMessageSource',
                     'basePath' => '@app/messages',
-                    'sourceLanguage' => 'en_US',
-                ],
-                'mailing' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/modules/mailing/messages',
                     'sourceLanguage' => 'en_US',
                 ],
             ],
@@ -80,6 +65,9 @@ $config = [
         ],
         'mailing' => [
             'class' => 'app\modules\mailing\Module',
+        ],
+        'option' => [
+            'class' => 'app\modules\option\Module',
         ],
     ],
     'params' => $params,

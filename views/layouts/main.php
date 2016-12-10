@@ -48,6 +48,7 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Mail Templates', 'url' => ['/mail-template']],
                     ['label' => 'Users', 'url' => ['/users']],
+                    ['label' => 'Options', 'url' => ['/options']],
                 ],
             ];
         }
