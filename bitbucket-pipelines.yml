@@ -4,7 +4,7 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 
-image: smartapps/bitbucket-pipelines-php-mysql
+image: smartapps/bitbucket-pipelines-php-mysql:stretch
 
 pipelines:
   default:
