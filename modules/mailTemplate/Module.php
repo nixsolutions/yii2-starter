@@ -2,6 +2,8 @@
 
 namespace app\modules\mailTemplate;
 
+use Yii;
+
 /**
  * mailTemplate module definition class
  */
@@ -19,6 +21,11 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
-        // custom initialization code goes here
+        if (empty(Yii::$app->i18n->translations['mailTemplate'])) {
+            Yii::$app->i18n->translations['mailTemplate'] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => __DIR__ . '/messages',
+            ];
+        }
     }
 }
