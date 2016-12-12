@@ -53,7 +53,6 @@ curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
 echo vagrant | sudo mv composer.phar /usr/local/bin/composer > /dev/null 2>&1
 
 echo "Installing app..."
-sudo cp /vagrant/set-github-oauth-token.sh.sample /vagrant/set-github-oauth-token.sh
 if [ -f /vagrant/set-github-oauth-token.sh ]
 then
     /vagrant/set-github-oauth-token.sh
