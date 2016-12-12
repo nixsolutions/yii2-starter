@@ -5,16 +5,31 @@ use yii\helpers\Url;
 
 class ManagementOptionCest
 {
-    public function _before(FunctionalTester $I)
+    protected function loginAsAdmin(FunctionalTester $I)
     {
         $I->amOnRoute('/login');
+        $I->seeInTitle('Login');
         $I->amLoggedInAs(1);
     }
 
-    public function _after(FunctionalTester $I)
+    protected function loginAsUser(FunctionalTester $I)
     {
+        $I->amOnRoute('/login');
+        $I->seeInTitle('Login');
+        $I->amLoggedInAs(2);
     }
 
+    protected function logout(FunctionalTester $I)
+    {
+        $I->click('.btn.btn-link.logout');
+        $I->amOnPage('/');
+        $I->see('Login', 'a');
+    }
+
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeOptionsGrid(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/options'));
@@ -30,6 +45,10 @@ class ManagementOptionCest
         $I->see('Actions');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeOptionsFromDatabase(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/options'));
@@ -42,6 +61,10 @@ class ManagementOptionCest
         $I->see('2016-12-10 09:30:43', 'td');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeOptionDescription(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/option/management/view?namespace=ADMIN&key=email'));
@@ -55,6 +78,10 @@ class ManagementOptionCest
         $I->see('2016-12-10 09:30:43', 'td');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeUpdateButton(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/option/management/view?namespace=ADMIN&key=email'));
@@ -62,6 +89,10 @@ class ManagementOptionCest
         $I->see('Update', 'a');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateOptionSuccess(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/option/management/update?namespace=ADMIN&key=email'));
@@ -74,6 +105,10 @@ class ManagementOptionCest
         $I->see('new.admin@mail.com', 'td');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function tryUpdateOptionReadonlyField(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/option/management/update?namespace=ADMIN&key=email'));
@@ -88,4 +123,12 @@ class ManagementOptionCest
         $I->see('email', 'td');
     }
 
+    /**
+     * @before loginAsUser
+     */
+    public function tryUpdateNotAdmin(FunctionalTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/option/management/update?namespace=ADMIN&key=email'));
+        $I->seeResponseCodeIs(403);
+    }
 }

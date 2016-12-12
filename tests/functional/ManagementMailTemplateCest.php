@@ -1,21 +1,34 @@
 <?php
 
-use app\tests\fixtures\MailTemplateFixture;
 use yii\helpers\Url;
 
 class ManagementMailTemplateCest
 {
-    public function _before(FunctionalTester $I)
+    protected function loginAsAdmin(FunctionalTester $I)
     {
         $I->amOnRoute('/login');
+        $I->seeInTitle('Login');
         $I->amLoggedInAs(1);
-//        $I->haveFixtures(['mailTemplate' => \tests\codeception\fixtures\MailTemplateFixture::className()]);
     }
 
-    public function _after(FunctionalTester $I)
+    protected function loginAsUser(FunctionalTester $I)
     {
+        $I->amOnRoute('/login');
+        $I->seeInTitle('Login');
+        $I->amLoggedInAs(2);
     }
 
+    protected function logout(FunctionalTester $I)
+    {
+        $I->click('.btn.btn-link.logout');
+        $I->amOnPage('/');
+        $I->see('Login', 'a');
+    }
+
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeTemplatesList(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mail-template'));
@@ -27,6 +40,10 @@ class ManagementMailTemplateCest
         $I->see('Actions');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateFormWithEmptyName(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1'));
@@ -41,12 +58,19 @@ class ManagementMailTemplateCest
         $I->see('Name cannot be blank.');
     }
 
+    /**
+     * @before loginAsAdmin
+     */
     public function updateNotExistTemplate(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1000'));
         $I->seeResponseCodeIs(404);
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateFormSuccessful(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1'));
@@ -61,6 +85,10 @@ class ManagementMailTemplateCest
         $I->see('test name');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeTemplateDescription(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/management/view?id=1'));
@@ -71,5 +99,14 @@ class ManagementMailTemplateCest
         $I->see('Key');
         $I->see('Subject');
         $I->see('Updated At');
+    }
+
+    /**
+     * @before loginAsUser
+     */
+    public function tryUpdateNotAdmin(FunctionalTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/mailTemplate/management/view?id=1'));
+        $I->seeResponseCodeIs(403);
     }
 }
