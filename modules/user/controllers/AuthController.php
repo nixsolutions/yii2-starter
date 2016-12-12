@@ -142,7 +142,8 @@ class AuthController extends Controller
             } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             } else {
-                $loginForm->login($user);
+                $user->rememberMe = $loginForm->rememberMe;
+                $user->login();
                 return $this->goBack();
             }
         }
