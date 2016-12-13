@@ -50,6 +50,7 @@ AppAsset::register($this);
                     ['label' => 'Mail Templates', 'url' => ['/mail-template']],
                     ['label' => 'Users', 'url' => ['/users']],
                     ['label' => 'Static Pages', 'url' => ['/static-pages']],
+                    ['label' => 'Options', 'url' => ['/options']],
                 ],
             ];
         }
