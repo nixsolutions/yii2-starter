@@ -74,13 +74,10 @@ $config = [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
-                'google' => [
-                    'class' => 'yii\authclient\clients\GoogleOpenId'
-                ],
-                'twitter' => [
-                    'class' => 'yii\authclient\clients\Twitter',
-                    'consumerKey' => 'twitter_consumer_key',
-                    'consumerSecret' => 'twitter_consumer_secret',
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => '937683696362218',
+                    'clientSecret' => '46b5d7dfbb3533ca477e924bb726117d',
                 ],
             ],
         ],
