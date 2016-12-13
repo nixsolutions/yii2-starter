@@ -22,6 +22,8 @@ use yii\web\ServerErrorHttpException;
  * @property string $created_at
  * @property string $last_login_at
  * @property string $auth_key
+ * @property string $auth_provider
+ * @property string $social_id
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -61,7 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
-            [['auth_key', 'avatar', 'email', 'password'], 'string'],
+            [['auth_key', 'avatar', 'email', 'password', 'auth_provider', 'social_id'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64],
         ];
     }
@@ -228,5 +230,14 @@ class User extends ActiveRecord implements IdentityInterface
             throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         return static::findOne($hash->user_id);
+    }
+
+    /**
+     * @param $socialId
+     * @return static
+     */
+    public static function findBySocialId($socialId)
+    {
+        return static::findOne(['social_id' => $socialId]);
     }
 }

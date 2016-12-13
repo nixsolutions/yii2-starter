@@ -60,6 +60,27 @@ class AuthController extends Controller
     }
 
     /**
+     * This function will be triggered when user is successfully authenticated using some oAuth client.
+     *
+     * @param $client
+     */
+    public function oAuthSuccess($client)
+    {
+        $userAttributes = $client->getUserAttributes();
+
+        if (!$user = User::findBySocialId($userAttributes['id'])) {
+            $user = new User();
+            $user->first_name = explode(' ', $userAttributes['name'])[0];
+            $user->last_name = explode(' ', $userAttributes['name'])[1];
+            $user->auth_provider = $client->getName();
+            $user->social_id = $userAttributes['id'];
+            $user->setRole(User::ROLE_USER);
+            $user->save();
+        }
+        $user->login();
+    }
+
+    /**
      * @return string|\yii\web\Response
      * @throws Exception
      * @throws ServerErrorHttpException

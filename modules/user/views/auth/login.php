@@ -36,6 +36,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
+            <?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['auth']]); ?>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-lg-12">
             <?= Html::a('Forgot password?', '/recovery'); ?>
         </div>
     </div>

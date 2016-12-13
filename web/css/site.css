@@ -124,3 +124,7 @@ div.grid-view {
         text-align: center !important;
     }
 }
+
+ul.auth-clients {
+    padding-left: 0;
+}
