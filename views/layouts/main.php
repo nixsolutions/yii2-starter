@@ -89,10 +89,10 @@ AppAsset::register($this);
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12">
-                <p class="pull-left">&copy; NIX Solutions Ltd. <?= date('Y') ?></p>
+                <p>&copy; NIX Solutions Ltd. <?= date('Y') ?></p>
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12">
-                <p class="pull-right">Powered by BRUTTO BAND</p>
+                <p class="footer-right">Powered by BRUTTO BAND</p>
             </div>
         </div>
     </div>
