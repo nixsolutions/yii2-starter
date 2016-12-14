@@ -62,21 +62,21 @@ class AuthController extends Controller
     /**
      * This function will be triggered when user is successfully authenticated using some oAuth client.
      *
-     * @param $client
+     * @param $provider
+     * @throws Exception
      */
-    public function oAuthSuccess($client)
+    public function oAuthSuccess($provider)
     {
-        $userAttributes = $client->getUserAttributes();
+        $userAttributes = $provider->getUserAttributes();
 
-        if (!$user = User::findBySocialId($userAttributes['id'])) {
+        if ((!$user = User::findBySocialId($userAttributes['id']))) {
             $user = new User();
-            $user->first_name = explode(' ', $userAttributes['name'])[0];
-            $user->last_name = explode(' ', $userAttributes['name'])[1];
-            $user->auth_provider = $client->getName();
-            $user->social_id = $userAttributes['id'];
-            $user->setRole(User::ROLE_USER);
-            $user->save();
         }
+
+        if ($user->saveSocialAccountInfo($userAttributes, $provider)) {
+            throw new Exception('User info could not be saved.');
+        }
+
         $user->login();
     }
 

@@ -240,4 +240,48 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['social_id' => $socialId]);
     }
+
+    /**
+     * @param $userAttributes
+     * @param $provider
+     * @return $this
+     */
+    public function saveSocialAccountInfo($userAttributes, $provider)
+    {
+        $this->first_name = explode(' ', $userAttributes['name'])[0];
+        $this->last_name = explode(' ', $userAttributes['name'])[1];
+        $this->social_id = $userAttributes['id'];
+        $this->auth_provider = $provider->getName();
+        $this->email = $userAttributes['email'];
+        $this->avatar = $this->getSocialAvatar($userAttributes, $provider);
+
+        $this->save();
+
+        if ($this->isNewRecord) {
+            $this->setRole(self::ROLE_USER);
+        }
+        return $this;
+    }
+
+    /**
+     * @param $userAttributes
+     * @param $provider
+     * @return null|string
+     */
+    public function getSocialAvatar($userAttributes, $provider)
+    {
+        switch ($provider->getName()) {
+            case 'facebook' :
+                $avatar = 'http://graph.facebook.com/' . $userAttributes['id'] . '/picture?type=large';
+                break;
+            case 'google' :
+                $avatar = $userAttributes['picture'];
+                break;
+            case 'twitter' :
+                $avatar = $userAttributes['profile_image_url'];
+                break;
+            default : $avatar = null;
+        }
+        return $avatar;
+    }
 }
