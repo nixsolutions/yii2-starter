@@ -40,6 +40,8 @@ $user = Yii::$app->user;
                                 , '/user/management') : 'users management (changing user role and status)'; ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ? Html::a(Yii::t('site', 'mail templates management (modifying templates)'),
                                 '/mail-template') : 'mail templates management (modifying templates)'; ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ? Html::a(Yii::t('site', 'static pages management (modifying content)'),
+                                '/static-pages') : 'static pages management (modifying content)'; ?>;</li>
                         <li><?= $user->isGuest ? 'users profiles (with ability of editing information)' :
                                 Html::a(Yii::t('site', 'users profiles (with ability of editing information)'),
                                 '/user/default/profile'); ?>.</li>

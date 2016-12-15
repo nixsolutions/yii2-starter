@@ -16,7 +16,7 @@ use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use app\modules\user\models\forms\RegistrationForm;
-use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * AuthController for the `user` module
@@ -58,7 +58,7 @@ class AuthController extends Controller
     /**
      * @return string|\yii\web\Response
      * @throws Exception
-     * @throws NotFoundHttpException
+     * @throws ServerErrorHttpException
      */
     public function actionRegistration()
     {
@@ -72,7 +72,7 @@ class AuthController extends Controller
             }
 
             if (!$mailTemplate = MailTemplate::findByKey('REGISTER_CONFIRM')) {
-                throw new NotFoundHttpException('Template does not exist.');
+                throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
             }
 
             $hash = new Hash();
@@ -101,9 +101,9 @@ class AuthController extends Controller
     }
 
     /**
-     * @return bool|\yii\web\Response
+     * @return \yii\web\Response
      * @throws BadRequestHttpException
-     * @throws Exception
+     * @throws ServerErrorHttpException
      */
     public function actionConfirmRegistration()
     {
@@ -112,7 +112,7 @@ class AuthController extends Controller
         }
 
         if (!$user = User::findByHash($hash)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         $user->status = User::STATUS_ACTIVE;
         $user->update();
@@ -142,6 +142,7 @@ class AuthController extends Controller
             } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
             } else {
+                $user->rememberMe = $loginForm->rememberMe;
                 $user->login();
                 return $this->goBack();
             }
@@ -155,8 +156,8 @@ class AuthController extends Controller
     /**
      * Sends link for password recovery on user email
      *
-     * @throws Exception
-     * @throws NotFoundHttpException
+     * @return string|\yii\web\Response
+     * @throws ServerErrorHttpException
      */
     public function actionRecovery()
     {
@@ -171,7 +172,7 @@ class AuthController extends Controller
             } else {
 
                 if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
-                    throw new NotFoundHttpException('Template does not exist.');
+                    throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
                 }
 
                 $hash = new Hash();
@@ -202,7 +203,7 @@ class AuthController extends Controller
     /**
      * @return string|\yii\web\Response
      * @throws BadRequestHttpException
-     * @throws NotFoundHttpException
+     * @throws ServerErrorHttpException
      */
     public function actionChangePassword()
     {
@@ -210,7 +211,7 @@ class AuthController extends Controller
             throw new BadRequestHttpException();
         }
         if (!$user = User::findByHash($hash)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         $changePasswordForm = new ChangePasswordForm();
 
