@@ -67,12 +67,15 @@ class AuthController extends Controller
      */
     public function oAuthSuccess($provider)
     {
+        if ($provider->getName() == 'twitter') {
+            $provider->attributeParams = ['include_email' => 'true'];
+        }
         $userAttributes = $provider->getUserAttributes();
+        $email = $provider->getName() == 'google' ? $userAttributes['emails'][0]['value'] : $userAttributes['email'];
 
-        if ((!$user = User::findBySocialId($userAttributes['id'])) && (!$user = User::findByEmail($userAttributes['email']))) {
+        if ((!$user = User::findBySocialId($userAttributes['id'])) && (!$user = User::findByEmail($email))) {
             $user = new User();
         }
-
         if (!$user->saveSocialAccountInfo($userAttributes, $provider)) {
             throw new Exception('User info could not be saved.');
         }

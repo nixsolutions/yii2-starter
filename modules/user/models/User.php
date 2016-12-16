@@ -3,6 +3,7 @@
 namespace app\modules\user\models;
 
 use Yii;
+use yii\authclient\clients\Twitter;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -63,7 +64,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
-            [['auth_key', 'avatar', 'email', 'password', 'auth_provider', 'social_id'], 'string'],
+            [['auth_key', 'avatar', 'email', 'password', 'auth_provider'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64],
         ];
     }
@@ -272,10 +273,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         switch ($provider->getName()) {
             case 'facebook' :
-                $avatar = 'http://graph.facebook.com/' . $userAttributes['id'] . '/picture?type=large';
+                $avatar =  $provider->apiBaseUrl . $userAttributes['id'] . '/picture?type=large';
                 break;
             case 'google' :
-                $avatar = $userAttributes['picture'];
+                $avatar = current(explode('?', $userAttributes['image']['url']));
                 break;
             case 'twitter' :
                 $avatar = $userAttributes['profile_image_url'];
