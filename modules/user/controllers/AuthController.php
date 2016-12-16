@@ -69,11 +69,11 @@ class AuthController extends Controller
     {
         $userAttributes = $provider->getUserAttributes();
 
-        if ((!$user = User::findBySocialId($userAttributes['id']))) {
+        if ((!$user = User::findBySocialId($userAttributes['id'])) && (!$user = User::findByEmail($userAttributes['email']))) {
             $user = new User();
         }
 
-        if ($user->saveSocialAccountInfo($userAttributes, $provider)) {
+        if (!$user->saveSocialAccountInfo($userAttributes, $provider)) {
             throw new Exception('User info could not be saved.');
         }
 
