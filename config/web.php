@@ -12,6 +12,13 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'option'],
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@budyaga/cropper/views' => '@app/views/cropper',
+                ],
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
