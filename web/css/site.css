@@ -118,9 +118,15 @@ div.grid-view {
     overflow: auto;
 }
 
+@media(min-width:992px) {
+    .footer p.footer-right {
+        float: right;
+    }
+}
+
 @media(max-width:992px) {
     .footer p {
-        float: none !important;
-        text-align: center !important;
+        float: none;
+        text-align: center;
     }
 }

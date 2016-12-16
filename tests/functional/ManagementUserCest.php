@@ -57,14 +57,12 @@ class ManagementUserCest
         $I->submitForm('#userForm', [
             'UserForm[first_name]' => 'test name',
             'UserForm[last_name]' => 'test',
-            'UserForm[email]' => 'test.key@sd.sd',
             'UserForm[status]' => 'created',
             'UserForm[role]' => 'user',
         ]);
         $I->expectTo('see that user info updated successful');
         $I->see('test name');
         $I->see('test');
-        $I->see('test.key@sd.sd');
         $I->see('created');
         $I->see('user');
     }

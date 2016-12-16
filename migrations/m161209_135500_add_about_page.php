@@ -7,7 +7,7 @@ class m161209_135500_add_about_page extends Migration
     public function up()
     {
         $this->insert('pages', [
-            'key' => 'ABOUT',
+            'key' => 'about',
             'title' => 'About',
             'content' => '<p>We are glad to represent you our demo Yii2 application.</p>
 <p>Yii is a high-performance PHP framework best for developing Web 2.0 applications. Yii comes with rich features: MVC, 

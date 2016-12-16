@@ -4,33 +4,32 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\page\models\PageSearch */
+/* @var $searchModel app\modules\option\models\OptionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('page', 'Static Pages');
+$this->title = Yii::t('option', 'Options');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-index">
+<div class="option-index">
 
-    <h1><?= Html::encode($this->title); ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
+
+            'namespace',
             'key',
-            'title',
-            'content',
+            'value',
             'description',
-            [
-                'attribute' => 'updated_at',
-                'headerOptions' => ['width' => '150'],
-            ],
+            'created_at',
+             'updated_at',
+
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => Yii::t('page', 'Actions'),
+                'header' => Yii::t('option', 'Actions'),
                 'headerOptions' => ['width' => '35'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view}  {update}',
