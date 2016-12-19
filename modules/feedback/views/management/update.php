@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('feedback', 'Update');
 
     <div class="feedback-form">
 
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
         <?= $form->field($model, 'status')->dropDownList([
             Feedback::STATUS_NEW => ucfirst(Feedback::STATUS_NEW),

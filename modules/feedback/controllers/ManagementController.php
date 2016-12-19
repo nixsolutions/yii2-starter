@@ -105,6 +105,7 @@ class ManagementController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('feedback', 'Information saved.'));
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('update', [
