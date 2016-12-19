@@ -21,7 +21,7 @@ class UploadAction extends \budyaga\cropper\actions\UploadAction
         if (!Yii::$app->request->isPost) {
             throw new BadRequestHttpException(Yii::t('cropper', 'ONLY_POST_REQUEST'));
         }
-
+        $file = UploadedFile::getInstanceByName($this->uploadParam);
         $model = new DynamicModel(compact($this->uploadParam));
         $this->ajaxValidate($model);
 
@@ -35,19 +35,16 @@ class UploadAction extends \budyaga\cropper\actions\UploadAction
         $width = $request->post('width', $this->width);
         $height = $request->post('height', $this->height);
 
-        if ((0 == $request->post('w')) || (0 == $request->post('h'))){
+        if ((0 == $request->post('w')) || (0 == $request->post('h'))) {
             return ['error' => Yii::t('cropper', 'ERROR_CAN_NOT_UPLOAD_FILE')];
         }
 
-        $file = UploadedFile::getInstanceByName($this->uploadParam);
         $image = Image::crop(
             $file->tempName . $request->post('filename'),
             intval($request->post('w')),
             intval($request->post('h')),
             [$request->post('x'), $request->post('y')]
-        )->resize(
-            new Box($width, $height)
-        );
+        )->resize(new Box($width, $height));
 
         if ($image->save($this->path . $model->{$this->uploadParam}->name)) {
             return ['filelink' => $this->url . $model->{$this->uploadParam}->name];
@@ -57,7 +54,6 @@ class UploadAction extends \budyaga\cropper\actions\UploadAction
 
     /**
      * @param $model DynamicModel
-     * @return mixed
      */
     protected function ajaxValidate($model)
     {
@@ -67,6 +63,5 @@ class UploadAction extends \budyaga\cropper\actions\UploadAction
             'extensions' => explode(', ', $this->extensions),
             'wrongExtension' => Yii::t('cropper', 'EXTENSION_ERROR', ['formats' => $this->extensions]),
         ])->validate();
-        return $model;
     }
 }

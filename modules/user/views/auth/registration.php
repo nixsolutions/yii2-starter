@@ -40,12 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php echo $form->field($model, 'avatar')
         ->widget(budyaga\cropper\Widget::className(), [
-        'uploadUrl' => Url::toRoute('/user/auth/uploadPhoto'),
-        'cropAreaWidth' => 870,
-        'cropAreaHeight' => 500,
-        'width' => 500,
-        'height' => 500,
-    ]) ?>
+            'uploadUrl' => Url::toRoute('/user/auth/uploadPhoto'),
+            'cropAreaWidth' => 870,
+            'cropAreaHeight' => 500,
+            'width' => 500,
+            'height' => 500,
+        ]) ?>
     <div class="form-group">
         <div class="col-lg-12">
             <?= Html::submitButton(Yii::t('user', 'Register'),
