@@ -30,7 +30,7 @@ class ManagementMailTemplateCest
     public function updateFormWithEmptyName(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/mailTemplate/management/update?id=1'));
-        $I->seeResponseCodeIs(400);
+        $I->seeResponseCodeIs(200);
         $I->submitForm('#mailTemplateForm', [
             'MailTemplate[name]' => '',
             'MailTemplate[subject]' => 'test',
