@@ -1,7 +1,7 @@
 image: smartapps/bitbucket-pipelines-php-mysql:stretch
 
 before_script:
-  - bash docker_install.sh > /dev/null
+  - bash initial.sh > /dev/null
 
 test:app:
   script:
