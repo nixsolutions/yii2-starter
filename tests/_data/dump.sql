@@ -42,6 +42,7 @@ CREATE TABLE `auth_assignment` (
 LOCK TABLES `auth_assignment` WRITE;
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 INSERT INTO `auth_assignment` VALUES ('admin',1,NULL);
+INSERT INTO `auth_assignment` VALUES ('user', '2',NULL);
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +207,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (1,'admin','admin','admin@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-pBE8U8N7dqYa01QFb0TlzaEBRkZk');
-INSERT INTO `users` VALUES (2,'admin2','admin2','admin2@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk');
+INSERT INTO `users` VALUES (2,'user','user','user@user.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
