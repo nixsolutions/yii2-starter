@@ -246,16 +246,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `options`;
 
-CREATE TABLE options
-(
-    namespace VARCHAR(255) NOT NULL,
-    `key` VARCHAR(255) NOT NULL,
-    value VARCHAR(255),
-    description VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+CREATE TABLE `options` (
+  `namespace` VARCHAR(255) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `value` VARCHAR(255),
+  `description` VARCHAR(255),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE UNIQUE INDEX pk_options ON options (namespace, `key`);
+CREATE UNIQUE INDEX `pk_options` ON `options` (`namespace`, `key`);
 
 LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
