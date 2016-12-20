@@ -246,23 +246,20 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `options`;
 
-CREATE TABLE options
-(
-    namespace VARCHAR(255) NOT NULL,
-    `key` VARCHAR(255) NOT NULL,
-    value VARCHAR(255),
-    description VARCHAR(255),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+CREATE TABLE `options` (
+  `namespace` VARCHAR(255) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `value` VARCHAR(255),
+  `description` VARCHAR(255),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE UNIQUE INDEX pk_options ON options (namespace, `key`);
+CREATE UNIQUE INDEX `pk_options` ON `options` (`namespace`, `key`);
 
 LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
-INSERT INTO options (namespace, `key`, value, description, created_at, updated_at) VALUES ('ADMIN', 'email', 'admin@mail.com', 'Must contains admin email', '2016-12-10 09:30:43', '2016-12-10 09:30:43');
-INSERT INTO options (namespace, `key`, value, description, created_at, updated_at) VALUES ('ADMIN', 'name', 'Dima', 'Must contains admin name', '2016-12-10 09:32:50', '2016-12-10 09:32:50');
-INSERT INTO options (namespace, `key`, value, description, created_at, updated_at) VALUES ('MANAGER', 'email', 'manager@mail.com', 'Must contains manager email', '2016-12-10 09:31:58', '2016-12-10 09:31:58');
-INSERT INTO options (namespace, `key`, value, description, created_at, updated_at) VALUES ('MANAGER', 'name', 'Vasia', 'Must contains manager name', '2016-12-10 09:32:23', '2016-12-10 09:32:23');
+INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'email', 'admin@mail.com', 'Must contains admin email', '2016-12-10 09:30:43', '2016-12-10 09:30:43');
+INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'name', 'Dima', 'Must contains admin name', '2016-12-10 09:32:50', '2016-12-10 09:32:50');
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 
