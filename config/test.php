@@ -15,14 +15,6 @@ return [
     'bootstrap' => ['log', 'option'],
     'language' => 'en-US',
     'components' => [
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@budyaga/cropper/views' => '@app/views/cropper',
-                ],
-            ],
-        ],
-
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

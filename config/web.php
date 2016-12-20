@@ -11,14 +11,12 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'option'],
-    'components' => [
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    '@budyaga/cropper/views' => '@app/views/cropper',
-                ],
-            ],
+    'controllerMap' => [
+        'images' => [
+            'class'         => 'phpnt\cropper\controllers\ImagesController',
         ],
+    ],
+    'components' => [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

@@ -19,7 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "2amigos/yii2-ckeditor-widget": "^2.0",
-        "budyaga/yii2-cropper": "*"
+        "phpnt/yii2-cropper": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
