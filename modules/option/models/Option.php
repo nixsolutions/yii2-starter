@@ -33,7 +33,11 @@ class Option extends \yii\db\ActiveRecord
             [['namespace', 'key'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['namespace', 'key', 'value', 'description'], 'string', 'max' => 255],
-            [['namespace', 'key'], 'unique', 'targetAttribute' => ['namespace', 'key'], 'message' => 'The combination of Namespace and Key has already been taken.'],
+            [['namespace', 'key'],
+                'unique',
+                'targetAttribute' => ['namespace', 'key'],
+                'message' => 'The combination of Namespace and Key has already been taken.',
+            ],
         ];
     }
 

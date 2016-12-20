@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f4eeea779c3836e39a97662501366d5",
-    "content-hash": "a301c62e8c77773f7b416bbbdbacf648",
+    "hash": "01de5cbd8c3b3550a41b8b5233a240c1",
+    "content-hash": "6bfc9d3854fbee801e0aa7f1f8759474",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -117,6 +117,22 @@
             ]
         },
         {
+            "name": "bower-asset/jcrop",
+            "version": "v0.9.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tapmodo/Jcrop.git",
+                "reference": "1902fbc6afa14481dc019a17e0dcb7d62b808a98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tapmodo/Jcrop/zipball/1902fbc6afa14481dc019a17e0dcb7d62b808a98",
+                "reference": "1902fbc6afa14481dc019a17e0dcb7d62b808a98",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.2.4",
             "source": {
@@ -222,6 +238,36 @@
             }
         },
         {
+            "name": "bower-asset/simple-ajax-uploader",
+            "version": "2.5.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LPology/Simple-Ajax-Uploader.git",
+                "reference": "3549d66f9270e65f448d5cc7c2af1867b782b968"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LPology/Simple-Ajax-Uploader/zipball/3549d66f9270e65f448d5cc7c2af1867b782b968",
+                "reference": "3549d66f9270e65f448d5cc7c2af1867b782b968",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "SimpleAjaxUploader.js"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Javascript plugin for cross-browser Ajax file uploading. Supports drag and drop, CORS, and multiple file uploading with progress bars. Works in IE7-9, mobile, and all modern browsers.",
+            "keywords": [
+                "ajax",
+                "cors",
+                "cross-browser",
+                "php",
+                "upload"
+            ]
+        },
+        {
             "name": "bower-asset/yii2-pjax",
             "version": "v2.0.6",
             "source": {
@@ -254,6 +300,51 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "budyaga/yii2-cropper",
+            "version": "2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/budyaga/yii2-cropper.git",
+                "reference": "75660eb36a2b1f2cfa64716cdcd69b6f758d6160"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/budyaga/yii2-cropper/zipball/75660eb36a2b1f2cfa64716cdcd69b6f758d6160",
+                "reference": "75660eb36a2b1f2cfa64716cdcd69b6f758d6160",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jcrop": "=0.9.12",
+                "bower-asset/simple-ajax-uploader": "@dev",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-imagine": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "budyaga\\cropper\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Krivochenko",
+                    "email": "budyaga@gmail.com"
+                }
+            ],
+            "description": "Yii-Framework widget for uploading and cropping images",
+            "keywords": [
+                "crop",
+                "extension",
+                "upload",
+                "yii2"
+            ],
+            "time": "2016-10-22 08:34:56"
         },
         {
             "name": "cebe/markdown",
@@ -399,6 +490,63 @@
                 "html"
             ],
             "time": "2016-07-16 12:58:58"
+        },
+        {
+            "name": "imagine/imagine",
+            "version": "v0.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/149041d2a1b517107bfe270ca2b1a17aa341715d",
+                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "suggest": {
+                "ext-gd": "to use the GD implementation",
+                "ext-gmagick": "to use the Gmagick implementation",
+                "ext-imagick": "to use the Imagick implementation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "drawing",
+                "graphics",
+                "image manipulation",
+                "image processing"
+            ],
+            "time": "2015-09-19 16:54:05"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -643,6 +791,54 @@
                 "yii2"
             ],
             "time": "2016-02-06 00:49:24"
+        },
+        {
+            "name": "yiisoft/yii2-imagine",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-imagine.git",
+                "reference": "59dcd0b43c2b0e5495c7e5c0320e2cbc1cd57411"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-imagine/zipball/59dcd0b43c2b0e5495c7e5c0320e2cbc1cd57411",
+                "reference": "59dcd0b43c2b0e5495c7e5c0320e2cbc1cd57411",
+                "shasum": ""
+            },
+            "require": {
+                "imagine/imagine": "~0.6.0",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\imagine\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "amigo.cobos@gmail.com"
+                }
+            ],
+            "description": "The Imagine integration for the Yii framework",
+            "keywords": [
+                "helper",
+                "image",
+                "imagine",
+                "yii2"
+            ],
+            "time": "2016-11-03 19:28:39"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",

@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\modules\option\models\Option */
 
 $optionName = "$model->namespace $model->key";
-$this->title = Yii::t('option', 'Update {modelClass}: ', [
-        'modelClass' => 'Option',
-    ]) . $optionName;
+$this->title = Yii::t('option', 'Update {modelClass}: ', ['modelClass' => 'Option']) . $optionName;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('option', 'Options'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = [
     'label' => $optionName,

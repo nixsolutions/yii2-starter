@@ -36,6 +36,7 @@ class ManagementController extends Controller
 
     /**
      * Lists all Option models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -51,6 +52,7 @@ class ManagementController extends Controller
 
     /**
      * Displays a single Option model.
+     *
      * @param string $namespace
      * @param string $key
      * @return mixed
@@ -65,6 +67,7 @@ class ManagementController extends Controller
     /**
      * Updates an existing Option model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param string $namespace
      * @param string $key
      * @return mixed
@@ -75,16 +78,16 @@ class ManagementController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'namespace' => $model->namespace, 'key' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
      * Finds the Option model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param string $namespace
      * @param string $key
      * @return Option the loaded model
@@ -92,10 +95,11 @@ class ManagementController extends Controller
      */
     protected function findModel($namespace, $key)
     {
-        if (($model = Option::findOne(['namespace' => $namespace, 'key' => $key])) !== null) {
-            return $model;
-        } else {
+        $model = Option::findOne(['namespace' => $namespace, 'key' => $key]);
+        if (null === $model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+        return $model;
+
     }
 }

@@ -15,8 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('option', 'Update'), ['update', 'namespace' => $model->namespace, 'key' => $model->key],
-            ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('option', 'Update'),
+            ['update', 'namespace' => $model->namespace, 'key' => $model->key],
+            ['class' => 'btn btn-primary']
+        ) ?>
 
     </p>
 

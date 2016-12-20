@@ -4,7 +4,8 @@ $params = require(__DIR__ . '/params.php');
 $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/routes.php'),
     require(__DIR__ . '/../modules/mailTemplate/config/routes.php'),
-    require(__DIR__ . '/../modules/user/config/routes.php')
+    require(__DIR__ . '/../modules/user/config/routes.php'),
+    require(__DIR__ . '/../modules/feedback/config/routes.php')
 );
 
 $config = [
@@ -12,6 +13,13 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'option'],
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@budyaga/cropper/views' => '@app/views/cropper',
+                ],
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -68,6 +76,9 @@ $config = [
         ],
         'option' => [
             'class' => 'app\modules\option\Module',
+        ],
+        'feedback' => [
+            'class' => 'app\modules\feedback\Module',
         ],
     ],
     'params' => $params,

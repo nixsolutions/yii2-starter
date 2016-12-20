@@ -38,6 +38,7 @@ AppAsset::register($this);
     $menuItems = [];
     $user = Yii::$app->user;
 
+    $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
     if ($user->isGuest) {
         $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
@@ -49,6 +50,7 @@ AppAsset::register($this);
                     ['label' => 'Mail Templates', 'url' => ['/mail-template']],
                     ['label' => 'Users', 'url' => ['/users']],
                     ['label' => 'Options', 'url' => ['/options']],
+                    ['label' => 'Feedback', 'url' => ['/feedback']],
                 ],
             ];
         }
