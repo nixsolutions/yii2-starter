@@ -32,6 +32,5 @@ $this->params['breadcrumbs'][] = $model->first_name;
             'last_login_at',
         ],
     ]); ?>
-    <?= Html::img($model->avatar, ['alt'=>'user avatar']);?>
 
 </div>

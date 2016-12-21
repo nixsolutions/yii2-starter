@@ -51,11 +51,6 @@ class AuthController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'uploadPhoto' => [
-                'class' => 'app\modules\user\actions\UploadAction',
-                'url' => '/uploads/avatars',
-                'path' => '@app/web/uploads/avatars',
             ]
         ];
     }
