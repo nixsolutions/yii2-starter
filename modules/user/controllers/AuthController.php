@@ -52,7 +52,7 @@ class AuthController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'uploadPhoto' => [
+            'upload-photo' => [
                 'class' => 'app\modules\user\actions\UploadAction',
                 'url' => '/uploads/avatars',
                 'path' => '@app/web/uploads/avatars',

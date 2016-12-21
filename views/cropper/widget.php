@@ -26,11 +26,7 @@ use yii\helpers\Html;
         ]
     ); ?>
     <?php Modal::begin([
-        'size' => Modal::SIZE_LARGE,
         'header' => '<h2>' . Yii::t('site', 'Change avatar') . '</h2>',
-        'options' => [
-            'htmlOptions' => ['class' => 'modal-lg'],
-        ],
         'toggleButton' => [
             'tag' => 'button',
             'class' => 'btn btn-sm btn-info',
@@ -59,6 +55,8 @@ use yii\helpers\Html;
             <span><?= $widget->label; ?></span>
         </div>
     </div>
+
+    <div class="help-block help-block-error "></div>
     <div class="progress hidden" style="width: <?= $widget->cropAreaWidth; ?>px;">
         <div class="progress-bar progress-bar-striped progress-bar-success active" role="progressbar"
              style="width: 0%">
