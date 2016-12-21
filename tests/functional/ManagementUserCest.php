@@ -1,19 +1,14 @@
 <?php
 
+use app\tests\functional\BaseFunctionalCest;
 use yii\helpers\Url;
 
-class ManagementUserCest
+class ManagementUserCest extends BaseFunctionalCest
 {
-    public function _before(FunctionalTester $I)
-    {
-        $I->amOnRoute('/login');
-        $I->amLoggedInAs(1);
-    }
-
-    public function _after(FunctionalTester $I)
-    {
-    }
-
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeUsersGrid(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/index'));
@@ -32,6 +27,10 @@ class ManagementUserCest
         $I->see('active', 'tbody td');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeUserDescription(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/view?id=1'));
@@ -42,6 +41,10 @@ class ManagementUserCest
         $I->see('active', 'td');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function seeUpdateButton(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/view?id=1'));
@@ -49,6 +52,10 @@ class ManagementUserCest
         $I->see('Update', 'a');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateUserInfoSuccess(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/update?id=2'));
@@ -57,18 +64,20 @@ class ManagementUserCest
         $I->submitForm('#userForm', [
             'UserForm[first_name]' => 'test name',
             'UserForm[last_name]' => 'test',
-            'UserForm[email]' => 'test.key@sd.sd',
             'UserForm[status]' => 'created',
             'UserForm[role]' => 'user',
         ]);
         $I->expectTo('see that user info updated successful');
         $I->see('test name');
         $I->see('test');
-        $I->see('test.key@sd.sd');
         $I->see('created');
         $I->see('user');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateUserWithWrongData(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
@@ -85,6 +94,10 @@ class ManagementUserCest
         $I->see('Last name cannot be blank.');
     }
 
+    /**
+     * @before loginAsAdmin
+     * @after logout
+     */
     public function updateUserWithWrongStatusAndRole(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
@@ -101,9 +114,21 @@ class ManagementUserCest
         $I->see('Role is invalid.');
     }
 
+    /**
+     * @before loginAsAdmin
+     */
     public function tryUpdateNotExistingUser(FunctionalTester $I)
     {
         $I->amOnPage(Url::toRoute('/users/management/update?id=1000'));
         $I->seeResponseCodeIs(404);
+    }
+
+    /**
+     * @before loginAsUser
+     */
+    public function tryUpdateUserNotAdminRole(FunctionalTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/user/management/update?id=1'));
+        $I->seeResponseCodeIs(403);
     }
 }

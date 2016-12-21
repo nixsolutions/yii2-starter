@@ -42,6 +42,7 @@ CREATE TABLE `auth_assignment` (
 LOCK TABLES `auth_assignment` WRITE;
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 INSERT INTO `auth_assignment` VALUES ('admin',1,NULL);
+INSERT INTO `auth_assignment` VALUES ('user', '2',NULL);
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +207,7 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (1,'admin','admin','admin@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-pBE8U8N7dqYa01QFb0TlzaEBRkZk');
-INSERT INTO `users` VALUES (2,'admin2','admin2','admin2@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk');
+INSERT INTO `users` VALUES (2,'user','user','user@user.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,6 +237,30 @@ INSERT INTO `mail_templates` VALUES (1,'REGISTER_CONFIRM','<p>Hello, {{name}}!</
 insert  into `mail_templates`(`id`,`key`,`body`,`name`,`updated_at`,`subject`) values (3,'REGISTER','<p>Hello {{user}}</p>\r\n\r\n\r\n\r\n<p>In {{data}}</p>\r\n\r\n\r\n\r\n<p>Visit link {{link}}</p>\r\n\r\n\r\n\r\n<p>Restore password {{password}}</p>\r\n\r\n\r\n\r\n<p>Second password {{password2}}</p>\r\n\r\n\r\n\r\n<p>{{wrong}}</p>\r\n\r\n\r\n\r\n<p>&nbsp;</p>\r\n\r\n','Register','2016-12-22 17:16:52','Test regisret user');
 
 /*!40000 ALTER TABLE `mail_templates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Dumping data for table `options`
+--
+
+DROP TABLE IF EXISTS `options`;
+
+CREATE TABLE `options` (
+  `namespace` VARCHAR(255) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `value` VARCHAR(255),
+  `description` VARCHAR(255),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX `pk_options` ON `options` (`namespace`, `key`);
+
+LOCK TABLES `options` WRITE;
+/*!40000 ALTER TABLE `options` DISABLE KEYS */;
+INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'email', 'admin@mail.com', 'Must contains admin email', '2016-12-10 09:30:43', '2016-12-10 09:30:43');
+INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'name', 'Dima', 'Must contains admin name', '2016-12-10 09:32:50', '2016-12-10 09:32:50');
+/*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
