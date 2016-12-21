@@ -249,8 +249,13 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function saveSocialAccountInfo($userAttributes, $provider)
     {
-        $this->first_name = explode(' ', $userAttributes['name'])[0];
-        $this->last_name = explode(' ', $userAttributes['name'])[1];
+        if ($provider->getName() == 'google') {
+            $this->first_name = $userAttributes['givenName'];
+            $this->last_name = $userAttributes['familyName'];
+        } else {
+            $this->first_name = explode(' ', $userAttributes['name'])[0];
+            $this->last_name = explode(' ', $userAttributes['name'])[1];
+        }
         $this->social_id = $userAttributes['id'];
         $this->auth_provider = $provider->getName();
         $this->email = $userAttributes['email'];
