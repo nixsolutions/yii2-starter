@@ -1,16 +1,16 @@
-(function($) {
-    $('#image').cropper({
-        aspectRatio: 16 / 9,
-        crop: function(e) {
-            // Output the result data for cropping image.
-            console.log(e.x);
-            console.log(e.y);
-            console.log(e.width);
-            console.log(e.height);
-            console.log(e.rotate);
-            console.log(e.scaleX);
-            console.log(e.scaleY);
-        }
+(function ($) {
+    $('#cropImage').on('click', function () {
+        var data = [];
+        data [yii.getCsrfParam()] = yii.getCsrfToken();
+        data['width'] =
+        data['height']
+
+    });
+
+    $('#registration-form').on('beforeSubmit', function (e) {
+        console.log($('#user-avatar').attr('src'));
+        $('#avatar-field').val($('#user-avatar').attr('src'));
+        return true;
     });
 
 })(jQuery);

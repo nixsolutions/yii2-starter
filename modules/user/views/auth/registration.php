@@ -4,6 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 
 use app\assets\CropperAsset;
+use app\widgets\crop\Crop;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -11,7 +12,6 @@ use yii\bootstrap\ActiveForm;
 CropperAsset::register($this);
 $this->registerJsFile('@web/js/crop.js', ['depends' => CropperAsset::className()]);
 $this->registerCssFile('@web/css/modules/user/registration.css', ['depends' => [BootstrapAsset::className()]]);
-$this->registerCssFile('@web/css/crop.css', ['depends' => [CropperAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
 $this->params['breadcrumbs'][] = $this->title;
@@ -21,37 +21,46 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>Please fill out the following fields for registration:</p>
 
-    <?php $form = ActiveForm::begin([
-        'options' => ['enctype' => 'multipart/form-data'],
-        'id' => 'registration-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-2 control-label'],
-        ],
-    ]); ?>
+    <?= Crop::widget([
+        'uploadUrl' => '/user/crop/crop',
+        'inputLabel' => 'Choose',
+        'modalLabel' => 'Set avatar',
+    ]) ?>
 
-    <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]); ?>
+    <div class="col-md-12">
 
-    <?= $form->field($model, 'lastName')->textInput(); ?>
+        <?php $form = ActiveForm::begin([
+            'options' => ['enctype' => 'multipart/form-data'],
+            'id' => 'registration-form',
+            'layout' => 'horizontal',
+            'fieldConfig' => [
+                'template' => "{label}\n<div class=\"col-lg-12\">{input}</div>\n<div class=\"col-lg-12\">{error}</div>",
+                'labelOptions' => ['class' => 'col-lg-2 control-label'],
+            ],
+        ]); ?>
 
-    <?= $form->field($model, 'email')->textInput(); ?>
+        <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]); ?>
 
-    <?= $form->field($model, 'password')->passwordInput(); ?>
+        <?= $form->field($model, 'lastName')->textInput(); ?>
 
-    <?= $form->field($model, 'passwordRepeat')->passwordInput(); ?>
+        <?= $form->field($model, 'email')->textInput(); ?>
 
-    <div class="form-group">
-        <div class="col-lg-12">
-            <?= Html::submitButton(Yii::t('user', 'Register'),
-                ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
+        <?= $form->field($model, 'password')->passwordInput(); ?>
+
+        <?= $form->field($model, 'passwordRepeat')->passwordInput(); ?>
+
+        <?= Html::activeHiddenInput($model, 'avatar', ['id' => 'avatar-field']); ?>
+
+        <div class="form-group">
+            <div class="col-lg-12">
+                <?= Html::submitButton(Yii::t('user', 'Register'),
+                    ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
+            </div>
         </div>
+
+        <?php ActiveForm::end(); ?>
+
     </div>
-
-    <?php ActiveForm::end(); ?>
-
-    <div>
-        <img id="image" src="uploads/avatars/585aa5e1df679.jpg">
-    </div>
-
 </div>
+
+
