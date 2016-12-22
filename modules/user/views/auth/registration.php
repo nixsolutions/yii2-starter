@@ -3,12 +3,15 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-use phpnt\cropper\ImageLoadWidget;
+use app\assets\CropperAsset;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+CropperAsset::register($this);
+$this->registerJsFile('@web/js/crop.js', ['depends' => CropperAsset::className()]);
 $this->registerCssFile('@web/css/modules/user/registration.css', ['depends' => [BootstrapAsset::className()]]);
+$this->registerCssFile('@web/css/crop.css', ['depends' => [CropperAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
 $this->params['breadcrumbs'][] = $this->title;
@@ -47,5 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 
+    <div>
+        <img id="image" src="uploads/avatars/585aa5e1df679.jpg">
+    </div>
 
 </div>

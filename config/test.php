@@ -13,8 +13,15 @@ return [
     'id' => 'basic-tests',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'option'],
+    'aliases' => [
+        '@bower' => '@vendor/bower',
+    ],
     'language' => 'en-US',
     'components' => [
+        'assetManager' => [
+            //cache off for static
+            'appendTimestamp' => YII_ENV_DEV ? true : false,
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -30,7 +37,7 @@ return [
         'user' => [
             'identityClass' => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
-            'loginUrl'=>['/login'],
+            'loginUrl' => ['/login'],
         ],
         'request' => [
             'cookieValidationKey' => 'test',
