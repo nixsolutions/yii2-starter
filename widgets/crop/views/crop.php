@@ -4,7 +4,7 @@
  */
 
 ?>
-<div id="crop-avatar" class="col-md-3">
+<div id="crop-avatar">
 
     <!-- Current avatar -->
     <div class="avatar-view" title="Change the avatar">
@@ -29,11 +29,14 @@
                             <div class="avatar-upload">
                                 <input type="hidden" class="avatar-src" name="avatar_src">
                                 <input type="hidden" class="avatar-data" name="avatar_data">
-                                <label class="btn btn-primary btn-file">
-                                    <?= Yii::t('crop', $widget->inputLabel); ?>
-                                    <input type="file" class="avatar-input" id="avatarInput" name="avatar_file"
-                                           style="display: none;">
-                                </label>
+                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                    <label class="btn btn-primary btn-file">
+                                        <?= Yii::t('crop', $widget->inputLabel); ?>
+                                        <input type="file" class="avatar-input" id="avatarInput" name="avatar_file"
+                                               style="display: none;">
+                                    </label>
+                                </div>
+
                             </div>
 
                             <!-- Crop and preview -->
@@ -44,9 +47,15 @@
                             </div>
 
                             <div class="row avatar-btns">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary btn-block avatar-save">
                                         <?= Yii::t('crop', $widget->cropLabel); ?>
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-block btn-default" data-dismiss="modal"
+                                            data-target="#avatar-modal">
+                                        Close
                                     </button>
                                 </div>
                             </div>

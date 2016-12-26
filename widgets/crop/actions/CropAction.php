@@ -57,7 +57,7 @@ class CropAction extends Action
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         if ($model->hasErrors()) {
-            return ['message' => $model->getFirstError($this->uploadParam)];
+            return ['message' => $model->getFirstError('file')];
         }
 
         $model->file->name = uniqid() . '.' . $model->file->extension;

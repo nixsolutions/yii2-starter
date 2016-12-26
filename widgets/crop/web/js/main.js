@@ -70,7 +70,7 @@
 
         initTooltip: function () {
             this.$avatarView.tooltip({
-                placement: 'bottom'
+                placement: 'right'
             });
         },
 
@@ -134,6 +134,8 @@
         },
 
         change: function () {
+            this.stopCropper();
+
             var files;
             var file;
 
@@ -320,6 +322,8 @@
             ].join('');
 
             this.$avatarUpload.after($alert);
+            $('div .alert.alert-danger.avatar-alert').animate({opacity: 1.0}, 2000).fadeOut('slow');
+
         }
     };
 

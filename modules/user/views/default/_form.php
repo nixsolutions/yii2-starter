@@ -12,14 +12,12 @@ use yii\widgets\ActiveForm;
 
 <div class="users-form">
 
-    <div class="col-md-12">
-        <?= Crop::widget([
-            'uploadUrl' => '/user/auth/upload-avatar',
-            'inputLabel' => 'Choose',
-            'modalLabel' => 'Update avatar',
-            'noPhotoUrl' => $user->avatar,
-        ]) ?>
-    </div>
+    <?= Crop::widget([
+        'uploadUrl' => '/user/auth/upload-avatar',
+        'inputLabel' => 'Choose',
+        'modalLabel' => 'Update avatar',
+        'noPhotoUrl' => $user->avatar,
+    ]) ?>
 
     <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>
 
