@@ -51,6 +51,11 @@ class AuthController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+            ],
+            'upload-avatar' => [
+                'class' => 'app\widgets\crop\actions\CropAction',
+                'url' => '/uploads/avatars',
+                'path' => '@app/web/uploads/avatars',
             ]
         ];
     }

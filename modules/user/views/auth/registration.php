@@ -3,14 +3,13 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-use app\assets\CropperAsset;
+use app\assets\AppAsset;
 use app\widgets\crop\Crop;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-CropperAsset::register($this);
-$this->registerJsFile('@web/js/crop.js', ['depends' => CropperAsset::className()]);
+$this->registerJsFile('@web/js/modules/user/registration.js', ['depends' => [AppAsset::className()]]);
 $this->registerCssFile('@web/css/modules/user/registration.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
@@ -22,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>Please fill out the following fields for registration:</p>
 
     <?= Crop::widget([
-        'uploadUrl' => '/user/crop/crop',
+        'uploadUrl' => '/user/auth/upload-avatar',
         'inputLabel' => 'Choose',
         'modalLabel' => 'Set avatar',
     ]) ?>
@@ -53,8 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="form-group">
             <div class="col-lg-12">
-                <?= Html::submitButton(Yii::t('user', 'Register'),
-                    ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
+                <?= Html::submitButton(
+                    Yii::t('user', 'Register'),
+                    ['class' => 'btn btn-primary', 'name' => 'register-button']
+                ); ?>
             </div>
         </div>
 

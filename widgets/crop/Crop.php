@@ -14,6 +14,9 @@ class Crop extends Widget
     public $inputLabel = 'Choose';
     public $cropLabel = 'Done';
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
@@ -22,11 +25,13 @@ class Crop extends Widget
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
         $this->registerAssets();
         return $this->render('crop', [
-            /*'model' => $this->model,*/
             'widget' => $this,
         ]);
     }

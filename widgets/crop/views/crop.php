@@ -2,7 +2,6 @@
 /**
  * @var $widget \app\widgets\crop\Crop
  */
-use yii\helpers\Html;
 
 ?>
 <div id="crop-avatar" class="col-md-3">
