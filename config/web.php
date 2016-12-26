@@ -63,11 +63,6 @@ $config = [
                     'basePath' => '@app/messages',
                     'sourceLanguage' => 'en_US',
                 ],
-                'crop' => [
-                    'class' => 'yii\i18n\GettextMessageSource',
-                    'basePath' => '@app/messages',
-                    'sourceLanguage' => 'en_US',
-                ],
             ],
         ],
     ],

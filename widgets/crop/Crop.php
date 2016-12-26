@@ -3,6 +3,7 @@
 namespace app\widgets\crop;
 
 use app\widgets\crop\assets\CropAsset;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 
@@ -20,6 +21,7 @@ class Crop extends Widget
     public function init()
     {
         parent::init();
+        self::registerTranslations();
         if (null == $this->uploadUrl) {
             throw new InvalidConfigException('Missing attribute uploadUrl');
         }
@@ -43,5 +45,18 @@ class Crop extends Widget
     {
         $view = $this->getView();
         CropAsset::register($view);
+    }
+
+    /**
+     * Register widget translations.
+     */
+    public static function registerTranslations()
+    {
+        if (!isset(Yii::$app->i18n->translations['crop'])) {
+            Yii::$app->i18n->translations['crop'] = [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => __DIR__ . '/messages',
+            ];
+        }
     }
 }

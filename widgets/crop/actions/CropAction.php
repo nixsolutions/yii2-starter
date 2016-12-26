@@ -2,6 +2,7 @@
 
 namespace app\widgets\crop\actions;
 
+use app\widgets\crop\Crop;
 use Yii;
 use yii\base\Action;
 use yii\base\DynamicModel;
@@ -29,6 +30,7 @@ class CropAction extends Action
      */
     public function init()
     {
+        Crop::registerTranslations();
         if ($this->url === null) {
             throw new InvalidConfigException('Missing attribute url');
         }
