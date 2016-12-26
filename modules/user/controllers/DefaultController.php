@@ -6,6 +6,7 @@ use app\modules\user\models\forms\UserForm;
 use app\modules\user\models\User;
 use Yii;
 use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,7 +14,7 @@ use yii\web\NotFoundHttpException;
  *
  * @package app\modules\user\controllers
  */
-class DefaultController extends \yii\web\Controller
+class DefaultController extends Controller
 {
     /**
      * @inheritdoc

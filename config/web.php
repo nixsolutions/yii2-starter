@@ -4,7 +4,8 @@ $params = require(__DIR__ . '/params.php');
 $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/routes.php'),
     require(__DIR__ . '/../modules/mailTemplate/config/routes.php'),
-    require(__DIR__ . '/../modules/user/config/routes.php')
+    require(__DIR__ . '/../modules/user/config/routes.php'),
+    require(__DIR__ . '/../modules/page/config/routes.php')
 );
 
 $config = [
@@ -79,6 +80,9 @@ $config = [
         ],
         'mailing' => [
             'class' => 'app\modules\mailing\Module',
+        ],
+        'page' => [
+            'class' => 'app\modules\page\Module',
         ],
         'option' => [
             'class' => 'app\modules\option\Module',
