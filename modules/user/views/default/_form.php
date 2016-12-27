@@ -18,13 +18,15 @@ use yii\widgets\ActiveForm;
             'uploadUrl' => '/user/auth/upload-avatar',
             'inputLabel' => 'Choose',
             'modalLabel' => 'Set avatar',
-            'noPhotoUrl' => $user->avatar ? : '/img/no_image.png',
+            'noPhotoUrl' => $user->avatar ?: '/img/no_image.png',
         ]) ?>
     </div>
 
-
     <div class="form-group">
-        <?= Html::button(Yii::t('app', 'Delete avatar'), ['class' => 'btn btn-danger', 'id' => 'deleteAvatar']); ?>
+        <?= Html::button(
+            Yii::t('app', 'Delete avatar'),
+            ['class' => 'btn btn-danger btn-block button-width', 'id' => 'deleteAvatar']
+        ); ?>
     </div>
 
     <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>

@@ -1,12 +1,14 @@
 <?php
 
 use app\assets\AppAsset;
+use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $userForm \app\modules\user\models\forms\UserForm */
 
 $this->registerJsFile('@web/js/modules/user/update.js', ['depends' => [AppAsset::className()]]);
+$this->registerCssFile('@web/css/modules/user/update.css', ['depends' => [BootstrapAsset::className()]]);
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Users',
 ]) . $userForm->first_name;
