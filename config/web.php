@@ -18,8 +18,7 @@ $config = [
     'language' => 'en-US',
     'components' => [
         'assetManager' => [
-            //cache off for static
-            'appendTimestamp' =>  YII_ENV_DEV ? true : false,
+            'linkAssets' => YII_ENV_DEV ? true : false,
 
         ],
         'authManager' => [
