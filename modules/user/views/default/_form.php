@@ -12,12 +12,20 @@ use yii\widgets\ActiveForm;
 
 <div class="users-form">
 
-    <?= Crop::widget([
-        'uploadUrl' => '/user/auth/upload-avatar',
-        'inputLabel' => 'Choose',
-        'modalLabel' => 'Update avatar',
-        'noPhotoUrl' => $user->avatar,
-    ]) ?>
+    <div class="form-group">
+        <?= Html::activeLabel($user, 'avatar') ?>
+        <?= Crop::widget([
+            'uploadUrl' => '/user/auth/upload-avatar',
+            'inputLabel' => 'Choose',
+            'modalLabel' => 'Set avatar',
+            'noPhotoUrl' => $user->avatar ? : '/img/no_image.png',
+        ]) ?>
+    </div>
+
+
+    <div class="form-group">
+        <?= Html::button(Yii::t('app', 'Delete avatar'), ['class' => 'btn btn-danger', 'id' => 'deleteAvatar']); ?>
+    </div>
 
     <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>
 

@@ -3,13 +3,10 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 
-use app\assets\AppAsset;
-use app\widgets\crop\Crop;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->registerJsFile('@web/js/modules/user/registration.js', ['depends' => [AppAsset::className()]]);
 $this->registerCssFile('@web/css/modules/user/registration.css', ['depends' => [BootstrapAsset::className()]]);
 
 $this->title = Yii::t('user', 'Registration');
@@ -17,13 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-register">
     <h1><?= Html::encode($this->title); ?></h1>
-
-    <?= Crop::widget([
-        'uploadUrl' => '/user/auth/upload-avatar',
-        'inputLabel' => 'Choose',
-        'modalLabel' => 'Set avatar',
-    ]) ?>
-
 
     <?php $form = ActiveForm::begin([
         'options' => ['enctype' => 'multipart/form-data'],

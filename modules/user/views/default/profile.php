@@ -17,7 +17,9 @@ $this->params['breadcrumbs'][] = $model->first_name;
         <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
-    <?= Html::img($model->avatar, ['alt' => 'User avatar', 'width' => 200, 'height' => 200]) ?>
+    <div class="form-group">
+        <?= Html::img($model->avatar, ['alt' => 'User avatar', 'width' => 200, 'height' => 200]) ?>
+    </div>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
