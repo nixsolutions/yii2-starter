@@ -7,6 +7,7 @@ use yii\authclient\clients\Twitter;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\web\ServerErrorHttpException;
 
@@ -243,52 +244,25 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $userAttributes
+     * @param $socialData
      * @param $provider
      * @return $this
      */
-    public function saveSocialAccountInfo($userAttributes, $provider)
+    public function saveSocialAccountInfo($socialData, $provider)
     {
-        $this->auth_provider = $provider->getName();
-        if ($this->auth_provider == 'google') {
-            $this->first_name = $userAttributes['name']['givenName'];
-            $this->last_name = $userAttributes['name']['familyName'];
-            $this->email = $userAttributes['emails'][0]['value'];
-        } else {
-            $this->first_name = explode(' ', $userAttributes['name'])[0];
-            $this->last_name = explode(' ', $userAttributes['name'])[1];
-            $this->email = $userAttributes['email'];
-        }
-        $this->social_id = $userAttributes['id'];
-        $this->avatar = $this->getSocialAvatar($userAttributes, $provider);
+        $this->auth_provider = $provider;
+        $this->first_name = ArrayHelper::getValue($socialData, 'firstName');
+        $this->last_name = ArrayHelper::getValue($socialData, 'lastName');
+        $this->email = ArrayHelper::getValue($socialData, 'email');
+        $this->social_id = ArrayHelper::getValue($socialData, 'socialId');
+        $this->avatar = ArrayHelper::getValue($socialData, 'avatar');
 
         $this->save();
 
         if ($this->isNewRecord) {
             $this->setRole(self::ROLE_USER);
         }
-        return $this;
-    }
 
-    /**
-     * @param $userAttributes
-     * @param $provider
-     * @return null|string
-     */
-    public function getSocialAvatar($userAttributes, $provider)
-    {
-        switch ($provider->getName()) {
-            case 'facebook' :
-                $avatar =  $provider->apiBaseUrl . $userAttributes['id'] . '/picture?type=large';
-                break;
-            case 'google' :
-                $avatar = current(explode('?', $userAttributes['image']['url']));
-                break;
-            case 'twitter' :
-                $avatar = $userAttributes['profile_image_url'];
-                break;
-            default : $avatar = null;
-        }
-        return $avatar;
+        return $this;
     }
 }

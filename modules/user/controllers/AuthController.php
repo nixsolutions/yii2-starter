@@ -2,6 +2,7 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\user\SocialAuthHandler;
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\user\models\forms\ChangePasswordForm;
@@ -67,20 +68,7 @@ class AuthController extends Controller
      */
     public function oAuthSuccess($provider)
     {
-        if ($provider->getName() == 'twitter') {
-            $provider->attributeParams = ['include_email' => 'true'];
-        }
-        $userAttributes = $provider->getUserAttributes();
-        $email = $provider->getName() == 'google' ? $userAttributes['emails'][0]['value'] : $userAttributes['email'];
-
-        if ((!$user = User::findBySocialId($userAttributes['id'])) && (!$user = User::findByEmail($email))) {
-            $user = new User();
-        }
-        if (!$user->saveSocialAccountInfo($userAttributes, $provider)) {
-            throw new Exception('User info could not be saved.');
-        }
-
-        $user->login();
+        (new SocialAuthHandler($provider))->auth();
     }
 
     /**
