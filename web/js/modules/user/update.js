@@ -4,6 +4,6 @@
         return true;
     });
     $('#deleteAvatar').on('click', function(){
-        $('#user-avatar').attr('src', '');
+        $('#user-avatar').attr('src', '/img/no_image.png');
     });
 })(jQuery);

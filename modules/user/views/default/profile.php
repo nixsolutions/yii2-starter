@@ -20,7 +20,7 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
 
     <div class="form-group">
         <?= Html::img(
-            $model->avatar,
+            $model->avatar ? : '/img/no_image.png',
             ['alt' => 'User avatar', 'width' => 200, 'height' => 200, 'class' => 'avatar-border']
         ) ?>
     </div>
