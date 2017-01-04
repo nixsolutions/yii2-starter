@@ -2,7 +2,7 @@
 
 namespace app\modules\user\controllers;
 
-use app\modules\user\SocialAuthHandler;
+use app\modules\user\social\SocialAuthHandler;
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\user\models\forms\ChangePasswordForm;
@@ -64,7 +64,6 @@ class AuthController extends Controller
      * This function will be triggered when user is successfully authenticated using some oAuth client.
      *
      * @param $provider
-     * @throws Exception
      */
     public function oAuthSuccess($provider)
     {
