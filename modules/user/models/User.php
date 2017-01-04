@@ -243,17 +243,17 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @param $adapter
-     * @param $clientName
+     * @param $client
      * @return $this
      */
-    public function saveSocialAccountInfo($adapter, $clientName)
+    public function saveSocialAccountInfo($adapter, $client)
     {
-        $this->auth_provider = $clientName;
+        $this->auth_provider = $client->getName();
         $this->first_name = $adapter->getFirstName();
         $this->last_name = $adapter->getLastName();
         $this->email = $adapter->getEmail();
         $this->social_id = $adapter->getSocialId();
-        $this->avatar = $adapter->getAvatar();
+        $this->avatar = $adapter->getAvatar($client);
 
         $this->save();
 

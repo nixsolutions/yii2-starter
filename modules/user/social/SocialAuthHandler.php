@@ -24,7 +24,6 @@ class SocialAuthHandler
     private $user;
 
     const TWITTER = 'twitter';
-    const GOOGLE = 'google';
 
     /**
      * SocialAuthHandler constructor.
@@ -36,29 +35,25 @@ class SocialAuthHandler
     }
 
     /**
-     * Handles authorization through social networks
+     * Handles authorization through social networks.
      * @throws Exception
      */
     public function auth()
     {
-        $clientName = $this->client->getName();
-
-        if ($clientName == self::TWITTER) {
+        if (self::TWITTER === $this->client->getName()) {
             $this->client->attributeParams = ['include_email' => 'true'];
         }
-        $userAttributes = $this->client->getUserAttributes();
-        $email = $clientName == self::GOOGLE ? ArrayHelper::getValue($userAttributes, 'emails.0.value') :
-            ArrayHelper::getValue($userAttributes, 'email');
 
-        if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($userAttributes, 'id'))) && (!$this->user = User::findByEmail($email))) {
-            $this->user = new User();
-        }
-
-        if (!$adapter = SocialDataAdapter::getAdapter($this->client, $userAttributes)) {
+        if (!$adapter = SocialDataAdapter::getAdapter($this->client)) {
             throw new Exception('Adapter does not exist.');
         }
 
-        if (!$this->user->saveSocialAccountInfo($adapter, $clientName)) {
+        if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($this->client->getUserAttributes(), 'id'))) &&
+            (!$this->user = User::findByEmail($adapter->getEmail()))) {
+            $this->user = new User();
+        }
+
+        if (!$this->user->saveSocialAccountInfo($adapter, $this->client)) {
             throw new Exception('Social data could not be saved.');
         }
 

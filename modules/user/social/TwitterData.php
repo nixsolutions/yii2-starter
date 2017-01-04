@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 class TwitterData extends SocialData
 {
     /**
-     * Gets user's avatar
+     * Gets user's avatar.
      * @return string
      */
     public function getAvatar()

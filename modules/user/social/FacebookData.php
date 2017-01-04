@@ -12,11 +12,12 @@ use yii\helpers\ArrayHelper;
 class FacebookData extends SocialData
 {
     /**
-     * Gets user's avatar
+     * Gets user's avatar.
+     * @param $client
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar($client)
     {
-        return $this->client->apiBaseUrl . ArrayHelper::getValue($this->userAttributes, 'id') . '/picture?type=large';
+        return $client->apiBaseUrl . ArrayHelper::getValue($this->userAttributes, 'id') . '/picture?type=large';
     }
 }

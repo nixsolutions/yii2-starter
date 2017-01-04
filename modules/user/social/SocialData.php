@@ -11,22 +11,19 @@ use yii\helpers\ArrayHelper;
  */
 class SocialData
 {
-    protected $client;
     protected $userAttributes;
 
     /**
      * SocialData constructor.
-     * @param $client
      * @param $userAttributes
      */
-    public function __construct($client, $userAttributes)
+    public function __construct($userAttributes)
     {
-        $this->client = $client;
         $this->userAttributes = $userAttributes;
     }
 
     /**
-     * Gets user's first name
+     * Gets user's first name.
      * @return mixed
      */
     public function getFirstName()
@@ -35,7 +32,7 @@ class SocialData
     }
 
     /**
-     * Gets user's last name
+     * Gets user's last name.
      * @return mixed
      */
     public function getLastName()
@@ -44,7 +41,7 @@ class SocialData
     }
 
     /**
-     * Gets user's email
+     * Gets user's email.
      * @return mixed
      */
     public function getEmail()
@@ -53,7 +50,7 @@ class SocialData
     }
 
     /**
-     * Gets user's social id
+     * Gets user's social id.
      * @return mixed
      */
     public function getSocialId()
