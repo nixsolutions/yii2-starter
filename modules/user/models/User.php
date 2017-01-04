@@ -3,11 +3,9 @@
 namespace app\modules\user\models;
 
 use Yii;
-use yii\authclient\clients\Twitter;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\web\ServerErrorHttpException;
 
@@ -244,18 +242,18 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @param $socialData
-     * @param $provider
+     * @param $adapter
+     * @param $clientName
      * @return $this
      */
-    public function saveSocialAccountInfo($socialData, $provider)
+    public function saveSocialAccountInfo($adapter, $clientName)
     {
-        $this->auth_provider = $provider;
-        $this->first_name = ArrayHelper::getValue($socialData, 'firstName');
-        $this->last_name = ArrayHelper::getValue($socialData, 'lastName');
-        $this->email = ArrayHelper::getValue($socialData, 'email');
-        $this->social_id = ArrayHelper::getValue($socialData, 'socialId');
-        $this->avatar = ArrayHelper::getValue($socialData, 'avatar');
+        $this->auth_provider = $clientName;
+        $this->first_name = $adapter->getFirstName();
+        $this->last_name = $adapter->getLastName();
+        $this->email = $adapter->getEmail();
+        $this->social_id = $adapter->getSocialId();
+        $this->avatar = $adapter->getAvatar();
 
         $this->save();
 
