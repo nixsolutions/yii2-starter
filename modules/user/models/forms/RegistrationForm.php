@@ -38,7 +38,7 @@ class RegistrationForm extends Model
     public function rules()
     {
         return [
-            'emailUnique'   => [
+            'emailUnique' => [
                 'email',
                 'unique',
                 'targetClass' => new User(),
