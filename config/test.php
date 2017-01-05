@@ -66,9 +66,6 @@ return [
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
         ],
-        'mailing' => [
-            'class' => 'app\modules\mailing\Module',
-        ],
         'page' => [
             'class' => 'app\modules\page\Module',
         ],
