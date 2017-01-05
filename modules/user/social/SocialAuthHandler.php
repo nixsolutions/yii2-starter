@@ -47,9 +47,16 @@ class SocialAuthHandler
             $this->client->attributeParams = ['include_email' => 'true'];
         }
 
-        if (!$userAttributes = $this->getNormalizedAttributes()) {
-            throw new Exception('Data not found.');
+        if (!$adapter = SocialDataAdapter::getAdapter($this->client)) {
+            throw new Exception('Adapter does not exist.');
         }
+
+        if (self::FACEBOOK === $this->client->getName()) {
+            $adapter->setClient($this->client);
+        }
+        $this->client->setNormalizeUserAttributeMap($adapter->normalizeUserAttributeMap());
+        $userAttributes = $this->client->getUserAttributes();
+        $this->client->setUserAttributes($userAttributes);
 
         if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($userAttributes, 'id'))) &&
             (!$this->user = User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')))) {
@@ -65,24 +72,5 @@ class SocialAuthHandler
         }
 
         $this->user->login();
-    }
-
-    /**
-     * @return array|bool
-     */
-    public function getNormalizedAttributes()
-    {
-        $className = __NAMESPACE__ . '\\' . ucfirst($this->client->getName()) . 'Data';
-        if (!class_exists($className)) {
-            return false;
-        }
-
-        if (self::FACEBOOK === $this->client->getName()) {
-            $className::setClient($this->client);
-        }
-        $this->client->setNormalizeUserAttributeMap($className::normalizeUserAttributeMap());
-        $this->client->setUserAttributes($this->client->getUserAttributes());
-
-        return $this->client->getUserAttributes();
     }
 }

@@ -11,20 +11,20 @@ use yii\helpers\ArrayHelper;
  */
 class FacebookData
 {
-    private static $client;
+    private $client;
 
     /**
      * @param mixed $client
      */
-    public static function setClient($client)
+    public function setClient($client)
     {
-        self::$client = $client;
+        $this->client = $client;
     }
 
     /**
      * @return array
      */
-    public static function normalizeUserAttributeMap()
+    public function normalizeUserAttributeMap()
     {
         return [
             'firstName' => function ($attributes) {
@@ -36,7 +36,7 @@ class FacebookData
             'email' => 'email',
             'socialId' => 'id',
             'avatar' => function ($attributes) {
-                return self::$client->apiBaseUrl . ArrayHelper::getValue($attributes, 'id') . '/picture?type=large';
+                return $this->client->apiBaseUrl . ArrayHelper::getValue($attributes, 'id') . '/picture?type=large';
             },
         ];
     }
