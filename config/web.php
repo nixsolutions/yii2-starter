@@ -12,7 +12,15 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'option'],
+    'aliases' => [
+        '@bower' => '@vendor/bower',
+    ],
+    'language' => 'en-US',
     'components' => [
+        'assetManager' => [
+            'linkAssets' => YII_ENV_DEV ? true : false,
+
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

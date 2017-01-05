@@ -8,6 +8,7 @@ use yii\widgets\DetailView;
 
 $this->title = $model->first_name;
 $this->params['breadcrumbs'][] = $model->first_name;
+$this->registerCssFile('@web/css/modules/user/profile.css');
 ?>
 <div class="users-view">
 
@@ -17,6 +18,12 @@ $this->params['breadcrumbs'][] = $model->first_name;
         <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
+    <div class="form-group">
+        <?= Html::img(
+            $model->avatar ? : '/img/no_image.png',
+            ['alt' => 'User avatar', 'width' => 200, 'height' => 200, 'class' => 'avatar-border']
+        ) ?>
+    </div>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
