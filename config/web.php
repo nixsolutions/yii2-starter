@@ -20,7 +20,6 @@ $config = [
     'components' => [
         'assetManager' => [
             'linkAssets' => YII_ENV_DEV ? true : false,
-
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -76,9 +75,6 @@ $config = [
         ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
-        ],
-        'mailing' => [
-            'class' => 'app\modules\mailing\Module',
         ],
         'page' => [
             'class' => 'app\modules\page\Module',

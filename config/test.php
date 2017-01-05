@@ -41,7 +41,7 @@ return [
         ],
         'request' => [
             'cookieValidationKey' => 'test',
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => true,
             // but if you absolutely need it set cookie domain to localhost
             /*
             'csrfCookie' => [
@@ -65,9 +65,6 @@ return [
         ],
         'mailTemplate' => [
             'class' => 'app\modules\mailTemplate\Module',
-        ],
-        'mailing' => [
-            'class' => 'app\modules\mailing\Module',
         ],
         'page' => [
             'class' => 'app\modules\page\Module',
