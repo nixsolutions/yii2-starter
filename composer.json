@@ -19,6 +19,7 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "2amigos/yii2-ckeditor-widget": "^2.0",
+        "yiisoft/yii2-authclient": "^2.1",
         "bower-asset/cropper": "^2.3",
         "flow/jsonpath": "*"
     },

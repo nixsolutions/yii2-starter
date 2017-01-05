@@ -65,6 +65,7 @@ composer install > /dev/null 2>&1
 sudo cp config/db.php.sample config/db.php
 sudo cp config/params.php.sample config/params.php
 sudo cp config/mailer.php.sample config/mailer.php
+sudo cp config/clients.php.sample config/clients.php
 
 echo "Migrating..."
 echo y | php yii migrate --migrationPath=@yii/rbac/migrations/

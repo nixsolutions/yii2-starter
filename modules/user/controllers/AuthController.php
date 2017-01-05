@@ -2,6 +2,7 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\user\social\SocialAuthHandler;
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\user\models\forms\ChangePasswordForm;
@@ -52,12 +53,26 @@ class AuthController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'oAuthSuccess'],
+            ],
             'upload-avatar' => [
                 'class' => 'app\widgets\crop\actions\CropAction',
                 'url' => '/uploads/avatars',
                 'path' => '@app/web/uploads/avatars',
             ]
         ];
+    }
+
+    /**
+     * This function will be triggered when user is successfully authenticated using some oAuth client.
+     *
+     * @param $provider
+     */
+    public function oAuthSuccess($provider)
+    {
+        (new SocialAuthHandler($provider))->auth();
     }
 
     /**
