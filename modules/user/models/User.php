@@ -244,24 +244,26 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @param $adapter
-     * @param $client
-     * @return $this
+     * @return bool
      */
-    public function saveSocialAccountInfo($adapter, $client)
+    public function saveSocialAccountInfo($adapter)
     {
-        $this->auth_provider = $client->getName();
-        $this->first_name = ArrayHelper::getValue($adapter, 'firstName');
-        $this->last_name = ArrayHelper::getValue($adapter, 'lastName');
-        $this->email = ArrayHelper::getValue($adapter, 'email');
-        $this->social_id = ArrayHelper::getValue($adapter, 'socialId');
-        $this->avatar = ArrayHelper::getValue($adapter, 'avatar');
+        $userAttributes = $adapter->getUserAttributes();
+        $this->first_name = ArrayHelper::getValue($userAttributes, 'firstName');
+        $this->last_name = ArrayHelper::getValue($userAttributes, 'lastName');
+        $this->email = ArrayHelper::getValue($userAttributes, 'email');
+        $this->social_id = ArrayHelper::getValue($userAttributes, 'socialId');
+        $this->avatar = ArrayHelper::getValue($userAttributes, 'avatar');
+        $this->auth_provider = $adapter->getName();
 
-        $this->save();
+        if (!$this->save()) {
+            return false;
+        }
 
         if ($this->isNewRecord) {
             $this->setRole(self::ROLE_USER);
         }
 
-        return $this;
+        return true;
     }
 }

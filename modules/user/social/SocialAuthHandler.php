@@ -49,11 +49,11 @@ class SocialAuthHandler
         }
 
         if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($this->client->getUserAttributes(), 'id'))) &&
-            (!$this->user = User::findByEmail(ArrayHelper::getValue($adapter, 'email')))) {
+            (!$this->user = User::findByEmail(ArrayHelper::getValue($adapter->getUserAttributes(), 'email')))) {
             $this->user = new User();
         }
 
-        if (!$this->user->saveSocialAccountInfo($adapter, $this->client)) {
+        if (!$this->user->saveSocialAccountInfo($adapter)) {
             throw new Exception('Social data could not be saved.');
         }
 

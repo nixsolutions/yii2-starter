@@ -19,12 +19,12 @@ class SocialDataAdapter
     {
         $className = __NAMESPACE__ . '\\' . ucfirst($client->getName()) . 'Data';
         if (!class_exists($className)) {
-            throw new Exception('Class does not exist.');
+            return false;
         }
 
         $client->setNormalizeUserAttributeMap((new $className($client))->normalizeUserAttributeMap());
         $client->setUserAttributes($client->getUserAttributes());
 
-        return $client->getUserAttributes();
+        return $client;
     }
 }
