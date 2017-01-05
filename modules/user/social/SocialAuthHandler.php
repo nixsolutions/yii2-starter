@@ -54,7 +54,7 @@ class SocialAuthHandler
         if (self::FACEBOOK === $this->client->getName()) {
             $adapter->setClient($this->client);
         }
-        $this->client->setNormalizeUserAttributeMap($adapter->normalizeUserAttributeMap());
+        $this->client->setNormalizeUserAttributeMap($adapter->getNormalizedUserAttributesMap());
         $userAttributes = $this->client->getUserAttributes();
         $this->client->setUserAttributes($userAttributes);
 

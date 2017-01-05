@@ -14,7 +14,7 @@ class GoogleData
     /**
      * @return array
      */
-    public function normalizeUserAttributeMap()
+    public function getNormalizedUserAttributesMap()
     {
         return [
             'firstName' => ['name', 'givenName'],

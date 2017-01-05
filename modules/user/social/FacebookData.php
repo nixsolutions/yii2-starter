@@ -24,7 +24,7 @@ class FacebookData
     /**
      * @return array
      */
-    public function normalizeUserAttributeMap()
+    public function getNormalizedUserAttributesMap()
     {
         return [
             'firstName' => function ($attributes) {
