@@ -9,14 +9,23 @@ use yii\helpers\ArrayHelper;
  * Class TwitterData
  * @package app\modules\user\social
  */
-class TwitterData extends SocialData
+class TwitterData
 {
     /**
-     * Gets user's avatar.
-     * @return string
+     * @return array
      */
-    public function getAvatar()
+    public function normalizeUserAttributeMap()
     {
-        return ArrayHelper::getValue($this->userAttributes, 'profile_image_url');
+        return [
+            'firstName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[0];
+            },
+            'lastName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[1];
+            },
+            'email' => 'email',
+            'socialId' => 'id',
+            'avatar' => 'profile_image_url',
+        ];
     }
 }

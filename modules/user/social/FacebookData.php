@@ -9,15 +9,36 @@ use yii\helpers\ArrayHelper;
  * Class FacebookData
  * @package app\modules\user\social
  */
-class FacebookData extends SocialData
+class FacebookData
 {
+    private $client;
+
     /**
-     * Gets user's avatar.
+     * FacebookData constructor.
      * @param $client
-     * @return string
      */
-    public function getAvatar($client)
+    public function __construct($client)
     {
-        return $client->apiBaseUrl . ArrayHelper::getValue($this->userAttributes, 'id') . '/picture?type=large';
+        $this->client = $client;
+    }
+
+    /**
+     * @return array
+     */
+    public function normalizeUserAttributeMap()
+    {
+        return [
+            'firstName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[0];
+            },
+            'lastName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[1];
+            },
+            'email' => 'email',
+            'socialId' => 'id',
+            'avatar' => function ($attributes) {
+                return $this->client->apiBaseUrl . ArrayHelper::getValue($attributes, 'id') . '/picture?type=large';
+            },
+        ];
     }
 }

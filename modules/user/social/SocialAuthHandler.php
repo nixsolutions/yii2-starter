@@ -49,7 +49,7 @@ class SocialAuthHandler
         }
 
         if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($this->client->getUserAttributes(), 'id'))) &&
-            (!$this->user = User::findByEmail($adapter->getEmail()))) {
+            (!$this->user = User::findByEmail(ArrayHelper::getValue($adapter, 'email')))) {
             $this->user = new User();
         }
 

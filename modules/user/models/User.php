@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\web\ServerErrorHttpException;
 
@@ -249,11 +250,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function saveSocialAccountInfo($adapter, $client)
     {
         $this->auth_provider = $client->getName();
-        $this->first_name = $adapter->getFirstName();
-        $this->last_name = $adapter->getLastName();
-        $this->email = $adapter->getEmail();
-        $this->social_id = $adapter->getSocialId();
-        $this->avatar = $adapter->getAvatar($client);
+        $this->first_name = ArrayHelper::getValue($adapter, 'firstName');
+        $this->last_name = ArrayHelper::getValue($adapter, 'lastName');
+        $this->email = ArrayHelper::getValue($adapter, 'email');
+        $this->social_id = ArrayHelper::getValue($adapter, 'socialId');
+        $this->avatar = ArrayHelper::getValue($adapter, 'avatar');
 
         $this->save();
 

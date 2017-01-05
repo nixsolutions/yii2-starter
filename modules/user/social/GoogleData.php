@@ -9,41 +9,21 @@ use yii\helpers\ArrayHelper;
  * Class GoogleData
  * @package app\modules\user\social
  */
-class GoogleData extends SocialData
+class GoogleData
 {
     /**
-     * Gets user's avatar
-     * @return string
+     * @return array
      */
-    public function getAvatar()
+    public function normalizeUserAttributeMap()
     {
-        return current(explode('?',  ArrayHelper::getValue($this->userAttributes, 'image.url')));
-    }
-
-    /**
-     * Gets user's first name
-     * @return mixed
-     */
-    public function getFirstName()
-    {
-        return ArrayHelper::getValue($this->userAttributes, 'name.givenName');
-    }
-
-    /**
-     * Gets user's last name
-     * @return mixed
-     */
-    public function getLastName()
-    {
-        return ArrayHelper::getValue($this->userAttributes, 'name.familyName');
-    }
-
-    /**
-     * Gets user's email
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return ArrayHelper::getValue($this->userAttributes, 'emails.0.value');
+        return [
+            'firstName' => ['name', 'givenName'],
+            'lastName' => ['name', 'familyName'],
+            'email' => ['emails', 0, 'value'],
+            'socialId' => 'id',
+            'avatar' => function ($attributes) {
+                return current(explode('?',  ArrayHelper::getValue($attributes, 'image.url')));
+            },
+        ];
     }
 }
