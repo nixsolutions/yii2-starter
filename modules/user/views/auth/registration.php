@@ -15,9 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-register">
     <h1><?= Html::encode($this->title); ?></h1>
 
-    <p>Please fill out the following fields for registration:</p>
-
     <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data'],
         'id' => 'registration-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
@@ -26,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'firstName')->textInput(['autofocus' => true]); ?>
+    <?= $form->field($model, 'firstName')->textInput(); ?>
 
     <?= $form->field($model, 'lastName')->textInput(); ?>
 
@@ -36,13 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'passwordRepeat')->passwordInput(); ?>
 
+    <?= Html::activeHiddenInput($model, 'avatar', ['id' => 'avatar-field']); ?>
 
     <div class="form-group">
         <div class="col-lg-12">
-            <?= Html::submitButton(Yii::t('user', 'Register'), ['class' => 'btn btn-primary', 'name' => 'register-button']); ?>
+            <?= Html::submitButton(
+                Yii::t('user', 'Register'),
+                ['class' => 'btn btn-primary', 'name' => 'register-button']
+            ); ?>
         </div>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+

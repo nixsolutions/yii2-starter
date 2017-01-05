@@ -57,6 +57,11 @@ class AuthController extends Controller
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'oAuthSuccess'],
             ],
+            'upload-avatar' => [
+                'class' => 'app\widgets\crop\actions\CropAction',
+                'url' => '/uploads/avatars',
+                'path' => '@app/web/uploads/avatars',
+            ]
         ];
     }
 

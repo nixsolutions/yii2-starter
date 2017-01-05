@@ -23,6 +23,7 @@ class UserForm extends Model
     public $last_name;
     public $status;
     public $role;
+    public $avatar;
 
     const SCENARIO_PROFILE = 'profile';
 
@@ -42,6 +43,7 @@ class UserForm extends Model
                 ['role'], 'in', 'range' => [User::ROLE_ADMIN, User::ROLE_USER],
                 'message' => Yii::t('user', 'Role is invalid.'),
             ],
+            ['avatar', 'string', 'max' => '255'],
         ];
     }
 
@@ -62,7 +64,9 @@ class UserForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios = ArrayHelper::merge($scenarios, [self::SCENARIO_PROFILE => ['first_name', 'last_name', 'status']]);
+        $scenarios = ArrayHelper::merge($scenarios,
+            [self::SCENARIO_PROFILE => ['first_name', 'last_name', 'status', 'avatar']]
+        );
         return $scenarios;
     }
 }
