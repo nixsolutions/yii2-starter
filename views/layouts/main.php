@@ -39,6 +39,7 @@ AppAsset::register($this);
     $menuItems[] = ['label' => 'About', 'url' => ['/about.html']];
     $user = Yii::$app->user;
 
+    $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
     if ($user->isGuest) {
         $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
@@ -51,6 +52,7 @@ AppAsset::register($this);
                     ['label' => 'Users', 'url' => ['/users']],
                     ['label' => 'Static Pages', 'url' => ['/static-pages']],
                     ['label' => 'Options', 'url' => ['/options']],
+                    ['label' => 'Feedback', 'url' => ['/feedback']],
                 ],
             ];
         }
