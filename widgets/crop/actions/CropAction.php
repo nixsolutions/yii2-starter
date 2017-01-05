@@ -31,6 +31,7 @@ class CropAction extends Action
     public function init()
     {
         Crop::registerTranslations();
+        Yii::$app->controller->enableCsrfValidation = false;
         if ($this->url === null) {
             throw new InvalidConfigException('Missing attribute url');
         }
