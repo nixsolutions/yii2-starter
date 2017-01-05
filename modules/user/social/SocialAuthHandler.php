@@ -4,6 +4,7 @@ namespace app\modules\user\social;
 
 use app\modules\user\models\User;
 use Exception;
+use Yii;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 
@@ -25,6 +26,8 @@ class SocialAuthHandler
 
     const TWITTER = 'twitter';
 
+    const FACEBOOK = 'facebook';
+
     /**
      * SocialAuthHandler constructor.
      * @param ClientInterface $client
@@ -44,19 +47,42 @@ class SocialAuthHandler
             $this->client->attributeParams = ['include_email' => 'true'];
         }
 
-        if (!$adapter = SocialDataAdapter::getAdapter($this->client)) {
-            throw new Exception('Adapter does not exist.');
+        if (!$userAttributes = $this->getNormalizedAttributes()) {
+            throw new Exception('Data not found.');
         }
 
-        if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($this->client->getUserAttributes(), 'id'))) &&
-            (!$this->user = User::findByEmail(ArrayHelper::getValue($adapter->getUserAttributes(), 'email')))) {
+        if ((!$this->user = User::findBySocialId(ArrayHelper::getValue($userAttributes, 'id'))) &&
+            (!$this->user = User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')))) {
             $this->user = new User();
         }
 
-        if (!$this->user->saveSocialAccountInfo($adapter)) {
+        if (User::STATUS_BLOCKED === $this->user->status) {
+            Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is blocked.'));
+        }
+
+        if (!$this->user->saveSocialAccountInfo($this->client)) {
             throw new Exception('Social data could not be saved.');
         }
 
         $this->user->login();
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function getNormalizedAttributes()
+    {
+        $className = __NAMESPACE__ . '\\' . ucfirst($this->client->getName()) . 'Data';
+        if (!class_exists($className)) {
+            return false;
+        }
+
+        if (self::FACEBOOK === $this->client->getName()) {
+            $className::setClient($this->client);
+        }
+        $this->client->setNormalizeUserAttributeMap($className::normalizeUserAttributeMap());
+        $this->client->setUserAttributes($this->client->getUserAttributes());
+
+        return $this->client->getUserAttributes();
     }
 }

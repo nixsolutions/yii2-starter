@@ -14,7 +14,7 @@ class TwitterData
     /**
      * @return array
      */
-    public function normalizeUserAttributeMap()
+    public static function normalizeUserAttributeMap()
     {
         return [
             'firstName' => function ($attributes) {
