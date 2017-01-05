@@ -190,7 +190,7 @@
             if (file.type) {
                 return /^image\/\w+$/.test(file.type);
             } else {
-                return /\.(jpg|jpeg|png|gif)$/.test(file);
+                return /\.(jpg|jpeg|png)$/.test(file);
             }
         },
 
