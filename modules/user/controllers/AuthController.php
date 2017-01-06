@@ -10,9 +10,12 @@ use app\modules\user\models\forms\LoginForm;
 use app\modules\user\models\forms\RecoveryForm;
 use app\modules\user\models\Hash;
 use app\modules\user\models\User;
+use BadMethodCallException;
 use Yii;
+use yii\authclient\BaseClient;
 use yii\base\Exception;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -55,24 +58,38 @@ class AuthController extends Controller
             ],
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'oAuthSuccess'],
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
             'upload-avatar' => [
                 'class' => 'app\widgets\crop\actions\CropAction',
                 'url' => '/uploads/avatars',
                 'path' => '@app/web/uploads/avatars',
-            ]
+            ],
         ];
     }
 
     /**
      * This function will be triggered when user is successfully authenticated using some oAuth client.
      *
-     * @param $provider
+     * @param $client
+     * @return bool
+     * @throws \BadMethodCallException
      */
-    public function oAuthSuccess($provider)
+    public function onAuthSuccess(BaseClient $client)
     {
-        (new SocialAuthHandler($provider))->auth();
+        $userAttributes = $client->getUserAttributes();
+        $this->user = User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')) ?: new User();
+
+        if (User::STATUS_BLOCKED === $this->user->status) {
+            Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is blocked.'));
+            return false;
+        }
+
+        $userAttributes['authProvider'] = $client->getName();
+        if (!$this->user->saveSocialAccountInfo($userAttributes)) {
+            throw new BadMethodCallException('Social data could not be saved.');
+        }
+        return $this->user->login();
     }
 
     /**
@@ -100,7 +117,7 @@ class AuthController extends Controller
                 'name' => $user->first_name,
                 'link' => Yii::$app->urlManager->createAbsoluteUrl([
                     'user/auth/confirm-registration',
-                    'hash' => $hash->generate(Hash::TYPE_REGISTER, $user->id)
+                    'hash' => $hash->generate(Hash::TYPE_REGISTER, $user->id),
                 ]),
             ]);
 
@@ -200,7 +217,7 @@ class AuthController extends Controller
                     'name' => $user->first_name,
                     'link' => Yii::$app->urlManager->createAbsoluteUrl([
                         'user/auth/change-password',
-                        'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id)
+                        'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id),
                     ]),
                 ]);
 
