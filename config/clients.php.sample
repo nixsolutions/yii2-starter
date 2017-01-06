@@ -1,18 +1,53 @@
 <?php
+use yii\helpers\ArrayHelper;
+
 return [
     'facebook' => [
-        'class' => 'yii\authclient\clients\Facebook',
+        'class' => yii\authclient\clients\Facebook::class,
         'clientId' => '937683696362218',
         'clientSecret' => '46b5d7dfbb3533ca477e924bb726117d',
+        'normalizeUserAttributeMap' => [
+            'firstName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[0];
+            },
+            'lastName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[1];
+            },
+            'email' => 'email',
+            'socialId' => 'id',
+        ],
     ],
     'google' => [
-        'class' => 'yii\authclient\clients\Google',
+        'class' => yii\authclient\clients\Google::class,
         'clientId' => '249379371436-p3116lvshu2c5f3jojasnj6otdh5436p.apps.googleusercontent.com',
         'clientSecret' => 'QCnauGkhZbyu3j5x8IK0xyLM',
+        'normalizeUserAttributeMap' => [
+            'firstName' => ['name', 'givenName'],
+            'lastName' => ['name', 'familyName'],
+            'email' => ['emails', 0, 'value'],
+            'socialId' => 'id',
+            'avatar' => function ($attributes) {
+                return current(explode('?', ArrayHelper::getValue($attributes, 'image.url')));
+            },
+        ],
     ],
     'twitter' => [
-        'class' => 'yii\authclient\clients\Twitter',
+        'class' => yii\authclient\clients\Twitter::class,
         'consumerKey' => 'g84sIfCGtkkiKeRAD6UFl8l6Y',
         'consumerSecret' => 'MfeYrhj5fi5XaaG5Gq1sbzHFleDWpNVewVdcxcXKlPXiW307aq',
-    ]
+        'attributeParams' => [
+            'include_email' => 'true',
+        ],
+        'normalizeUserAttributeMap' => [
+            'firstName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[0];
+            },
+            'lastName' => function ($attributes) {
+                return explode(' ', ArrayHelper::getValue($attributes, 'name'))[1];
+            },
+            'email' => 'email',
+            'socialId' => 'id',
+            'avatar' => 'profile_image_url',
+        ],
+    ],
 ];
