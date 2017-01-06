@@ -25,8 +25,6 @@ class SocialAuthHandler
      */
     private $user;
 
-    const FACEBOOK = 'facebook';
-
     /**
      * SocialAuthHandler constructor.
      *
