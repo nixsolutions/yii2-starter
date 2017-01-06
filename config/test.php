@@ -6,6 +6,7 @@ $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../modules/user/config/routes.php'),
     require(__DIR__ . '/../modules/page/config/routes.php')
 );
+$clients = require(__DIR__ . '/clients.php');
 
 /**
  * Application configuration shared by all test types
@@ -57,6 +58,10 @@ return [
                     'sourceLanguage' => 'en_US',
                 ],
             ],
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' =>$clients,
         ],
     ],
     'modules' => [
