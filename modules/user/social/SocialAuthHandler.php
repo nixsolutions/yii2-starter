@@ -45,11 +45,6 @@ class SocialAuthHandler
     public function auth()
     {
         $userAttributes = $this->client->getUserAttributes();
-        if (self::FACEBOOK === $this->client->getName()) {
-            $userAttributes['avatar'] = $this->client->apiBaseUrl . '/'
-                . ArrayHelper::getValue($userAttributes, 'id') . '/picture?type=large';
-        }
-
         $this->user = $this->getUser($userAttributes);
         if (User::STATUS_BLOCKED === $this->user->status) {
             Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is blocked.'));
@@ -70,8 +65,7 @@ class SocialAuthHandler
      */
     protected function getUser($userAttributes)
     {
-        return User::findBySocialId(ArrayHelper::getValue($userAttributes, 'id')) ?:
-            User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')) ?: new User();
+        return User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')) ?: new User();
 
     }
 }

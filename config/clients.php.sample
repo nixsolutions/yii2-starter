@@ -15,6 +15,9 @@ return [
             },
             'email' => 'email',
             'socialId' => 'id',
+            'avatar' => function ($attributes) {
+                return 'https://graph.facebook.com/' . ArrayHelper::getValue($attributes, 'id') . '/picture?type=large';
+            },
         ],
     ],
     'google' => [
