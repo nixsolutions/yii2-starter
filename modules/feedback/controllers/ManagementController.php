@@ -41,7 +41,7 @@ class ManagementController extends Controller
                         'roles' => ['@'],
                         'matchCallback' => function () {
                             return !Yii::$app->user->can(User::ROLE_ADMIN);
-                        }
+                        },
                     ],
                 ],
             ],
@@ -114,7 +114,7 @@ class ManagementController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('feedback', 'Information saved.'));
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
         return $this->render('update', [
             'model' => $model,
