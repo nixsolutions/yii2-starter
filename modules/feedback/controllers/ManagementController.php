@@ -33,10 +33,18 @@ class ManagementController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['create'],
-                        'roles' => ['@', '?'],
+                        'roles' => ['?'],
                     ],
-                ]
-            ]
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return !Yii::$app->user->can(User::ROLE_ADMIN);
+                        }
+                    ],
+                ],
+            ],
         ];
     }
 

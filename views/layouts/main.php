@@ -39,11 +39,14 @@ AppAsset::register($this);
     $menuItems[] = ['label' => 'About', 'url' => ['/about.html']];
     $user = Yii::$app->user;
 
-    $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
     if ($user->isGuest) {
+        $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
         $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
     } else {
+        if (!$user->can(User::ROLE_ADMIN)) {
+            $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
+        }
         if ($user->can(User::ROLE_ADMIN)) {
             $menuItems[] = [
                 'label' => 'Manage',
