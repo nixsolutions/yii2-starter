@@ -194,7 +194,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->avatar = self::DEFAULT_AVATAR_URL;
 
         $this->save();
-
+        $this->setRole(self::ROLE_USER);
         return $this;
     }
 
@@ -260,17 +260,5 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_provider = ArrayHelper::getValue($userAttributes, 'authProvider');
 
         return $this->save();
-    }
-
-    /**
-     * @param bool $insert
-     * @param array $changedAttributes
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        if ($insert) {
-            $this->setRole(self::ROLE_USER);
-        }
-        parent::afterSave($insert, $changedAttributes);
     }
 }

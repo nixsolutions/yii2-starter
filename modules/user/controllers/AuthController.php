@@ -78,6 +78,7 @@ class AuthController extends Controller
     {
         $userAttributes = $client->getUserAttributes();
         $this->user = User::findByEmail(ArrayHelper::getValue($userAttributes, 'email')) ?: new User();
+        $isNewUser = $this->user->isNewRecord;
 
         if (User::STATUS_BLOCKED === $this->user->status) {
             Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is blocked.'));
@@ -87,6 +88,9 @@ class AuthController extends Controller
         $userAttributes['authProvider'] = $client->getName();
         if (!$this->user->saveSocialAccountInfo($userAttributes)) {
             throw new BadMethodCallException('Social data could not be saved.');
+        }
+        if ($isNewUser) {
+            $this->user->setRole(User::ROLE_USER);
         }
         return $this->user->login();
     }
