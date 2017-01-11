@@ -40,9 +40,13 @@ AppAsset::register($this);
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
+        $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
         $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
     } else {
+        if (!$user->can(User::ROLE_ADMIN)) {
+            $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
+        }
         if ($user->can(User::ROLE_ADMIN)) {
             $menuItems[] = [
                 'label' => 'Manage',
@@ -51,6 +55,7 @@ AppAsset::register($this);
                     ['label' => 'Users', 'url' => ['/users']],
                     ['label' => 'Static Pages', 'url' => ['/static-pages']],
                     ['label' => 'Options', 'url' => ['/options']],
+                    ['label' => 'Feedback', 'url' => ['/feedback']],
                 ],
             ];
         }

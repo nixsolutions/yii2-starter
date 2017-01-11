@@ -4,6 +4,7 @@ $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/routes.php'),
     require(__DIR__ . '/../modules/mailTemplate/config/routes.php'),
     require(__DIR__ . '/../modules/user/config/routes.php'),
+    require(__DIR__ . '/../modules/feedback/config/routes.php'),
     require(__DIR__ . '/../modules/page/config/routes.php')
 );
 $clients = require(__DIR__ . '/clients.php');
@@ -76,6 +77,9 @@ return [
         ],
         'option' => [
             'class' => 'app\modules\option\Module',
+        ],
+        'feedback' => [
+            'class' => 'app\modules\feedback\Module',
         ],
     ],
     'params' => $params,
