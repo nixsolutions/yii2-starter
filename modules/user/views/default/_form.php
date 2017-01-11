@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::button(
-            Yii::t('app', 'Delete avatar'),
+            Yii::t('app', 'Delete'),
             ['class' => 'btn btn-danger btn-block button-width', 'id' => 'deleteAvatar']
         ); ?>
     </div>
@@ -39,6 +39,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
+        <?= Html::a('Cancel', ['profile'], ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

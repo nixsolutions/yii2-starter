@@ -51,7 +51,8 @@ class Page extends ActiveRecord
         return [
             [['created_at', 'updated_at'], 'safe'],
             [['content'], 'string'],
-            [['key', 'title', 'description'], 'string', 'max' => 255],
+            ['title', 'string', 'max' => 64],
+            [['key', 'description'], 'string', 'max' => 255],
             [['key'], 'unique'],
         ];
     }

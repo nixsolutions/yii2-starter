@@ -31,13 +31,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]); ?>
 
-    <?= $form->field($model, 'created_at')->textInput(); ?>
-
-    <?= $form->field($model, 'updated_at')->textInput(); ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('page', 'Create') : Yii::t('app', 'Update'),
-            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']); ?>
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']); ?>
+        <?= Html::a(Yii::t('page', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -195,6 +195,8 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT NULL,
   `last_login_at` datetime DEFAULT NULL,
   `auth_key` varchar(255) DEFAULT NULL,
+  `auth_provider` varchar(255) DEFAULT NULL,
+  `social_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -206,8 +208,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin','admin@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-pBE8U8N7dqYa01QFb0TlzaEBRkZk');
-INSERT INTO `users` VALUES (2,'user','user','user@user.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk');
+INSERT INTO `users` VALUES (1,'admin','admin','admin@admin.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-pBE8U8N7dqYa01QFb0TlzaEBRkZk',NULL,NULL);
+INSERT INTO `users` VALUES (2,'user','user','user@user.com','$2y$13$c/a//d76.nbnlpst.Pmgkeqf9zYyJRpgy8T6PfEv0g02Tbz/DpJGS',NULL,'active','2016-11-23 13:56:58','2016-11-23 13:56:58','uGi-fgE8U8N7dqYa01QFb0TlzaEBRkZk',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

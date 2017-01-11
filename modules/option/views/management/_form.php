@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('option', 'Update'), ['class' => 'btn btn-success' ]) ?>
+        <?= Html::a(Yii::t('option', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

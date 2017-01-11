@@ -2,7 +2,6 @@
 
 namespace app\modules\user\controllers;
 
-use app\modules\user\social\SocialAuthHandler;
 use app\modules\mailTemplate\models\Mail;
 use app\modules\mailTemplate\models\MailTemplate;
 use app\modules\user\models\forms\ChangePasswordForm;
