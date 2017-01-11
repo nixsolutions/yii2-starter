@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -16,7 +17,7 @@ $this->registerCssFile('@web/css/modules/user/view.css');
     <h1><?= Html::encode($model->first_name); ?></h1>
     <div class="form-group">
         <?= Html::img(
-            $model->avatar ? : '/img/no_image.png',
+            $model->avatar ? : User::DEFAULT_AVATAR_URL,
             ['alt' => 'User avatar', 'width' => 200, 'height' => 200, 'class' => 'avatar-border']
         ) ?>
     </div>

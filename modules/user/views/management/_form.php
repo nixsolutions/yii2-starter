@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
             'uploadUrl' => '/user/auth/upload-avatar',
             'inputLabel' => 'Choose',
             'modalLabel' => 'Set avatar',
-            'noPhotoUrl' => $user->avatar ?: '/img/no_image.png',
+            'noPhotoUrl' => $user->avatar ?: User::DEFAULT_AVATAR_URL,
         ]) ?>
     </div>
 
