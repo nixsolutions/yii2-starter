@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::button(
-            Yii::t('app', 'Delete avatar'),
+            Yii::t('app', 'Delete'),
             ['class' => 'btn btn-danger btn-block button-width', 'id' => 'deleteAvatar']
         ); ?>
     </div>

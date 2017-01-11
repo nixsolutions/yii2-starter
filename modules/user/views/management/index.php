@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => yii\grid\SerialColumn::className()],
             [
                 'attribute' => 'first_name',
                 'headerOptions' => ['width' => '100'],
@@ -30,11 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
-                'filter' => [
-                    User::STATUS_ACTIVE => ucfirst(User::STATUS_ACTIVE),
-                    User::STATUS_CREATED => ucfirst(User::STATUS_CREATED),
-                    User::STATUS_BLOCKED => ucfirst(User::STATUS_BLOCKED),
-                ],
+                'filter' => Html::activeDropDownList($searchModel, 'status',
+                    [
+                        User::STATUS_ACTIVE => ucfirst(User::STATUS_ACTIVE),
+                        User::STATUS_CREATED => ucfirst(User::STATUS_CREATED),
+                        User::STATUS_BLOCKED => ucfirst(User::STATUS_BLOCKED),
+                    ],
+                    ['prompt' => Yii::t('user', 'All'), 'class' => 'form-control']),
             ],
             [
                 'attribute' => 'created_at',
@@ -53,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class' => yii\grid\ActionColumn::className(),
                 'header' => Yii::t('user', 'Actions'),
                 'headerOptions' => ['width' => '35'],
                 'contentOptions' => ['style' => 'text-align: center'],
