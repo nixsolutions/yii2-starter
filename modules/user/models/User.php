@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii\web\ServerErrorHttpException;
 
@@ -22,6 +23,8 @@ use yii\web\ServerErrorHttpException;
  * @property string $created_at
  * @property string $last_login_at
  * @property string $auth_key
+ * @property string $auth_provider
+ * @property string $social_id
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -61,7 +64,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['email', 'unique'],
             [['created_at', 'last_login_at'], 'safe'],
-            [['auth_key', 'avatar', 'email', 'password'], 'string'],
+            [['auth_key', 'avatar', 'email', 'password', 'auth_provider'], 'string'],
             [['first_name', 'last_name'], 'string', 'max' => 64],
         ];
     }
@@ -229,5 +232,40 @@ class User extends ActiveRecord implements IdentityInterface
             throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         return static::findOne($hash->user_id);
+    }
+
+    /**
+     * @param $socialId
+     * @return static
+     */
+    public static function findBySocialId($socialId)
+    {
+        return static::findOne(['social_id' => $socialId]);
+    }
+
+    /**
+     * @param $client
+     * @return bool
+     */
+    public function saveSocialAccountInfo($client)
+    {
+        $userAttributes = $client->getUserAttributes();
+        $this->first_name = ArrayHelper::getValue($userAttributes, 'firstName');
+        $this->last_name = ArrayHelper::getValue($userAttributes, 'lastName');
+        $this->email = ArrayHelper::getValue($userAttributes, 'email');
+        $this->social_id = ArrayHelper::getValue($userAttributes, 'socialId');
+        $this->avatar = ArrayHelper::getValue($userAttributes, 'avatar');
+        $this->status = self::STATUS_ACTIVE;
+        $this->auth_provider = $client->getName();
+
+        if (!$this->save()) {
+            return false;
+        }
+
+        if ($this->isNewRecord) {
+            $this->setRole(self::ROLE_USER);
+        }
+
+        return true;
     }
 }

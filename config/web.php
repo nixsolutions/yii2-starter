@@ -8,6 +8,7 @@ $routes = \yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../modules/page/config/routes.php'),
     require(__DIR__ . '/../modules/feedback/config/routes.php')
 );
+$clients = require(__DIR__ . '/clients.php');
 
 $config = [
     'id' => 'basic',
@@ -63,6 +64,10 @@ $config = [
                     'sourceLanguage' => 'en_US',
                 ],
             ],
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' =>$clients,
         ],
     ],
     'modules' => [
