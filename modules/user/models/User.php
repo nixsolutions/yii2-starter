@@ -192,7 +192,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->avatar = $userData->avatar;
 
         $this->save();
-        $this->setRole(self::ROLE_USER);
+
         return $this;
     }
 
@@ -257,14 +257,18 @@ class User extends ActiveRecord implements IdentityInterface
         $this->status = self::STATUS_ACTIVE;
         $this->auth_provider = ArrayHelper::getValue($userAttributes, 'authProvider');
 
-        if (!$this->save()) {
-            return false;
-        }
+        return $this->save();
+    }
 
-        if ($this->isNewRecord) {
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        if ($insert) {
             $this->setRole(self::ROLE_USER);
         }
-
-        return true;
+        parent::afterSave($insert, $changedAttributes);
     }
 }
