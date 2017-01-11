@@ -2,6 +2,7 @@
 
 namespace app\modules\feedback\models\forms;
 
+use Yii;
 use yii\base\Model;
 
 /**
@@ -12,6 +13,8 @@ class ContactForm extends Model
     public $name;
     public $email;
     public $message;
+    public $verifyCode;
+
 
     /**
      * @return array the validation rules.
@@ -23,6 +26,14 @@ class ContactForm extends Model
             ['email', 'email'],
             [['message'], 'string'],
             [['name', 'email'], 'string', 'max' => 255],
+            ['verifyCode', 'captcha'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'verifyCode' => Yii::t('feedback', 'Verification Code'),
         ];
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
+use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\feedback\models\Feedback */
@@ -27,6 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'email') ?>
 
             <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
+
+
+            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [ 'captchaAction' => '/site/captcha',
+                'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+            ]) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

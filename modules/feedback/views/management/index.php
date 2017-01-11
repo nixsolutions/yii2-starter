@@ -33,10 +33,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'headerOptions' => ['width' => '80'],
-                'filter' => [
-                    Feedback::STATUS_NEW => ucfirst(Feedback::STATUS_NEW),
-                    Feedback::STATUS_ANSWERED => ucfirst(Feedback::STATUS_ANSWERED),
-                ],
+
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'status',
+                    [
+                        Feedback::STATUS_NEW => ucfirst(Feedback::STATUS_NEW),
+                        Feedback::STATUS_ANSWERED => ucfirst(Feedback::STATUS_ANSWERED),
+                    ],
+                    ['prompt' => Yii::t('feedback', 'All'), 'class' => 'form-control']
+                ),
+                'content' => function ($model) {
+                    $color = Feedback::STATUS_ANSWERED === $model->status ? 'green' : 'red';
+                    return "<p style='color: {$color}'>$model->status</p>";
+                },
             ],
             'created_at:datetime',
             'updated_at:datetime',
@@ -48,13 +58,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view} {answered} ',
                 'buttons' => [
                     'answered' => function ($url, $model) {
-                        return Html::beginForm(
+                        return Feedback::STATUS_NEW === $model->status ?
+                            Html::beginForm(
                                 ['/feedback/management/update?id=' . $model->id],
                                 'post',
-                                ['class' => 'form-button-inline'])
-                            . Html::activehiddenInput($model, 'status', ['value' => Feedback::STATUS_ANSWERED])
-                            . Html::submitButton('<span class="glyphicon glyphicon-ok-sign">',
-                                ['class' => 'btn-link']) . Html::endForm();
+                                ['class' => 'form-button-inline']
+                            )
+                            . Html::activeHiddenInput($model, 'status', ['value' => Feedback::STATUS_ANSWERED])
+                            . Html::submitButton('<span class="glyphicon glyphicon-import">', ['class' => 'btn-link'])
+                            . Html::endForm()
+                            : Html::button('<span class="glyphicon glyphicon-saved">', ['class' => 'btn-link','prompt' => 'Select']);
                     },
                 ],
             ],
