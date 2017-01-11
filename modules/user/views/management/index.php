@@ -3,6 +3,7 @@
 use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\user\models\SearchUser */
@@ -21,6 +22,16 @@ $dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
         'columns' => [
             ['class' => yii\grid\SerialColumn::className()],
             [
+                'label' => Yii::t('user', 'Avatar'),
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::img(Url::toRoute($model->avatar), [
+                        'alt' => Yii::t('user', 'Avatar'),
+                        'style' => 'width:100px;',
+                    ]);
+                },
+            ],
+            [
                 'attribute' => 'first_name',
                 'headerOptions' => ['width' => '100'],
             ],
@@ -31,13 +42,21 @@ $dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
             'email:email',
             [
                 'attribute' => 'status',
-                'filter' => Html::activeDropDownList($searchModel, 'status',
+                'content' => function ($model) {
+                    $color = User::STATUS_ACTIVE === $model->status ? 'green' : 'grey';
+                    $color = User::STATUS_BLOCKED === $model->status ? 'red' : $color;
+                    return "<p style='color: {$color}'>$model->status</p>";
+                },
+                'filter' => Html::activeDropDownList(
+                    $searchModel,
+                    'status',
                     [
                         User::STATUS_ACTIVE => ucfirst(User::STATUS_ACTIVE),
                         User::STATUS_CREATED => ucfirst(User::STATUS_CREATED),
                         User::STATUS_BLOCKED => ucfirst(User::STATUS_BLOCKED),
                     ],
-                    ['prompt' => Yii::t('user', 'All'), 'class' => 'form-control']),
+                    ['prompt' => Yii::t('user', 'All'), 'class' => 'form-control']
+                ),
             ],
             [
                 'attribute' => 'created_at',
