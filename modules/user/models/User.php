@@ -259,14 +259,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->status = self::STATUS_ACTIVE;
         $this->auth_provider = ArrayHelper::getValue($userAttributes, 'authProvider');
 
-        if (!$this->save()) {
-            return false;
-        }
-
-        if ($this->isNewRecord) {
-            $this->setRole(self::ROLE_USER);
-        }
-
-        return true;
+        return $this->save();
     }
 }

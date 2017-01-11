@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['update', 'namespace' => $model->namespace, 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ); ?>
-        <?= Html::a(Yii::t('option', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('option', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
     </p>
 
     <?= DetailView::widget([

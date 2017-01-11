@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
-        <?= Html::a(Yii::t('user', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('user', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?= Html::activeHiddenInput($user, 'avatar', ['id' => 'avatar-field']); ?>

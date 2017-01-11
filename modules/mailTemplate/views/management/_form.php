@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
             $model->isNewRecord ? Yii::t('mailTemplate', 'Create') : Yii::t('mailTemplate', 'Update'),
             ['name' => 'mail-template-button', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']
         ); ?>
-        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>
