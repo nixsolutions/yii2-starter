@@ -19,6 +19,8 @@ use yii\db\ActiveRecord;
  */
 class Page extends ActiveRecord
 {
+    const MAX_CONTENT_LENGTH = 300;
+
     /**
      * @inheritdoc
      */
@@ -82,5 +84,18 @@ class Page extends ActiveRecord
     public static function findByKey($key)
     {
         return static::findOne(['key' => $key]);
+    }
+
+    /**
+     * @param $content
+     * @return string
+     */
+    public function cropContent($content)
+    {
+        if (mb_strlen($content) > Page::MAX_CONTENT_LENGTH) {
+            $content = rtrim(mb_substr($content, 0, Page::MAX_CONTENT_LENGTH));
+            return $content . '...';
+        }
+        return $content;
     }
 }

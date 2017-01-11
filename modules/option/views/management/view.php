@@ -12,14 +12,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="option-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title); ?></h1>
 
     <p>
         <?= Html::a(Yii::t('option', 'Update'),
             ['update', 'namespace' => $model->namespace, 'key' => $model->key],
             ['class' => 'btn btn-primary']
-        ) ?>
-
+        ); ?>
+        <?= Html::a(Yii::t('option', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
     </p>
 
     <?= DetailView::widget([
@@ -32,6 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
         ],
-    ]) ?>
+    ]); ?>
 
 </div>

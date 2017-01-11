@@ -35,8 +35,9 @@ use yii\widgets\ActiveForm;
     <div class="form-group">
         <?= Html::submitButton(
             $model->isNewRecord ? Yii::t('mailTemplate', 'Create') : Yii::t('mailTemplate', 'Update'),
-            ['name' => 'mail-template-button', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+            ['name' => 'mail-template-button', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']
         ); ?>
+        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>
