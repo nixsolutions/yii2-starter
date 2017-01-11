@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('option', 'Options');
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
 ?>
 <div class="option-index">
 

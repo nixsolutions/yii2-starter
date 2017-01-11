@@ -10,6 +10,7 @@ use yii\helpers\StringHelper;
 
 $this->title = Yii::t('page', 'Static Pages');
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
 ?>
 <div class="page-index">
 

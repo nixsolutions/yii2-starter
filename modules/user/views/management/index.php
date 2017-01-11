@@ -10,6 +10,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
 ?>
 <div class="users-index">
 

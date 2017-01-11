@@ -13,6 +13,7 @@ $this->registerCssFile('@web/css/modules/feedback/index.css', ['depends' => [Boo
 
 $this->title = Yii::t('feedback', 'Feedbacks');
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
 ?>
 <div class="feedback-index">
 
