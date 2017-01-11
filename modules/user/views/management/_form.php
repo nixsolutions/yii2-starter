@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\user\models\User;
+use app\widgets\crop\Crop;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,6 +12,23 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="users-form">
+
+    <div class="form-group">
+        <?= Html::activeLabel($user, 'avatar') ?>
+        <?= Crop::widget([
+            'uploadUrl' => '/user/auth/upload-avatar',
+            'inputLabel' => 'Choose',
+            'modalLabel' => 'Set avatar',
+            'noPhotoUrl' => $user->avatar ?: User::DEFAULT_AVATAR_URL,
+        ]) ?>
+    </div>
+
+    <div class="form-group">
+        <?= Html::button(
+            Yii::t('app', 'Delete'),
+            ['class' => 'btn btn-danger btn-block button-width', 'id' => 'deleteAvatar']
+        ); ?>
+    </div>
 
     <?php $form = ActiveForm::begin(['id' => 'userForm']); ?>
 
@@ -36,6 +54,7 @@ use yii\widgets\ActiveForm;
         <?= Html::a(Yii::t('user', 'Cancel'), ['index'], ['class' => 'btn btn-primary']); ?>
     </div>
 
+    <?= Html::activeHiddenInput($user, 'avatar', ['id' => 'avatar-field']); ?>
     <?php ActiveForm::end(); ?>
 
 </div>
