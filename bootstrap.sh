@@ -53,8 +53,7 @@ curl -sS https://getcomposer.org/installer | php > /dev/null 2>&1
 echo vagrant | sudo mv composer.phar /usr/local/bin/composer > /dev/null 2>&1
 
 echo "Installing app..."
-if [ -f /vagrant/set-github-oauth-token.sh ]
-then
+if [ -f /vagrant/set-github-oauth-token.sh ]; then
     /vagrant/set-github-oauth-token.sh
 fi
 composer global require "fxp/composer-asset-plugin:^1.2.1" > /dev/null 2>&1
@@ -62,10 +61,18 @@ composer global require "fxp/composer-asset-plugin:^1.2.1" > /dev/null 2>&1
 cd /vagrant
 composer install > /dev/null 2>&1
 
-sudo cp config/db.php.sample config/db.php
-sudo cp config/params.php.sample config/params.php
-sudo cp config/mailer.php.sample config/mailer.php
-sudo cp config/clients.php.sample config/clients.php
+if [ ! -f /vagrant/config/db.php ]; then
+    sudo cp config/db.php.sample config/db.php
+fi
+if [ ! -f /vagrant/config/params.php ]; then
+    sudo cp config/params.php.sample config/params.php
+fi
+if [ ! -f /vagrant/config/mailer.php ]; then
+    sudo cp config/mailer.php.sample config/mailer.php
+fi
+if [ ! -f /vagrant/config/clients.php ]; then
+    sudo cp config/clients.php.sample config/clients.php
+fi
 
 echo "Migrating..."
 echo y | php yii migrate --migrationPath=@yii/rbac/migrations/

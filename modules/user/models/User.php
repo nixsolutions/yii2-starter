@@ -43,6 +43,8 @@ class User extends ActiveRecord implements IdentityInterface
     /** Role admin */
     const ROLE_ADMIN = 'admin';
 
+    const DEFAULT_AVATAR_URL = '/img/no_image.png';
+
     public $rememberMe = true;
 
     /**
@@ -189,7 +191,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->email = $userData->email;
         $this->password = Yii::$app->security->generatePasswordHash($userData->password);
         $this->auth_key = Yii::$app->security->generateRandomString();
-        $this->avatar = $userData->avatar;
+        $this->avatar = self::DEFAULT_AVATAR_URL;
 
         $this->save();
 
