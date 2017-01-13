@@ -27,7 +27,8 @@ $dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
                 'value' => function ($model) {
                     return Html::img($model->avatar, [
                         'alt' => Yii::t('user', 'Avatar'),
-                        'style' => 'width:120px;',
+                        'style' => 'width:60px;',
+                        'class' => 'img-circle',
                     ]);
                 },
             ],
