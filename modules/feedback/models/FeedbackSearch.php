@@ -5,7 +5,6 @@ namespace app\modules\feedback\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\feedback\models\Feedback;
 
 /**
  * FeedbackSearch represents the model behind the search form about `app\modules\feedback\models\Feedback`.
@@ -47,6 +46,9 @@ class FeedbackSearch extends Feedback
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Yii::$app->params['grid']['itemsPrePage'],
+            ],
             'sort' => [
                 'defaultOrder' => [
                     'created_at' =>  SORT_DESC,

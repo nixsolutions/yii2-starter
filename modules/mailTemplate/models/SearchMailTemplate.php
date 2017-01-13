@@ -2,6 +2,7 @@
 
 namespace app\modules\mailTemplate\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -45,6 +46,9 @@ class SearchMailTemplate extends MailTemplate
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
+            'pagination' => [
+                'pageSize' => Yii::$app->params['grid']['itemsPrePage'],
+            ],
             'query' => $query,
         ]);
 

@@ -45,6 +45,9 @@ class OptionSearch extends Option
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
+            'pagination' => [
+                'pageSize' => Yii::$app->params['grid']['itemsPrePage'],
+            ],
             'query' => $query,
         ]);
 

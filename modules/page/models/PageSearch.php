@@ -2,6 +2,7 @@
 
 namespace app\modules\page\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -44,6 +45,9 @@ class PageSearch extends Page
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
+            'pagination' => [
+                'pageSize' => Yii::$app->params['grid']['itemsPrePage'],
+            ],
             'query' => $query,
         ]);
 
