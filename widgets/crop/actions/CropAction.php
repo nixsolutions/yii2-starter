@@ -76,8 +76,8 @@ class CropAction extends Action
 
         $image = Image::crop(
             $file->tempName . $request->post('filename'),
-            (int)$width,
-            (int)$height,
+            (int) $width,
+            (int) $height,
             [$startX, $startY]
         )->resize(new Box($boxWidth, $boxHeight));
 
