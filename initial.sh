@@ -8,4 +8,6 @@ cp config/params.php.sample config/params.php
 cp config/db.php.sample config/db.php
 cp config/mailer.php.sample config/mailer.php
 cp config/clients.php.sample config/clients.php
-php yii serve --port=8888
+echo 'Run build-in php server'
+nohup php yii serve --port=8888
+echo 'Ready to run tests'
