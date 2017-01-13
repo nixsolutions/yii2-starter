@@ -9,11 +9,6 @@
 class_name: FunctionalTester
 modules:
     enabled:
-      - REST:
-          url: http://localhost:8888/
-            # Your base API URL
-            # Can also be a framework module name
-          depends: PhpBrowser
       - Filesystem
       - Yii2
       - Db:
