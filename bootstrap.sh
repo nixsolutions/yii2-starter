@@ -5,7 +5,7 @@ DB_PORT='3306'
 DB_PASSWORD='root'
 DB_NAME='yii_starter'
 DB_NAME_TEST='yii_starter_tests'
-
+DISPLAY_ERRORS="on"
 
 echo "Updating packages..."
 echo vagrant | sudo -S apt-get update
@@ -78,3 +78,5 @@ echo "Migrating..."
 echo y | php yii migrate --migrationPath=@yii/rbac/migrations/
 echo y | php yii rbac/init
 echo y | php yii migrate/up
+
+sudoo sed -i "s/display_errors = .*/display_errors = ${DISPLAY_ERRORS}/" /etc/php/7.0/fpm/php.ini
