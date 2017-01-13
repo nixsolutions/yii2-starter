@@ -9,7 +9,6 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Mail Templates');
 $this->params['breadcrumbs'][] = $this->title;
-$dataProvider->pagination->pageSize = Yii::$app->params['grid']['itemsPrePage'];
 ?>
 <div class="mail-template-index">
 

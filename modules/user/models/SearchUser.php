@@ -2,6 +2,7 @@
 
 namespace app\modules\user\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -57,6 +58,9 @@ class SearchUser extends User
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => Yii::$app->params['grid']['itemsPrePage'],
+            ],
             'sort' => [
                 'defaultOrder' => 'created_at DESC',
             ],
