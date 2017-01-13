@@ -7,3 +7,4 @@ composer install
 cp config/params.php.sample config/params.php
 cp config/db.php.sample config/db.php
 cp config/mailer.php.sample config/mailer.php
+cp config/clients.php.sample config/clients.php

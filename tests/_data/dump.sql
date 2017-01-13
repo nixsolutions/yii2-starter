@@ -293,6 +293,7 @@ LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
 INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'email', 'admin@mail.com', 'Must contains admin email', '2016-12-10 09:30:43', '2016-12-10 09:30:43');
 INSERT INTO `options` (`namespace`, `key`, `value`, `description`, `created_at`, `updated_at`) VALUES ('ADMIN', 'name', 'Dima', 'Must contains admin name', '2016-12-10 09:32:50', '2016-12-10 09:32:50');
+INSERT INTO `options` VALUES ('grid','itemsPrePage','7','Default number of items in the table on page','2017-01-11 12:03:30','2017-01-11 12:03:30');
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 

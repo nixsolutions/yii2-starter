@@ -19,6 +19,7 @@ class ManagementFeedbackTestCest extends BaseFunctionalCest
         $I->expectTo('see validations errors');
         $I->see('Create Feedback', 'h1');
         $I->see('Email cannot be blank');
+        $I->see('The verification code is incorrect.');
     }
 
     public function feedbackAsGuestSuccessfully(FunctionalTester $I)
@@ -28,8 +29,21 @@ class ManagementFeedbackTestCest extends BaseFunctionalCest
             'ContactForm[name]' => 'tester',
             'ContactForm[email]' => 'tester@example.com',
             'ContactForm[message]' => 'test subject',
+            'ContactForm[verifyCode]' => 'testme',
         ]);
         $I->see('Thank you for contacting us. We will respond to you as soon as possible.');
+    }
+
+    public function feedbackAsGuestWrongCaptcha(FunctionalTester $I)
+    {
+        $I->amOnPage(Url::toRoute('/contact'));
+        $I->submitForm('#contact-form', [
+            'ContactForm[name]' => 'tester',
+            'ContactForm[email]' => 'tester@example.com',
+            'ContactForm[message]' => 'test subject',
+            'ContactForm[verifyCode]' => 'wrong world',
+        ]);
+        $I->see('The verification code is incorrect.');
     }
 
     /**
@@ -42,6 +56,7 @@ class ManagementFeedbackTestCest extends BaseFunctionalCest
         $I->submitForm('#contact-form', [
             'ContactForm[name]' => 'tester',
             'ContactForm[message]' => 'test subject',
+            'ContactForm[verifyCode]' => 'testme',
         ]);
         $I->see('Thank you for contacting us. We will respond to you as soon as possible.');
     }
@@ -92,7 +107,6 @@ class ManagementFeedbackTestCest extends BaseFunctionalCest
         $I->see('yii2starter@gmail.com');
         $I->see('All great!');
         $I->see('new');
-        $I->see('Update', 'a');
     }
 
     /**
@@ -110,28 +124,9 @@ class ManagementFeedbackTestCest extends BaseFunctionalCest
      */
     public function updateStatusFeedbackSuccess(FunctionalTester $I)
     {
-        $I->amOnPage(Url::toRoute('/feedback/management/update?id=1'));
+        $I->amOnPage(Url::toRoute('/feedback'));
         $I->seeResponseCodeIs(200);
-        $I->see('Update', 'button');
-        $I->submitForm('#contact-form', [
-            'Feedback[status]' => 'answered',
-        ]);
+        $I->submitForm('.form-button-inline', []);
         $I->see('Information saved.');
-        $I->see('answered');
-    }
-
-    /**
-     * @before loginAsAdmin
-     * @after logout
-     */
-    public function updateStatusFeedbackWrongStatus(FunctionalTester $I)
-    {
-        $I->amOnPage(Url::toRoute('/feedback/management/update?id=1'));
-        $I->seeResponseCodeIs(200);
-        $I->see('Update', 'button');
-        $I->submitForm('#contact-form', [
-            'Feedback[status]' => 'not exist status',
-        ]);
-        $I->see('Status is invalid.');
     }
 }
