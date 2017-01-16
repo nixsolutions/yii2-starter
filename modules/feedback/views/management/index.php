@@ -36,8 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'status',
-                'headerOptions' => ['width' => '80'],
-
+                'headerOptions' => ['width' => '130'],
                 'filter' => Html::activeDropDownList(
                     $searchModel,
                     'status',

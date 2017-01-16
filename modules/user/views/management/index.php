@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return Html::img($model->avatar, [
                         'alt' => Yii::t('user', 'Avatar'),
-                        'style' => 'width:60px;',
+                        'style' => 'width:60px; object-fit:cover;',
                         'class' => 'img-circle',
                     ]);
                 },
@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
+                'headerOptions' => ['width' => '120'],
                 'content' => function ($model) {
                     $label = User::STATUS_ACTIVE === $model->status ? 'success' : 'default';
                     $label = User::STATUS_BLOCKED === $model->status ? 'danger' : $label;
