@@ -21,7 +21,8 @@
         "2amigos/yii2-ckeditor-widget": "^2.0",
         "yiisoft/yii2-authclient": "^2.1",
         "bower-asset/cropper": "^2.3",
-        "flow/jsonpath": "*"
+        "flow/jsonpath": "*",
+        "2amigos/yii2-date-picker-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

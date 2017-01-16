@@ -64,6 +64,13 @@ return [
             'class' => 'yii\authclient\Collection',
             'clients' =>$clients,
         ],
+        'formatter' => [
+            'dateFormat' => 'd-M-Y',
+            'datetimeFormat' => 'php:Y-m-d H:i:s',
+            'timeFormat' => 'H:i:s',
+            'locale' => 'en-US',
+            'defaultTimeZone' => 'Europe/Kiev',
+        ],
     ],
     'modules' => [
         'user' => [

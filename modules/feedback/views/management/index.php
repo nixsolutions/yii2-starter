@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\feedback\models\Feedback;
+use dosamigos\datepicker\DatePicker;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -20,6 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'filterRowOptions' => [
+//            'class' => 'form-control',
+        ],
         'columns' => [
             ['class' => yii\grid\SerialColumn::class],
             'name',
@@ -44,12 +48,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['prompt' => Yii::t('feedback', 'All'), 'class' => 'form-control']
                 ),
                 'content' => function ($model) {
-                    $color = Feedback::STATUS_ANSWERED === $model->status ? 'green' : 'red';
-                    return "<p style='color: {$color}'>$model->status</p>";
+                    $label = Feedback::STATUS_ANSWERED === $model->status ? 'success' : 'danger';
+                    return "<span class='visible-md-block visible-xs-block
+                        visible-sm-block visible-lg-block label label-{$label}'>{$model->status}</span>";
                 },
             ],
-            'created_at:datetime',
-            'updated_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'value' => 'created_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'clientOptions' => ['format' => 'yyyy-mm-d']
+                ]),
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => 'updated_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'clientOptions' => ['format' => 'yyyy-mm-d']
+                ]),
+                'format' => 'html',
+                'content' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->updated_at);
+                },
+            ],
             [
                 'class' => yii\grid\ActionColumn::class,
                 'header' => Yii::t('feedback', 'Actions'),
@@ -65,9 +90,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['class' => 'form-button-inline']
                             )
                             . Html::activeHiddenInput($model, 'status', ['value' => Feedback::STATUS_ANSWERED])
-                            . Html::submitButton('<span class="glyphicon glyphicon-import">', ['class' => 'btn-link'])
-                            . Html::endForm()
-                            : Html::button('<span class="glyphicon glyphicon-saved">', ['class' => 'btn-link','prompt' => 'Select']);
+                            . Html::a(
+                                '<span class="glyphicon glyphicon-import"></span>',
+                                '#',
+                                [
+                                    'title' => Yii::t('feedback', 'Mark as answered'),
+                                    'data' => ['method' => 'post'],
+                                ]
+                            )
+                            . Html::endForm() :
+                            Html::a(
+                                '<span class="glyphicon glyphicon-saved"></span>',
+                                '#',
+                                ['title' => Yii::t('feedback', 'Answered')]
+                            );
                     },
                 ],
             ],

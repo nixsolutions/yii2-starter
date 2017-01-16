@@ -1,5 +1,6 @@
 <?php
 
+use dosamigos\datepicker\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\StringHelper;
@@ -29,6 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             [
                 'attribute' => 'updated_at',
+                'value' => 'updated_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'clientOptions' => ['format' => 'yyyy-mm-d']
+                ]),
+                'format' => 'html',
+                'content' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->updated_at);
+                },
                 'headerOptions' => ['width' => '150'],
             ],
             [
