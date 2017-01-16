@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             [
                 'attribute' => 'status',
+                'headerOptions' => ['width' => '120'],
                 'content' => function ($model) {
                     $color = User::STATUS_ACTIVE === $model->status ? 'green' : 'grey';
                     $color = User::STATUS_BLOCKED === $model->status ? 'red' : $color;
