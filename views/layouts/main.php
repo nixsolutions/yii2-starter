@@ -55,7 +55,7 @@ AppAsset::register($this);
                     ['label' => 'Users', 'url' => ['/users']],
                     ['label' => 'Static Pages', 'url' => ['/static-pages']],
                     ['label' => 'Options', 'url' => ['/options']],
-                    ['label' => 'Feedback', 'url' => ['/feedback']],
+                    ['label' => 'Feedbacks', 'url' => ['/feedback']],
                 ],
             ];
         }

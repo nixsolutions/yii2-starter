@@ -1,9 +1,9 @@
 <?php
 
 use app\modules\user\models\User;
+use dosamigos\datepicker\DatePicker;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\user\models\SearchUser */
@@ -43,9 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'content' => function ($model) {
-                    $color = User::STATUS_ACTIVE === $model->status ? 'green' : 'grey';
-                    $color = User::STATUS_BLOCKED === $model->status ? 'red' : $color;
-                    return "<p style='color: {$color}'>$model->status</p>";
+                    $label = User::STATUS_ACTIVE === $model->status ? 'success' : 'default';
+                    $label = User::STATUS_BLOCKED === $model->status ? 'danger' : $label;
+                    return "<span class='visible-md-block visible-xs-block
+                        visible-sm-block visible-lg-block label label-{$label}'>{$model->status}</span>";
                 },
                 'filter' => Html::activeDropDownList(
                     $searchModel,
@@ -60,11 +61,29 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'created_at',
-                'format' => ['date', 'php:Y-m-d H:i:s'],
+                'value' => 'created_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'clientOptions' => ['format' => 'yyyy-mm-d']
+                ]),
+                'format' => 'html',
+                'content' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->created_at);
+                },
             ],
             [
                 'attribute' => 'last_login_at',
-                'format' => ['date', 'php:Y-m-d H:i:s'],
+                'value' => 'last_login_at',
+                'filter' => DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'last_login_at',
+                    'clientOptions' => ['format' => 'yyyy-mm-d']
+                ]),
+                'format' => 'html',
+                'content' => function ($model) {
+                    return Yii::$app->formatter->asDatetime($model->last_login_at);
+                },
             ],
             [
                 'class' => yii\grid\DataColumn::className(),

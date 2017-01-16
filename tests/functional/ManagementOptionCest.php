@@ -37,8 +37,8 @@ class ManagementOptionCest extends BaseFunctionalCest
         $I->see('email', 'td');
         $I->see('admin@mail.com', 'td');
         $I->see('Must contains admin email', 'td');
-        $I->see('2016-12-10 09:30:43', 'td');
-        $I->see('2016-12-10 09:30:43', 'td');
+        $I->see('2016-12-10', 'td');
+        $I->see('2016-12-10', 'td');
     }
 
     /**
