@@ -21,10 +21,6 @@ $this->registerCssFile('@web/css/modules/user/view.css');
             ['alt' => 'User avatar', 'width' => 200, 'height' => 200, 'class' => 'avatar-border']
         ) ?>
     </div>
-    <p>
-        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-        <?= Html::a(Yii::t('user', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
-    </p>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -42,5 +38,10 @@ $this->registerCssFile('@web/css/modules/user/view.css');
             'last_login_at',
         ],
     ]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('user', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+    </p>
 
 </div>
