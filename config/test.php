@@ -62,7 +62,7 @@ return [
         ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
-            'clients' =>$clients,
+            'clients' => $clients,
         ],
         'formatter' => [
             'dateFormat' => 'd-M-Y',
