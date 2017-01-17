@@ -1,14 +1,14 @@
 <?php
 
+use app\assets\WysiwygAsset;
 use dosamigos\ckeditor\CKEditor;
-use dosamigos\ckeditor\CKEditorWidgetAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\page\models\Page */
 /* @var $form yii\widgets\ActiveForm */
-$this->registerJsFile('@web/js/justify/plugin.js', ['depends' => [CKEditorWidgetAsset::className()]]);
+WysiwygAsset::register($this);
 ?>
 
 <div class="page-form">
