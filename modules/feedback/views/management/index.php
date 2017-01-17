@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             )
                             . Html::activeHiddenInput($model, 'status', ['value' => Feedback::STATUS_ANSWERED])
                             . Html::a(
-                                '<span class="glyphicon glyphicon-import"></span>',
+                                '<span class="glyphicon glyphicon-comment"></span>',
                                 '#',
                                 [
                                     'title' => Yii::t('feedback', 'Mark as answered'),
@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             )
                             . Html::endForm() :
                             Html::a(
-                                '<span class="glyphicon glyphicon-saved"></span>',
+                                '<span class="glyphicon glyphicon-comment text-muted"></span>',
                                 '#',
                                 ['title' => Yii::t('feedback', 'Answered')]
                             );
