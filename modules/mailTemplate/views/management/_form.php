@@ -28,7 +28,7 @@ WysiwygAsset::register($this);
             'extraPlugins' => 'justify',
             'height' => 400,
             'toolbarGroups' => [
-                ['name' => 'alignment', 'groups' => [ 'list', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ]],
+                ['name' => 'alignment', 'groups' => ['list', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']],
             ],
             'resize_enabled' => true,
         ],
