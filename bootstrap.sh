@@ -79,4 +79,4 @@ echo y | php yii migrate --migrationPath=@yii/rbac/migrations/
 echo y | php yii rbac/init
 echo y | php yii migrate/up
 
-sudoo sed -i "s/display_errors = .*/display_errors = ${DISPLAY_ERRORS}/" /etc/php/7.0/fpm/php.ini
+sudo sed -i "s/display_errors = .*/display_errors = ${DISPLAY_ERRORS}/" /etc/php/7.0/fpm/php.ini
