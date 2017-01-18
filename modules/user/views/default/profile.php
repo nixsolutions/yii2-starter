@@ -15,9 +15,6 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
 
     <h1><?= Html::encode($model->first_name); ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    </p>
 
     <div class="form-group">
         <?= Html::img(
@@ -40,5 +37,9 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
             'last_login_at',
         ],
     ]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
 
 </div>
