@@ -30,19 +30,38 @@ $user = Yii::$app->user;
                     <p><?= Yii::t('site', 'We are glad to represent you demo of our Yii2 web application. It has:'); ?></p>
                     <ul>
                         <li><?= Yii::t('site', 'role-based access control, that gives possibility to limit users activity;');?></li>
-                        <li><?= $user->isGuest ? Html::a(Yii::t('site', 'registration of new users with email confirmation'),
-                                '/registration') : 'registration of new users with email confirmation'; ?>;</li>
-                        <li><?= $user->isGuest ? Html::a(Yii::t('site', 'password recovery (with email)'),
-                                '/recovery') : 'password recovery (with email)'; ?>;</li>
-                        <li><?= $user->isGuest ? Html::a(Yii::t('site', 'users login ("Remember me" during a week)'), '/login') :
-                                'users login ("Remember me" during a week)'; ?>;</li>
-                        <li><?= $user->can(User::ROLE_ADMIN) ? Html::a(Yii::t('site', 'users management (changing user role and status)')
-                                , '/user/management') : 'users management (changing user role and status)'; ?>;</li>
-                        <li><?= $user->can(User::ROLE_ADMIN) ? Html::a(Yii::t('site', 'mail templates management (modifying templates)'),
-                                '/mail-template') : 'mail templates management (modifying templates)'; ?>;</li>
-                        <li><?= $user->can(User::ROLE_ADMIN) ? Html::a(Yii::t('site', 'static pages management (modifying content)'),
-                                '/static-pages') : 'static pages management (modifying content)'; ?>;</li>
-                        <li><?= $user->isGuest ? 'users profiles (with ability of editing information)' :
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'registration of new users with email confirmation'), '/registration') :
+                                Yii::t('site', 'registration of new users with email confirmation'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'password recovery (with email)'), '/recovery') :
+                                Yii::t('site', 'password recovery (with email)'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'users login ("Remember me" during a week)'), '/login') :
+                                Yii::t('site', 'users login ("Remember me" during a week)'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'), '/login') :
+                                Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'users management (changing user role and status)'), '/user/management') :
+                                Yii::t('site', 'users management (changing user role and status)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'mail templates management (modifying templates)'), '/mail-template') :
+                                Yii::t('site', 'mail templates management (modifying templates)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'static pages management (modifying content)'), '/static-pages') :
+                                Yii::t('site', 'static pages management (modifying content)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'options management (changing value)'), '/options') :
+                                Yii::t('site', 'options management (changing value)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'feedbacks management (changing status of message)'), '/feedback') :
+                                Yii::t('site', 'feedbacks management (changing status of message)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Yii::t('site', 'contact page for sending message to admin') :
+                                Html::a(Yii::t('site', 'contact page for sending message to admin'), '/contact'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Yii::t('site', 'users profiles (with ability of editing information)') :
                                 Html::a(Yii::t('site', 'users profiles (with ability of editing information)'),
                                 '/user/default/profile'); ?>.</li>
                     </ul>

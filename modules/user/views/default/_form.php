@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
-        <?= Html::a('Cancel', ['profile'], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a('Cancel', ['profile'], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -50,7 +50,9 @@ return [
             },
             'email' => 'email',
             'socialId' => 'id',
-            'avatar' => 'profile_image_url',
+            'avatar' => function ($attributes) {
+                return str_replace('_normal', '', ArrayHelper::getValue($attributes, 'profile_image_url'));
+            },
         ],
     ],
 ];
