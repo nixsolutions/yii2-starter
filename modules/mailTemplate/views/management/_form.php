@@ -1,5 +1,6 @@
 <?php
 
+use app\assets\WysiwygAsset;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -7,6 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\modules\mailTemplate\models\MailTemplate */
 /* @var $form yii\widgets\ActiveForm */
+WysiwygAsset::register($this);
 ?>
 
 <div class="mail-template-form">
@@ -20,12 +22,13 @@ use yii\widgets\ActiveForm;
     <h4><?= Yii::t('mailTemplate', 'Example placeholders {{user}} {{date}} {{link}} {{password}}'); ?></h4>
     <?= $form->field($model, 'body')->widget(CKEditor::className(), [
         'options' => ['rows' => 8],
-        'preset' => 'basic',
+        'preset' => 'full',
         'clientOptions' => [
-            'height' => 300,
+            'allowedContent' => true,
+            'extraPlugins' => 'justify',
+            'height' => 400,
             'toolbarGroups' => [
-                ['name' => 'document', 'groups' => ['mode']],
-                ['name' => 'basicstyles', 'groups' => ['cleanup']],
+                ['name' => 'alignment', 'groups' => ['list', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']],
             ],
             'resize_enabled' => true,
         ],

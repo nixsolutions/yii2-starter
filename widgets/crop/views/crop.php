@@ -47,12 +47,12 @@
                             </div>
 
                             <div class="row avatar-btns">
-                                <div class="col-md-6">
+                                <div class="col-md-6 panel">
                                     <button type="submit" class="btn btn-primary btn-block avatar-save">
                                         <?= Yii::t('crop', $widget->cropLabel); ?>
                                     </button>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 panel">
                                     <button type="submit" class="btn btn-block btn-default" data-dismiss="modal"
                                             data-target="#avatar-modal">
                                         Close
