@@ -166,6 +166,14 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasEmptyPassword()
+    {
+        return empty($this->password);
+    }
+
+    /**
      * Logs in a user using the provided username and password.
      *
      * @return boolean whether the user is logged in successfully
