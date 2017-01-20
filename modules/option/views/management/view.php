@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\option\models\Option */
 
 $this->title = "$model->namespace $model->key";
-$this->params['breadcrumbs'][] = ['label' => Yii::t('option', 'Options'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('option', 'Options'), 'url' => [Url::to('index')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="option-view">
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['update', 'namespace' => $model->namespace, 'key' => $model->key],
             ['class' => 'btn btn-primary']
         ); ?>
-        <?= Html::a(Yii::t('option', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a(Yii::t('option', 'Cancel'), [Url::to('index')], ['class' => 'btn btn-default']); ?>
     </p>
     
 </div>

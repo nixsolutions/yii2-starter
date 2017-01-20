@@ -34,10 +34,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['registration', 'login', 'recovery'],
+                'only' => ['registration', 'recovery'],
                 'rules' => [
                     [
-                        'actions' => ['registration', 'login', 'recovery'],
+                        'actions' => ['registration', 'recovery'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -177,7 +177,7 @@ class AuthController extends Controller
 
             $user = User::findByEmail($loginForm->email);
 
-            if (!$user || !$user->validatePassword($loginForm->password)) {
+            if (!$user || $user->hasEmptyPassword() || !$user->validatePassword($loginForm->password)) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Incorrect email or password.'));
             } elseif (User::STATUS_ACTIVE !== $user->status) {
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account is not active.'));
