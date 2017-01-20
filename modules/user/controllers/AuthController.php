@@ -34,10 +34,10 @@ class AuthController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['registration', 'login', 'recovery'],
+                'only' => ['registration', 'recovery'],
                 'rules' => [
                     [
-                        'actions' => ['registration', 'login', 'recovery'],
+                        'actions' => ['registration', 'recovery'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
