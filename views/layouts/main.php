@@ -37,7 +37,7 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [];
-    $menuItems[] = ['label' => 'About', 'url' => [Url::to('//about.html')]];
+    $menuItems[] = ['label' => 'About', 'url' => [Url::to('/about.html')]];
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
