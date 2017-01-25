@@ -39,8 +39,9 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
         ],
     ]); ?>
 
-    <p>
+    <div class="form-group">
+        <?= Html::a(Yii::t('user', 'Change password'), [Url::to('send-change-password-mail')], ['class' => 'btn btn-primary']); ?>
         <?= Html::a(Yii::t('user', 'Update'), [Url::to('update'), 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-    <p>
+    </div>
 
 </div>

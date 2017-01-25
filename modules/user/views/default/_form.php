@@ -40,7 +40,6 @@ use yii\widgets\ActiveForm;
     <?= Html::activeHiddenInput($user, 'avatar', ['id' => 'avatar-field']); ?>
 
     <div class="form-group">
-        <?= Html::a(Yii::t('user', 'Change password'), [Url::to('send-change-password-mail')], ['class' => 'btn btn-primary']); ?>
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
         <?= Html::a('Cancel', [Url::to('profile')], ['class' => 'btn btn-default']); ?>
     </div>
