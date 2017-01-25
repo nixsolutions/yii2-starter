@@ -8,6 +8,8 @@ use yii\helpers\Html;
 
 class ActionColumn extends YiiActionColumn
 {
+    public $headerOptions = ['width' => '110', 'class' => 'action-column'];
+
     protected function initDefaultButtons()
     {
         if (!isset($this->buttons['view'])) {
@@ -16,7 +18,7 @@ class ActionColumn extends YiiActionColumn
                     'title' => Yii::t('yii', 'View'),
                     'aria-label' => Yii::t('yii', 'View'),
                     'data-pjax' => '0',
-                    'class' => 'btn btn-primary btn-xs',
+                    'class' => 'btn btn-primary',
                 ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, $options);
             };
@@ -27,7 +29,7 @@ class ActionColumn extends YiiActionColumn
                     'title' => Yii::t('yii', 'Update'),
                     'aria-label' => Yii::t('yii', 'Update'),
                     'data-pjax' => '0',
-                    'class' => 'btn btn-info btn-xs',
+                    'class' => 'btn btn-info',
                 ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, $options);
             };
@@ -40,7 +42,7 @@ class ActionColumn extends YiiActionColumn
                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     'data-method' => 'post',
                     'data-pjax' => '0',
-                    'class' => 'btn btn-danger btn-xs',
+                    'class' => 'btn btn-danger',
                 ], $this->buttonOptions);
                 return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, $options);
             };

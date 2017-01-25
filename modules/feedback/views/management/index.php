@@ -74,7 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => yii\grid\ActionColumn::class,
                 'header' => Yii::t('feedback', 'Actions'),
-                'headerOptions' => ['width' => '75'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view} {answered} ',
                 'buttons' => [
@@ -92,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'title' => Yii::t('feedback', 'Mark as answered'),
                                     'data' => ['method' => 'post'],
-                                    'class' => 'btn btn-info btn-xs',
+                                    'class' => 'btn btn-info',
                                 ]
                             )
                             . Html::endForm() :
@@ -101,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 '#',
                                 [
                                     'title' => Yii::t('feedback', 'Answered'),
-                                    'class' => 'btn btn-default btn-xs',
+                                    'class' => 'btn btn-default',
                                 ]
                             );
                     },

@@ -54,7 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Yii::t('option', 'Actions'),
-                'headerOptions' => ['width' => '35'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view}  {update}',
             ],
