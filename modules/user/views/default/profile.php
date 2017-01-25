@@ -2,6 +2,7 @@
 
 use app\modules\user\models\User;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -39,7 +40,7 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
     ]); ?>
 
     <p>
-        <?= Html::a(Yii::t('user', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    </p>
+        <?= Html::a(Yii::t('user', 'Update'), [Url::to('update'), 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+    <p>
 
 </div>

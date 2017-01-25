@@ -2,12 +2,19 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\mailTemplate\models\Mail;
+use app\modules\mailTemplate\models\MailTemplate;
+use app\modules\user\models\forms\ChangePasswordForm;
 use app\modules\user\models\forms\UserForm;
+use app\modules\user\models\Hash;
 use app\modules\user\models\User;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Class DefaultController
@@ -27,7 +34,7 @@ class DefaultController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['profile', 'update'],
+                        'actions' => ['profile', 'update', 'send-change-password-mail'],
                         'roles' => ['@'],
                     ],
                 ]
@@ -88,5 +95,69 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         return $model;
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws ServerErrorHttpException
+     */
+    public function actionChangePassword()
+    {
+        if (!$hash = Yii::$app->request->get('hash')) {
+            throw new BadRequestHttpException();
+        }
+        if (!$user = User::findByHash($hash)) {
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
+        }
+        $changePasswordForm = new ChangePasswordForm();
+
+        if ($changePasswordForm->load(Yii::$app->request->post()) && $changePasswordForm->validate()) {
+            $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
+            $user->update();
+            Hash::findByUserId($user->id)->delete();
+            $user->login();
+
+            return $this->goHome();
+        }
+        return $this->render('auth/change-password', [
+            'model' => $changePasswordForm,
+        ]);
+    }
+
+    /**
+     * Sends link for changing password on user email
+     *
+     * @return string|\yii\web\Response
+     * @throws ServerErrorHttpException
+     */
+    public function actionSendChangePasswordMail()
+    {
+        $user = $this->findModel(Yii::$app->user->getId());
+
+        if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
+        }
+
+        $hash = new Hash();
+        $mailTemplate->replacePlaceholders([
+            'name' => $user->first_name,
+            'link' => Yii::$app->urlManager->createAbsoluteUrl([
+                Url::to('user/auth/change-password'),
+                'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id),
+            ]),
+        ]);
+
+        $mail = new Mail();
+        $mail->setTemplate($mailTemplate);
+        $mail->sendTo($user->email);
+
+        Yii::$app->session->setFlash(
+            'success',
+            Yii::t('user', 'Please check your email and follow instructions to change your password.')
+        );
+        return $this->render('profile', [
+            'model' => $user,
+        ]);
     }
 }
