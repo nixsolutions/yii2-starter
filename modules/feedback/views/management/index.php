@@ -92,13 +92,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'title' => Yii::t('feedback', 'Mark as answered'),
                                     'data' => ['method' => 'post'],
+                                    'class' => 'btn btn-info btn-xs',
                                 ]
                             )
                             . Html::endForm() :
                             Html::a(
                                 '<span class="glyphicon glyphicon-comment text-muted"></span>',
                                 '#',
-                                ['title' => Yii::t('feedback', 'Answered')]
+                                [
+                                    'title' => Yii::t('feedback', 'Answered'),
+                                    'class' => 'btn btn-default btn-xs',
+                                ]
                             );
                     },
                 ],
