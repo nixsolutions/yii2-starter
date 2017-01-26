@@ -111,13 +111,7 @@ class DefaultController extends Controller
             throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         $changePasswordForm = new ChangePasswordForm();
-
-        if ($changePasswordForm->load(Yii::$app->request->post()) && $changePasswordForm->validate()) {
-            $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
-            $user->update();
-            Hash::findByUserId($user->id)->delete();
-            $user->login();
-
+        if ($user->changePassword($changePasswordForm)) {
             return $this->goHome();
         }
         return $this->render('auth/change-password', [
@@ -135,7 +129,7 @@ class DefaultController extends Controller
     {
         $user = $this->findModel(Yii::$app->user->getId());
 
-        if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
+        if (!$mailTemplate = MailTemplate::findByKey(MailTemplate::CHANGE_PASSWORD)) {
             throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
 

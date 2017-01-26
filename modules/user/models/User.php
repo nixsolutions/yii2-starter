@@ -2,6 +2,7 @@
 
 namespace app\modules\user\models;
 
+use app\modules\user\models\forms\ChangePasswordForm;
 use Yii;
 use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
@@ -270,5 +271,20 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_provider = ArrayHelper::getValue($userAttributes, 'authProvider');
 
         return $this->save();
+    }
+
+    /**
+     * @param $form
+     * @return bool
+     */
+    public function changePassword($form)
+    {
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            $this->password = Yii::$app->security->generatePasswordHash($form->newPassword);
+            $this->update();
+            Hash::findByUserId($this->id)->delete();
+            return true;
+        }
+        return false;
     }
 }

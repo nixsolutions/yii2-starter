@@ -111,7 +111,7 @@ class AuthController extends Controller
                 throw new Exception('User could not be created.');
             }
 
-            if (!$mailTemplate = MailTemplate::findByKey('REGISTER_CONFIRM')) {
+            if (!$mailTemplate = MailTemplate::findByKey(MailTemplate::REGISTER_CONFIRM)) {
                 throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
             }
 
@@ -211,7 +211,7 @@ class AuthController extends Controller
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User is not active.'));
             } else {
 
-                if (!$mailTemplate = MailTemplate::findByKey('CHANGE_PASSWORD')) {
+                if (!$mailTemplate = MailTemplate::findByKey(MailTemplate::FORGOT_PASSWORD)) {
                     throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
                 }
 
@@ -254,18 +254,12 @@ class AuthController extends Controller
             throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
         }
         $changePasswordForm = new ChangePasswordForm();
-
-        if ($changePasswordForm->load(Yii::$app->request->post()) && $changePasswordForm->validate()) {
-            $user->password = Yii::$app->security->generatePasswordHash($changePasswordForm->newPassword);
-            $user->update();
-            Hash::findByUserId($user->id)->delete();
+        if ($user->changePassword($changePasswordForm)) {
             $user->login();
-
             return $this->goHome();
         }
         return $this->render('change-password', [
             'model' => $changePasswordForm,
         ]);
     }
-
 }
