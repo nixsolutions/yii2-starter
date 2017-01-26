@@ -245,7 +245,7 @@ class AuthController extends Controller
      * @throws BadRequestHttpException
      * @throws ServerErrorHttpException
      */
-    public function actionChangePassword()
+    public function actionForgotPassword()
     {
         if (!$hash = Yii::$app->request->get('hash')) {
             throw new BadRequestHttpException();

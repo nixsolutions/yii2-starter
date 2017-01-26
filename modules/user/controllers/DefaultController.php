@@ -34,7 +34,7 @@ class DefaultController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['profile', 'update', 'send-change-password-mail'],
+                        'actions' => ['profile', 'update', 'send-change-password-mail', 'change-password'],
                         'roles' => ['@'],
                     ],
                 ]

@@ -61,7 +61,7 @@ class Hash extends ActiveRecord
      */
     public function generate($type, $userId)
     {
-        if ($hash = self::findOne(['user_id' => $userId, 'type' => $type])) {
+        if ($hash = self::findOne(['user_id' => $userId])) {
             $hash->delete();
         }
         $this->user_id = $userId;
