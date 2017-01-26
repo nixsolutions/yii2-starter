@@ -16,7 +16,6 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
 
     <h1><?= Html::encode($model->first_name); ?></h1>
 
-
     <div class="form-group">
         <?= Html::img(
             $model->avatar ? : User::DEFAULT_AVATAR_URL,
@@ -40,8 +39,8 @@ $this->registerCssFile('@web/css/modules/user/profile.css');
     ]); ?>
 
     <div class="form-group">
-        <?= Html::a(Yii::t('user', 'Change password'), [Url::to('send-change-password-mail')], ['class' => 'btn btn-primary']); ?>
         <?= Html::a(Yii::t('user', 'Update'), [Url::to('update'), 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('user', 'Change password'), [Url::to('send-change-password-mail')], ['class' => 'btn btn-primary']); ?>
     </div>
 
 </div>
