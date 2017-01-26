@@ -98,28 +98,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @return string|\yii\web\Response
-     * @throws BadRequestHttpException
-     * @throws ServerErrorHttpException
-     */
-    public function actionChangePassword()
-    {
-        if (!$hash = Yii::$app->request->get('hash')) {
-            throw new BadRequestHttpException();
-        }
-        if (!$user = User::findByHash($hash)) {
-            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
-        }
-        $changePasswordForm = new ChangePasswordForm();
-        if ($user->changePassword($changePasswordForm)) {
-            return $this->goHome();
-        }
-        return $this->render('auth/change-password', [
-            'model' => $changePasswordForm,
-        ]);
-    }
-
-    /**
      * Sends link for changing password on user email
      *
      * @return string|\yii\web\Response
@@ -137,8 +115,8 @@ class DefaultController extends Controller
         $mailTemplate->replacePlaceholders([
             'name' => $user->first_name,
             'link' => Yii::$app->urlManager->createAbsoluteUrl([
-                Url::to('user/auth/change-password'),
-                'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id),
+                Url::to('user/default/change-password'),
+                'hash' => $hash->generate(Hash::TYPE_CHANGE_PASSWORD, $user->id),
             ]),
         ]);
 
@@ -152,6 +130,28 @@ class DefaultController extends Controller
         );
         return $this->render('profile', [
             'model' => $user,
+        ]);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     * @throws BadRequestHttpException
+     * @throws ServerErrorHttpException
+     */
+    public function actionChangePassword()
+    {
+        if (!$hash = Yii::$app->request->get('hash')) {
+            throw new BadRequestHttpException();
+        }
+        if (!$user = User::findByHash($hash)) {
+            throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
+        }
+        $changePasswordForm = new ChangePasswordForm();
+        if ($user->changePassword($changePasswordForm)) {
+            return $this->goHome();
+        }
+        return $this->render('change-password', [
+            'model' => $changePasswordForm,
         ]);
     }
 }

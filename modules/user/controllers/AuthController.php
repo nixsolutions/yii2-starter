@@ -219,7 +219,7 @@ class AuthController extends Controller
                 $mailTemplate->replacePlaceholders([
                     'name' => $user->first_name,
                     'link' => Yii::$app->urlManager->createAbsoluteUrl([
-                        'user/auth/change-password',
+                        'user/auth/forgot-password',
                         'hash' => $hash->generate(Hash::TYPE_RECOVER, $user->id),
                     ]),
                 ]);
@@ -258,7 +258,7 @@ class AuthController extends Controller
             $user->login();
             return $this->goHome();
         }
-        return $this->render('change-password', [
+        return $this->render('forgot-password', [
             'model' => $changePasswordForm,
         ]);
     }

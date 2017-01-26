@@ -18,6 +18,7 @@ class Hash extends ActiveRecord
 {
     const TYPE_REGISTER = 'register';
     const TYPE_RECOVER = 'recover';
+    const TYPE_CHANGE_PASSWORD = 'change-password';
 
     /**
      * @inheritdoc
