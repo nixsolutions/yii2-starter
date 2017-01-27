@@ -141,7 +141,7 @@ CREATE TABLE `hashes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `hash` varchar(255) DEFAULT NULL,
-  `type` enum('register','recover') DEFAULT 'register',
+  `type` enum('register','recover','change password') DEFAULT 'register',
   PRIMARY KEY (`id`),
   KEY `fk_user_id_hash` (`user_id`),
   CONSTRAINT `fk_user_id_hash` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
