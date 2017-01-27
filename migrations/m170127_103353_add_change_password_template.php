@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m170126_102014_add_change_password_template extends Migration
+class m170127_103353_add_change_password_template extends Migration
 {
     public function up()
     {
