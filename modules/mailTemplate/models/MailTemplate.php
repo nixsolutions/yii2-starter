@@ -20,7 +20,7 @@ class MailTemplate extends ActiveRecord
 {
     const REGISTER_CONFIRM = 'REGISTER_CONFIRM';
 
-    const PASSWORD_RECOVERY = 'PASSWORD_RECOVERY';
+    const RECOVERY_PASSWORD = 'RECOVERY_PASSWORD';
 
     const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 

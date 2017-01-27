@@ -211,7 +211,7 @@ class AuthController extends Controller
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'User is not active.'));
             } else {
 
-                if (!$mailTemplate = MailTemplate::findByKey(MailTemplate::PASSWORD_RECOVERY)) {
+                if (!$mailTemplate = MailTemplate::findByKey(MailTemplate::RECOVERY_PASSWORD)) {
                     throw new ServerErrorHttpException('The server encountered an internal error and could not complete your request.');
                 }
 
