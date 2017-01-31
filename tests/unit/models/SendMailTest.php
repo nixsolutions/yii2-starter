@@ -92,7 +92,7 @@ class SendMailTest extends \Codeception\Test\Unit
         expect('valid email is sent', $emailMessage)->isInstanceOf('yii\mail\MessageInterface');
         expect($emailMessage->getTo())->hasKey('admin@example.com');
         expect($emailMessage->getFrom())->hasKey('admin@example.com');
-        expect($emailMessage->getSubject())->equals('Test regisret user');
+        expect($emailMessage->getSubject())->equals('Test register user');
         expect($emailMessage->toString())->contains('Hello vasia');
         expect($emailMessage->toString())->contains('In 21.03.2018');
         expect($emailMessage->toString())->contains('Visit link https://www.google.com.ua');
