@@ -7,4 +7,7 @@ php:
   - 7.1
 
 before_script:
-  - composer install
+  - bash initial.sh > /dev/null
+
+script:
+  - php vendor/bin/codecept run
