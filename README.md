@@ -10,7 +10,7 @@
 
 Get Demo Yii2 application source files from Git repository:
 ```
-git clone git@bitbucket.org:nixsolutions/npr-310.git %path%
+git clone git@github.com:nixsolutions/yii2-starter.git %path%
 ```
 
 Copy file set-github-oauth-token.sh.sample without .example extension into root project directory and put your github token inside
