@@ -1,9 +1,11 @@
 # NIX Solutions presents Demo Yii2 application
 
-[![Build Status](https://secure.travis-ci.org/nixsolutions/yii2-starter.png?branch=master)](https://travis-ci.org/nixsolutions/yii2-starter)
 
-[![Coverage Status](https://coveralls.io/repos/github/nixsolutions/yii2-starter/badge.svg?branch=develop)](https://coveralls.io/nixsolutions/LizaZmievskaya/yii2-starter?branch=develop)
+[![Build Status](https://travis-ci.org/nixsolutions/yii2-starter.svg?branch=master)](https://travis-ci.org/nixsolutions/yii2-starter)
 [![Dependency Status](https://www.versioneye.com/user/projects/53a1549983add72cb9000014/badge.svg)](https://www.versioneye.com/user/projects/53a1549983add72cb9000014)
+[![GitHub version](https://badge.fury.io/gh/nixsolutions%2Fyii2-starter.svg)](https://badge.fury.io/gh/nixsolutions%2Fyii2-starter)
+[![Coverage Status](https://coveralls.io/repos/github/nixsolutions/yii2-starter/badge.svg?branch=master)](https://coveralls.io/nixsolutions/yii2-starter?branch=master)
+
 
 ## Requirements for development
 
