@@ -6,6 +6,7 @@
 [![GitHub version](https://badge.fury.io/gh/nixsolutions%2Fyii2-starter.svg)](https://badge.fury.io/gh/nixsolutions%2Fyii2-starter)
 [![Coverage Status](https://coveralls.io/repos/github/nixsolutions/yii2-starter/badge.svg?branch=master)](https://coveralls.io/nixsolutions/yii2-starter?branch=master)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=master)
 
 ## Requirements for development
 
