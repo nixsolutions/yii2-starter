@@ -1,15 +1,9 @@
 # NIX Solutions presents Demo Yii2 application
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nixsolutions/yii2-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License](https://poser.pugx.org/nixsolutions/yii2-starter/license.svg)](https://packagist.org/packages/nixsolutions/yii2-starter)
-
 [![Build Status](https://secure.travis-ci.org/nixsolutions/yii2-starter.png?branch=master)](https://travis-ci.org/nixsolutions/yii2-starter)
-[![Latest Stable Version](https://poser.pugx.org/nixsolutions/yii2-starter/v/stable.png)](https://packagist.org/packages/nixsolutions/yyii2-starter)
-[![Total Downloads](https://poser.pugx.org/nixsolutions/yii2-starter/downloads.png)](https://packagist.org/packages/nixsolutions/yii2-starter)
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/nixsolutions/yii2-starter/badge.png)](https://coveralls.io/r/nixsolutions/yii2-starter)
-[![Dependency Status](https://www.versioneye.com/user/projects/53a1549983add72cb9000014/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53a1549983add72cb9000014)
+[![Coverage Status](https://coveralls.io/repos/github/nixsolutions/yii2-starter/badge.svg?branch=develop)](https://coveralls.io/nixsolutions/LizaZmievskaya/yii2-starter?branch=develop)
+[![Dependency Status](https://www.versioneye.com/user/projects/53a1549983add72cb9000014/badge.svg)](https://www.versioneye.com/user/projects/53a1549983add72cb9000014)
 
 ## Requirements for development
 
