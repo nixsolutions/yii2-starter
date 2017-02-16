@@ -21,7 +21,6 @@ sudo: required
 before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('root') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - bash initial.sh > /dev/null
-  - sudo apt-get -y install php5-xdebug
 
 script:
-  - php vendor/bin/codecept run --coverage --coverage-xml
+  - php vendor/bin/codecept run
