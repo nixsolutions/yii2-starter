@@ -1,4 +1,11 @@
 # NIX Solutions presents Demo Yii2 application
+
+[![Build Status](https://travis-ci.org/nixsolutions/yii2-starter.svg?branch=develop)](https://travis-ci.org/nixsolutions/yii2-starter)
+
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=develop)
+
+
 ## Requirements for development
 
 - [Vagrant](https://www.vagrantup.com/) (1.8.5)
@@ -10,7 +17,7 @@
 
 Get Demo Yii2 application source files from Git repository:
 ```
-git clone git@bitbucket.org:nixsolutions/npr-310.git %path%
+git clone git@github.com:nixsolutions/yii2-starter.git %path%
 ```
 
 Copy file set-github-oauth-token.sh.sample without .example extension into root project directory and put your github token inside
