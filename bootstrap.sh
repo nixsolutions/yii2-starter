@@ -29,12 +29,12 @@ echo vagrant | sudo -S cp /vagrant/nginx.config /etc/nginx/sites-available/defau
 echo vagrant | sudo -S service nginx restart
 
 echo "Installing mysql 5.7..."
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $DB_PASSWORD"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $DB_PASSWORD"
-echo vagrant | sudo apt-get install software-properties-common
-echo vagrant | sudo add-apt-repository -y ppa:ondrej/mysql-5.7 2> /dev/null
+debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $DB_PASSWORD"
+debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $DB_PASSWORD"
+echo vagrant | sudo apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 5072E1F5
+echo vagrant | echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee /etc/apt/sources.list.d/mysql-5.7.list
 echo vagrant | sudo apt-get update
-echo vagrant | sudo apt-get install -y mysql-server 2> /dev/null
+echo vagrant | sudo DEBIAN_FRONTEND=noninteractive apt-get install -qy mysql-server
 echo vagrant | sudo -S sed -i "s/^bind-address.*127.0.0.1/bind-address=0.0.0.0/" /etc/mysql/my.cnf
 
 echo "Creating DB..."
