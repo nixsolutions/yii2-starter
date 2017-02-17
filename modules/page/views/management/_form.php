@@ -14,7 +14,7 @@ WysiwygAsset::register($this);
 
 <div class="page-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'pageForm']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
 
