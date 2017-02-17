@@ -16,7 +16,8 @@ return [
             'email' => 'email',
             'socialId' => 'id',
             'avatar' => function ($attributes) {
-                return 'https://graph.facebook.com/' . ArrayHelper::getValue($attributes, 'id') . '/picture?type=large';
+                return 'https://graph.facebook.com/' . ArrayHelper::getValue($attributes, 'id')
+                . '/picture?type=large&width=200&height=200';
             },
         ],
     ],
@@ -30,7 +31,7 @@ return [
             'email' => ['emails', 0, 'value'],
             'socialId' => 'id',
             'avatar' => function ($attributes) {
-                return current(explode('?', ArrayHelper::getValue($attributes, 'image.url')));
+                return current(explode('?', ArrayHelper::getValue($attributes, 'image.url'))) . '?sz=200';
             },
         ],
     ],

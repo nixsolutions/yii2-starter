@@ -8,7 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\feedback\models\Feedback */
 
 $this->title = Yii::t('feedback', 'Create Feedback');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('feedback', 'Feedbacks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="feedback-create">
@@ -29,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
 
 
-            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [ 'captchaAction' => '/site/captcha',
+            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), ['captchaAction' => '/site/captcha',
                 'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
             ]) ?>
 

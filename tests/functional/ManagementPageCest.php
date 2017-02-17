@@ -47,7 +47,7 @@ class ManagementPageCest
         $I->amOnPage(Url::toRoute('/page/management/update?id=1'));
         $I->seeResponseCodeIs(200);
         $I->see('Update', 'button');
-        $I->submitForm('.page-form', [
+        $I->submitForm('#pageForm', [
             'Page[title]' => 'test title',
             'Page[content]' => 'test',
             'Page[description]' => 'test page',

@@ -3,6 +3,7 @@
 use app\assets\WysiwygAsset;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -40,7 +41,7 @@ WysiwygAsset::register($this);
             $model->isNewRecord ? Yii::t('mailTemplate', 'Create') : Yii::t('mailTemplate', 'Update'),
             ['name' => 'mail-template-button', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']
         ); ?>
-        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), [Url::to('index')], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

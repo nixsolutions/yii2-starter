@@ -18,6 +18,7 @@ class Hash extends ActiveRecord
 {
     const TYPE_REGISTER = 'register';
     const TYPE_RECOVER = 'recover';
+    const TYPE_CHANGE_PASSWORD = 'change password';
 
     /**
      * @inheritdoc
@@ -60,7 +61,7 @@ class Hash extends ActiveRecord
      */
     public function generate($type, $userId)
     {
-        if ($hash = self::findOne(['user_id' => $userId, 'type' => $type])) {
+        if ($hash = self::findOne(['user_id' => $userId])) {
             $hash->delete();
         }
         $this->user_id = $userId;

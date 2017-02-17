@@ -18,6 +18,12 @@ use yii\db\ActiveRecord;
  */
 class MailTemplate extends ActiveRecord
 {
+    const REGISTER_CONFIRM = 'REGISTER_CONFIRM';
+
+    const RECOVERY_PASSWORD = 'RECOVERY_PASSWORD';
+
+    const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+
     /**
      * @inheritdoc
      */

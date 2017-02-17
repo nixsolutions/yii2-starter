@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\mailTemplate\models\MailTemplate */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mail Templates'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Mail Templates'), 'url' => [Url::to('index')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mail-template-view">
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a(Yii::t('mailTemplate', 'Cancel'), [Url::to('index')], ['class' => 'btn btn-default']); ?>
     </p>
     
 </div>
