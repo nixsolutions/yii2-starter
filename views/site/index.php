@@ -2,50 +2,75 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+use app\modules\user\models\User;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$this->title = Yii::t('site', 'NIX Yii2 Application');
+$user = Yii::$app->user;
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1><?= Yii::t('site', 'Welcome'); ?><?= !$user->isGuest ? ' ' . $user->identity->first_name : ''; ?>!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h2><?= Yii::t('site', 'NIX Solutions presents Demo Yii2 application.'); ?></h2>
     </div>
 
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <div class="col-lg-12">
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <div class="lead text-justify">
+                    <p><?= Yii::t('site', 'Yii is a high-performance PHP framework best for developing Web 2.0
+                     applications. Yii comes with rich features: MVC, DAO/ActiveRecord, I18N/L10N, caching, 
+                     authentication and role-based access control, scaffolding, testing, etc. 
+                     It can reduce your development time significantly.'); ?></p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                    <p><?= Yii::t('site', 'We are glad to represent you demo of our Yii2 web application. It has:'); ?></p>
+                    <ul>
+                        <li><?= Yii::t('site', 'role-based access control, that gives possibility to limit users activity;');?></li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'registration of new users with email confirmation'), [Url::to('/registration')]) :
+                                Yii::t('site', 'registration of new users with email confirmation'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'password recovery (with email)'), [Url::to('/recovery')]) :
+                                Yii::t('site', 'password recovery (with email)'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'users login ("Remember me" during a week)'), [Url::to('/login')]) :
+                                Yii::t('site', 'users login ("Remember me" during a week)'); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Html::a(Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'), [Url::to('/login')]) :
+                                Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'users management (changing user role and status)'), [Url::to('//user/management')]) :
+                                Yii::t('site', 'users management (changing user role and status)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'mail templates management (modifying templates)'), [Url::to('/mail-template')]) :
+                                Yii::t('site', 'mail templates management (modifying templates)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'static pages management (modifying content)'), [Url::to('/static-pages')]) :
+                                Yii::t('site', 'static pages management (modifying content)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'options management (changing value)'), [Url::to('/options')]) :
+                                Yii::t('site', 'options management (changing value)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Html::a(Yii::t('site', 'feedbacks management (changing status of message)'), [Url::to('/feedback')]) :
+                                Yii::t('site', 'feedbacks management (changing status of message)'); ?>;</li>
+                        <li><?= $user->can(User::ROLE_ADMIN) ?
+                                Yii::t('site', 'contact page for sending message to admin') :
+                                Html::a(Yii::t('site', 'contact page for sending message to admin'), [Url::to('/contact')]); ?>;</li>
+                        <li><?= $user->isGuest ?
+                                Yii::t('site', 'users profiles (with ability of editing information)') :
+                                Html::a(Yii::t('site', 'users profiles (with ability of editing information)'),
+                                    [Url::to('/user/default/profile')]); ?>.</li>
+                    </ul>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                    <p><?= Yii::t('site', 'To test our application you may login as admin@admin.com/123456.'); ?></p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div>
         </div>
 

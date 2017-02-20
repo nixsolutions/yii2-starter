@@ -31,3 +31,10 @@ tests/_support/_generated
 
 # vagrant files
 .vagrant
+
+vm_build.log
+/config/mailer.php
+
+set-github-oauth-token.sh
+
+@webroot

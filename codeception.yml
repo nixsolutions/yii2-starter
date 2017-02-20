@@ -8,29 +8,24 @@ settings:
     bootstrap: _bootstrap.php
     memory_limit: 1024M
     colors: true
+    strict_xml: true
 modules:
     config:
         Yii2:
             configFile: 'config/test.php'
-
+        Db:
+            dsn: 'mysql:host=localhost;dbname=yii_starter_tests'
+            user: 'root'
+            password: 'root'
+            populate: true
+            cleanup: true
+            dump: tests/_data/dump.sql
 # To enable code coverage:
-#coverage:
-#    #c3_url: http://localhost:8080/index-test.php/
-#    enabled: true
-#    #remote: true
-#    #remote_config: '../tests/codeception.yml'
-#    whitelist:
-#        include:
-#            - models/*
-#            - controllers/*
-#            - commands/*
-#            - mail/*
-#    blacklist:
-#        include:
-#            - assets/*
-#            - config/*
-#            - runtime/*
-#            - vendor/*
-#            - views/*
-#            - web/*
-#            - tests/*
+coverage:
+    #c3_url: http://localhost:8080/index-test.php/
+    enabled: true
+    #remote: true
+    #remote_config: '../tests/codeception.yml'
+    whitelist:
+        include:
+            - modules/*
