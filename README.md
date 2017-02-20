@@ -4,9 +4,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=master)
 
-[![GitHub license](https://img.shields.io/github/license/nixsolutions/yii2-starter.svg)](https://github.com/nixsolutions/yii2-starter/license)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/nixsolutions/yii2-starter/blob/master/LICENSE.md)
 [![Github All Releases](https://img.shields.io/github/downloads/nixsolutions/yii2-starter/total.svg)](https://github.com/nixsolutions/yii2-starter/downloads)
-[![GitHub release](https://img.shields.io/github/release/nixsolutions/yii2-starter.svg)](https://github.com/nixsolutions/yii2-starter/release)
+[![GitHub release](https://img.shields.io/github/release/nixsolutions/yii2-starter.svg)](https://github.com/nixsolutions/yii2-starter/releases)
 
 ## Requirements for development
 
