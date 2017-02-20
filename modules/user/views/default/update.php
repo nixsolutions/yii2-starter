@@ -3,6 +3,7 @@
 use app\assets\AppAsset;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $userForm \app\modules\user\models\forms\UserForm */
@@ -12,7 +13,7 @@ $this->registerCssFile('@web/css/modules/user/update.css', ['depends' => [Bootst
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Users',
 ]) . $userForm->first_name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Profile'), 'url' => ['profile']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('user', 'Profile'), 'url' => [Url::to('profile')]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="users-update">

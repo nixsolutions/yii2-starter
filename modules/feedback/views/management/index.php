@@ -21,9 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'filterRowOptions' => [
-//            'class' => 'form-control',
-        ],
         'columns' => [
             ['class' => yii\grid\SerialColumn::class],
             'name',
@@ -77,7 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => yii\grid\ActionColumn::class,
                 'header' => Yii::t('feedback', 'Actions'),
-                'headerOptions' => ['width' => '75'],
                 'contentOptions' => ['style' => 'text-align: center'],
                 'template' => '{view} {answered} ',
                 'buttons' => [
@@ -95,13 +91,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'title' => Yii::t('feedback', 'Mark as answered'),
                                     'data' => ['method' => 'post'],
+                                    'class' => 'btn btn-info',
                                 ]
                             )
                             . Html::endForm() :
                             Html::a(
                                 '<span class="glyphicon glyphicon-comment text-muted"></span>',
                                 '#',
-                                ['title' => Yii::t('feedback', 'Answered')]
+                                [
+                                    'title' => Yii::t('feedback', 'Answered'),
+                                    'class' => 'btn btn-default',
+                                ]
                             );
                     },
                 ],

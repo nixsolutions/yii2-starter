@@ -1,13 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\page\models\Page */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('page', 'Static Pages'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('page', 'Static Pages'), 'url' => [Url::to('index')]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="page-view">
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('page', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
-        <?= Html::a(Yii::t('page', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a(Yii::t('page', 'Cancel'), [Url::to('index')], ['class' => 'btn btn-default']); ?>
     </p>
 
 </div>

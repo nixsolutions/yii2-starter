@@ -7,6 +7,7 @@ use app\modules\user\models\User;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -28,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'NIX Solutions',
+        'brandLabel' => 'NIX Yii2 Demo',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,30 +37,30 @@ AppAsset::register($this);
     ]);
 
     $menuItems = [];
-    $menuItems[] = ['label' => 'About', 'url' => ['/about.html']];
+    $menuItems[] = ['label' => 'About', 'url' => [Url::to('/about.html')]];
     $user = Yii::$app->user;
 
     if ($user->isGuest) {
-        $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
-        $menuItems[] = ['label' => 'Registration', 'url' => ['/registration']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/login']];
+        $menuItems[] = ['label' => 'Contact', 'url' => [Url::to('/contact')]];
+        $menuItems[] = ['label' => 'Registration', 'url' => [Url::to('/registration')]];
+        $menuItems[] = ['label' => 'Login', 'url' => [Url::to('/login')]];
     } else {
         if (!$user->can(User::ROLE_ADMIN)) {
-            $menuItems[] = ['label' => 'Contact', 'url' => ['/contact']];
+            $menuItems[] = ['label' => 'Contact', 'url' => [Url::to('/contact')]];
         }
         if ($user->can(User::ROLE_ADMIN)) {
             $menuItems[] = [
                 'label' => 'Manage',
                 'items' => [
-                    ['label' => 'Mail Templates', 'url' => ['/mail-template']],
-                    ['label' => 'Users', 'url' => ['/users']],
-                    ['label' => 'Static Pages', 'url' => ['/static-pages']],
-                    ['label' => 'Options', 'url' => ['/options']],
-                    ['label' => 'Feedbacks', 'url' => ['/feedback']],
+                    ['label' => 'Mail Templates', 'url' => [Url::to('/mail-template')]],
+                    ['label' => 'Users', 'url' => [Url::to('/users')]],
+                    ['label' => 'Static Pages', 'url' => [Url::to('/static-pages')]],
+                    ['label' => 'Options', 'url' => [Url::to('/options')]],
+                    ['label' => 'Feedbacks', 'url' =>  [Url::to('/feedback')]],
                 ],
             ];
         }
-        $menuItems[] = ['label' => 'Profile', 'url' => ['/user/default/profile']];
+        $menuItems[] = ['label' => 'Profile', 'url' => [Url::to('/user/default/profile')]];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

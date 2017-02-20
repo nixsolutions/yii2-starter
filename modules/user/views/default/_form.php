@@ -3,6 +3,7 @@
 use app\modules\user\models\User;
 use app\widgets\crop\Crop;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -40,7 +41,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']); ?>
-        <?= Html::a('Cancel', ['profile'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a('Cancel', [Url::to('profile')], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

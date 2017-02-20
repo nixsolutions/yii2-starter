@@ -6,6 +6,7 @@
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 $this->registerCssFile('@web/css/modules/user/login.css', ['depends' => [BootstrapAsset::className()]]);
 
@@ -36,14 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <div class="col-lg-12">
-            <?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => ['auth']]); ?>
+            <?= yii\authclient\widgets\AuthChoice::widget(['baseAuthUrl' => [Url::to('auth')]]); ?>
         </div>
     </div>
 
 
     <div class="form-group">
         <div class="col-lg-12">
-            <?= Html::a('Forgot password?', '/recovery'); ?>
+            <?= Html::a('Forgot password?', [Url::to('/recovery')]); ?>
         </div>
     </div>
 
@@ -56,6 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php ActiveForm::end(); ?>
 
     <div>
-        <?= Html::a(Yii::t('user', 'Click here to create an account.'), '/registration'); ?>
+        <?= Html::a(Yii::t('user', 'Click here to create an account.'), [Url::to('/registration')]); ?>
     </div>
 </div>

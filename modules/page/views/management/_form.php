@@ -3,6 +3,7 @@
 use app\assets\WysiwygAsset;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -13,7 +14,7 @@ WysiwygAsset::register($this);
 
 <div class="page-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'pageForm']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
 
@@ -37,7 +38,7 @@ WysiwygAsset::register($this);
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('page', 'Create') : Yii::t('app', 'Update'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']); ?>
-        <?= Html::a(Yii::t('page', 'Cancel'), ['index'], ['class' => 'btn btn-default']); ?>
+        <?= Html::a(Yii::t('page', 'Cancel'), [Url::to('index')], ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

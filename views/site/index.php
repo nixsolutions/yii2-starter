@@ -4,6 +4,7 @@
 
 use app\modules\user\models\User;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = Yii::t('site', 'NIX Yii2 Application');
 $user = Yii::$app->user;
@@ -31,39 +32,39 @@ $user = Yii::$app->user;
                     <ul>
                         <li><?= Yii::t('site', 'role-based access control, that gives possibility to limit users activity;');?></li>
                         <li><?= $user->isGuest ?
-                                Html::a(Yii::t('site', 'registration of new users with email confirmation'), '/registration') :
+                                Html::a(Yii::t('site', 'registration of new users with email confirmation'), [Url::to('/registration')]) :
                                 Yii::t('site', 'registration of new users with email confirmation'); ?>;</li>
                         <li><?= $user->isGuest ?
-                                Html::a(Yii::t('site', 'password recovery (with email)'), '/recovery') :
+                                Html::a(Yii::t('site', 'password recovery (with email)'), [Url::to('/recovery')]) :
                                 Yii::t('site', 'password recovery (with email)'); ?>;</li>
                         <li><?= $user->isGuest ?
-                                Html::a(Yii::t('site', 'users login ("Remember me" during a week)'), '/login') :
+                                Html::a(Yii::t('site', 'users login ("Remember me" during a week)'), [Url::to('/login')]) :
                                 Yii::t('site', 'users login ("Remember me" during a week)'); ?>;</li>
                         <li><?= $user->isGuest ?
-                                Html::a(Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'), '/login') :
+                                Html::a(Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'), [Url::to('/login')]) :
                                 Yii::t('site', 'users login with social network account (Facebook, Google, Twitter)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
-                                Html::a(Yii::t('site', 'users management (changing user role and status)'), '/user/management') :
+                                Html::a(Yii::t('site', 'users management (changing user role and status)'), [Url::to('//user/management')]) :
                                 Yii::t('site', 'users management (changing user role and status)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
-                                Html::a(Yii::t('site', 'mail templates management (modifying templates)'), '/mail-template') :
+                                Html::a(Yii::t('site', 'mail templates management (modifying templates)'), [Url::to('/mail-template')]) :
                                 Yii::t('site', 'mail templates management (modifying templates)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
-                                Html::a(Yii::t('site', 'static pages management (modifying content)'), '/static-pages') :
+                                Html::a(Yii::t('site', 'static pages management (modifying content)'), [Url::to('/static-pages')]) :
                                 Yii::t('site', 'static pages management (modifying content)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
-                                Html::a(Yii::t('site', 'options management (changing value)'), '/options') :
+                                Html::a(Yii::t('site', 'options management (changing value)'), [Url::to('/options')]) :
                                 Yii::t('site', 'options management (changing value)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
-                                Html::a(Yii::t('site', 'feedbacks management (changing status of message)'), '/feedback') :
+                                Html::a(Yii::t('site', 'feedbacks management (changing status of message)'), [Url::to('/feedback')]) :
                                 Yii::t('site', 'feedbacks management (changing status of message)'); ?>;</li>
                         <li><?= $user->can(User::ROLE_ADMIN) ?
                                 Yii::t('site', 'contact page for sending message to admin') :
-                                Html::a(Yii::t('site', 'contact page for sending message to admin'), '/contact'); ?>;</li>
+                                Html::a(Yii::t('site', 'contact page for sending message to admin'), [Url::to('/contact')]); ?>;</li>
                         <li><?= $user->isGuest ?
                                 Yii::t('site', 'users profiles (with ability of editing information)') :
                                 Html::a(Yii::t('site', 'users profiles (with ability of editing information)'),
-                                '/user/default/profile'); ?>.</li>
+                                    [Url::to('/user/default/profile')]); ?>.</li>
                     </ul>
 
                     <p><?= Yii::t('site', 'To test our application you may login as admin@admin.com/123456.'); ?></p>
