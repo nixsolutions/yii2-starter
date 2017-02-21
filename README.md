@@ -8,7 +8,6 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/nixsolutions/yii2-starter/?branch=master)
 
 [![GitHub release](https://img.shields.io/github/release/nixsolutions/yii2-starter.svg)](https://github.com/nixsolutions/yii2-starter/releases)
-[![Github All Releases](https://img.shields.io/github/downloads/nixsolutions/yii2-starter/total.svg)](https://github.com/nixsolutions/yii2-starter/downloads)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/nixsolutions/yii2-starter/blob/master/LICENSE.md)
 
