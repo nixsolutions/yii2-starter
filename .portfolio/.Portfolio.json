@@ -1,0 +1,9 @@
+{
+  "name": "Demo Yii2 application",
+  "repository": "https://github.com/nixsolutions/yii2-starter",
+  "demo": "",
+  "logo_background": "bg5",
+  "description": "Demo PHP application built on top of Yii2 framework and Mysql database",
+  "language": "php",
+  "technology": ["php", "yii", "mysql"]
+}
